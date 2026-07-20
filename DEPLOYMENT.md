@@ -75,16 +75,14 @@ Vercel auto-detects Vite. You should see:
 
 Leave these as-is.
 
-### 3. Add the environment variables
-Before clicking Deploy, expand **Environment Variables** and add the same two
-values from Supabase:
+### 3. Environment variables — optional
+**For an offline-first launch (recommended for now): skip this step entirely.**
+With no variables set, the app runs on each visitor's local browser storage and
+works fully — no database needed.
 
-| Name | Value |
-|------|-------|
-| `VITE_SUPABASE_URL` | your Project URL |
-| `VITE_SUPABASE_ANON_KEY` | your anon public key |
-
-Add each, then make sure they apply to **Production** (the default).
+Only if/when you connect Supabase later: expand **Environment Variables** and add
+the same two values from Supabase (`VITE_SUPABASE_URL`,
+`VITE_SUPABASE_ANON_KEY`), applied to **Production**, then redeploy.
 
 ### 4. Deploy
 1. Click **Deploy**.
