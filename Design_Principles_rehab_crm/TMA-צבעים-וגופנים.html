@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl"><head><meta charset="utf-8" />
+<title>TMA — הצבעים והגופנים</title>
+<link rel="stylesheet" href="colors_and_type.css" />
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--tma-ivory-200);}
+  body{font-family:var(--font-body);color:var(--fg-2);-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+
+  .page{
+    width:794px;min-height:1123px;margin:24px auto;background:var(--tma-ivory-50);
+    padding:72px 76px 64px;position:relative;box-shadow:var(--shadow-3);
+  }
+
+  /* ---- cover header ---- */
+  .masthead{border-bottom:1px solid var(--border-soft);padding-bottom:32px;margin-bottom:40px;}
+  .wordmark{font-family:var(--font-display);font-weight:500;font-size:88px;line-height:.9;color:var(--tma-gold-500);letter-spacing:.02em;}
+  .wordmark .sub{display:block;font-family:var(--font-body);font-size:12px;letter-spacing:.42em;color:var(--tma-gold-700);margin-top:14px;font-weight:500;}
+  .doc-title{font-family:var(--font-display);font-size:40px;color:var(--tma-noir-900);font-weight:500;margin:28px 0 10px;line-height:1.1;}
+  .doc-lede{font-size:16px;line-height:1.7;color:var(--fg-2);max-width:560px;}
+
+  /* ---- section ---- */
+  section{margin-top:44px;break-inside:avoid;}
+  .eyebrow{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--tma-gold-700);font-weight:600;display:flex;align-items:center;gap:14px;margin-bottom:18px;}
+  .eyebrow::before{content:"";width:40px;height:1px;background:var(--tma-gold-500);display:inline-block;}
+  h2{font-family:var(--font-display);font-size:32px;color:var(--tma-noir-900);font-weight:500;margin:0 0 8px;line-height:1.1;}
+  h3{font-family:var(--font-display);font-size:22px;color:var(--tma-noir-900);font-weight:600;margin:26px 0 8px;}
+  p{font-size:15px;line-height:1.75;margin:0 0 12px;color:var(--fg-2);max-width:600px;text-wrap:pretty;}
+  strong{color:var(--tma-noir-900);font-weight:600;}
+
+  .intro-feel{background:var(--tma-noir-800);color:var(--tma-ivory-100);padding:32px 36px;margin-top:8px;position:relative;overflow:hidden;}
+  .intro-feel .glow{position:absolute;inset:auto -80px -120px auto;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(242,224,182,.28),transparent 70%);}
+  .intro-feel p{color:var(--tma-ivory-100);max-width:none;position:relative;margin:0;font-size:17px;line-height:1.8;}
+  .intro-feel .accent{color:var(--tma-gold-soft);font-style:italic;}
+
+  /* ---- swatches ---- */
+  .swatches{display:flex;gap:0;margin:8px 0 16px;border-radius:var(--radius-sm);overflow:hidden;border:1px solid var(--border-soft);}
+  .swatches .sw{flex:1;height:64px;display:flex;align-items:flex-end;padding:8px;font-family:var(--font-mono);font-size:9px;}
+  .sw.dark-label{color:rgba(255,255,255,.7);}
+  .sw.light-label{color:rgba(31,31,31,.55);}
+
+  .pair{display:flex;gap:18px;margin:10px 0 4px;}
+  .chip{flex:1;border:1px solid var(--border-soft);border-radius:var(--radius-sm);overflow:hidden;}
+  .chip .fill{height:72px;}
+  .chip .cap{padding:10px 12px;background:var(--bg-surface);}
+  .chip .cap b{display:block;font-size:13px;color:var(--tma-noir-900);font-weight:600;}
+  .chip .cap span{font-size:11px;color:var(--fg-3);}
+
+  .semantic-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px;}
+  .semantic-row .s{border-radius:var(--radius-sm);overflow:hidden;border:1px solid var(--border-soft);}
+  .semantic-row .s .dot{height:48px;}
+  .semantic-row .s .t{padding:8px 10px;background:var(--bg-surface);font-size:11px;color:var(--fg-2);}
+  .semantic-row .s .t b{display:block;color:var(--tma-noir-900);font-size:12px;font-weight:600;}
+
+  /* ---- font specimens ---- */
+  .specimen{border:1px solid var(--border-soft);border-radius:var(--radius-sm);padding:20px 22px;margin:10px 0 6px;background:var(--bg-surface);}
+  .specimen .label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--tma-gold-700);font-weight:600;margin-bottom:10px;}
+  .specimen .big-serif{font-family:var(--font-display);font-size:46px;font-weight:500;color:var(--tma-noir-900);line-height:1;}
+  .specimen .big-serif-he{font-family:var(--font-display-he);font-size:42px;font-weight:500;color:var(--tma-noir-900);line-height:1.1;}
+  .specimen .sans-sample{font-family:var(--font-body);font-size:17px;color:var(--fg-2);line-height:1.6;}
+  .specimen .mono-sample{font-family:var(--font-mono);font-size:18px;color:var(--tma-noir-700);letter-spacing:.04em;}
+
+  /* ---- golden rule box ---- */
+  .rule-box{border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);padding:16px 0;margin:18px 0 4px;}
+  .rule-box .rt{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--tma-gold-700);font-weight:600;margin-bottom:10px;}
+  ol{margin:0;padding-inline-start:20px;}
+  ol li{font-size:14px;line-height:1.7;color:var(--fg-2);margin-bottom:5px;}
+
+  .tldr{margin-top:44px;background:var(--tma-ivory-100);border:1px solid var(--border-soft);border-radius:var(--radius-md);padding:26px 30px;break-inside:avoid;}
+  .tldr h2{font-size:24px;margin-bottom:8px;}
+  .tldr p{font-size:15px;max-width:none;margin:0;}
+
+  footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--border-soft);font-size:11px;letter-spacing:.04em;color:var(--fg-3);display:flex;justify-content:space-between;}
+
+  @media print{
+    html,body{background:#fff;}
+    .page{margin:0;box-shadow:none;width:auto;min-height:auto;padding:48px 54px;}
+    section,.tldr,.intro-feel{break-inside:avoid;}
+    @page{size:A4 portrait;margin:14mm 0;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="masthead">
+    <div class="wordmark">TMA<span class="sub">THE MULTI ACCADEMY</span></div>
+    <div class="doc-title">הצבעים והגופנים — במילים פשוטות</div>
+    <p class="doc-lede">איך נראה ומרגיש המותג של TMA: אילו צבעים אנחנו משתמשים ולמה, ואילו גופנים בונים את האופי שלו. אפשר לתת את המסמך לכל מי שמעצב עבורנו — גם בלי רקע טכני.</p>
+  </div>
+
+  <section>
+    <div class="eyebrow">התחושה הכללית</div>
+    <div class="intro-feel">
+      <div class="glow"></div>
+      <p>המותג אמור להרגיש כמו <span class="accent">מועדון יוקרתי</span> — שקט, בטוח בעצמו, אלגנטי. לא רועש ולא צעקני. הרבה אוויר ומרחב, פרטים עדינים, וזהב שמופיע במשורה כמו תכשיט — לא כצבע שממלא את המסך. המותג דו-לשוני: עברית ואנגלית חיות זו לצד זו.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">הצבעים</div>
+    <h2>זהב — הצבע המוביל</h2>
+    <p>הזהב הוא הלב של המותג. זה לא זהב מבריק וזול, אלא <strong>זהב עתיק וחמים</strong> — כמו מסגרת של תמונה ישנה או אור נרות. הוא מופיע בלוגו, בכותרות קטנות, בקווים דקים ובפרטים, אף פעם לא כרקע גדול.</p>
+    <div class="swatches">
+      <div class="sw light-label" style="background:#fbf6e8;">50</div>
+      <div class="sw light-label" style="background:#f4e6c2;">100</div>
+      <div class="sw light-label" style="background:#ecd29a;">200</div>
+      <div class="sw light-label" style="background:#dfba6e;">300</div>
+      <div class="sw light-label" style="background:#cfa657;">400</div>
+      <div class="sw dark-label" style="background:#c5a253;">500</div>
+      <div class="sw dark-label" style="background:#a98641;">600</div>
+      <div class="sw dark-label" style="background:#876830;">700</div>
+      <div class="sw dark-label" style="background:#604a22;">800</div>
+      <div class="sw dark-label" style="background:#3a2c14;">900</div>
+    </div>
+    <div class="pair">
+      <div class="chip"><div class="fill" style="background:#c5a253;"></div><div class="cap"><b>זהב רגיל</b><span>על רקע בהיר — עמוק ומאופק</span></div></div>
+      <div class="chip"><div class="fill" style="background:#1f1f1f;display:flex;align-items:center;justify-content:center;"><span style="color:#f2e0b6;font-family:var(--font-display);font-size:30px;">זהב רך</span></div><div class="cap"><b>זהב רך ("אור נרות")</b><span>על רקע כהה — זוהר וחמים</span></div></div>
+    </div>
+
+    <h3>שחור חם, שנהב רך</h3>
+    <p>הרקע הכהה שלנו הוא <strong>לא שחור מוחלט</strong>, אלא שחור מעט חמים ורך — כמו חדר בתאורה נמוכה, עוטף ויוקרתי. וגם הלבן שלנו <strong>אף פעם לא לבן צחור</strong> — הוא תמיד נוטה לשנהב חמים, רך לעין. זה הרקע הבהיר הראשי שלנו.</p>
+    <div class="pair">
+      <div class="chip"><div class="fill" style="background:#1f1f1f;"></div><div class="cap"><b>שחור חם ("נואר")</b><span>רקע כהה, לוגו, שקפים דרמטיים</span></div></div>
+      <div class="chip"><div class="fill" style="background:#fbf9f4;border-bottom:1px solid var(--border-soft);"></div><div class="cap"><b>שנהב</b><span>הרקע הבהיר הראשי</span></div></div>
+    </div>
+
+    <h3>צבעי מצב — תמיד מעומעמים</h3>
+    <p>כשצריך לסמן מצב, הצבעים תמיד <strong>עמומים ומאופקים</strong>, אף פעם לא חדים או צועקים.</p>
+    <div class="semantic-row">
+      <div class="s"><div class="dot" style="background:#5b8a5a;"></div><div class="t"><b>ירוק רך</b>הצלחה</div></div>
+      <div class="s"><div class="dot" style="background:#c08a3e;"></div><div class="t"><b>ענבר חמים</b>אזהרה</div></div>
+      <div class="s"><div class="dot" style="background:#a3463c;"></div><div class="t"><b>טרקוטה</b>שגיאה</div></div>
+      <div class="s"><div class="dot" style="background:#4a6c7a;"></div><div class="t"><b>כחול אפרפר</b>מידע</div></div>
+    </div>
+
+    <div class="rule-box">
+      <div class="rt">הכלל הזהב של הצבעים</div>
+      <ol>
+        <li>רקע בהיר = שנהב חמים. רקע כהה = שחור חמים. אף פעם לבן או שחור מוחלטים.</li>
+        <li>הזהב הוא תבלין, לא מנה עיקרית — נגיעות קטנות בלבד.</li>
+        <li>אין צבעים זוהרים, ואין מעברי צבע (גרדיאנטים) רועשים.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">הגופנים</div>
+    <h2>שלושה תפקידים, שלוש תחושות</h2>
+    <p>לכל גופן יש תפקיד משלו — וכל אחד נותן תחושה אחרת.</p>
+
+    <div class="specimen">
+      <div class="label">כותרות · סריף קלאסי (Cormorant Garamond)</div>
+      <div class="big-serif">Quiet Authority</div>
+    </div>
+    <p>הכותרות הגדולות, הלוגו, הציטוטים והמספרים נכתבים ב<strong>סריף קלאסי</strong> (עם "רגליים" קטנות) — אלגנטי, ספרותי, עם ניגודיות יפה בין קווים עבים לדקים. זה מה שנותן את תחושת היוקרה והסמכות.</p>
+
+    <div class="specimen">
+      <div class="label">כותרות בעברית · סריף עברי (Frank Ruhl Libre)</div>
+      <div class="big-serif-he">סמכות שקטה</div>
+    </div>
+    <p>לכותרות בעברית יש גרסה משלהן — גופן סריף עברי בעל אופי ספרותי דומה, כדי שעברית ואנגלית ירגישו כמשפחה אחת. המערכת עוברת אליו אוטומטית כשהטקסט בעברית.</p>
+
+    <div class="specimen">
+      <div class="label">טקסט רץ · סנס נקי (Inter / Heebo)</div>
+      <div class="sans-sample">כל הטקסט הרגיל — פסקאות, תיאורים וכפתורים — נכתב בגופן נקי וברור לקריאה. The quick brown fox.</div>
+    </div>
+    <p>הטקסט ה"רגיל" נכתב ב<strong>סנס-סריף</strong> נקי ונייטרלי (בלי "רגליים"), קל וברור. הוא לא מושך תשומת לב — פשוט נעים וקריא, בעברית ובאנגלית.</p>
+
+    <div class="specimen">
+      <div class="label">מספרים וקודים · Monospace</div>
+      <div class="mono-sample">01 · 02 · 03 — Module 04</div>
+    </div>
+    <p>למספרים, קודים ומספור שיעורים אנחנו משתמשים מדי פעם בגופן ברוחב אחיד — שימוש נדיר ועדין.</p>
+
+    <div class="rule-box">
+      <div class="rt">הכלל הזהב של הגופנים</div>
+      <ol>
+        <li>כותרות = סריף קלאסי (אלגנטי). טקסט רגיל = סנס נקי (קריא).</li>
+        <li>עברית ואנגלית תמיד בזוג גופנים תואם.</li>
+        <li>אותיות גדולות ומרווחות (כמו "THE MULTI ACCADEMY") שמורות לכותרות-משנה קטנות — תמיד בזהב.</li>
+      </ol>
+    </div>
+  </section>
+
+  <div class="tldr">
+    <h2>בקצרה</h2>
+    <p>המותג של TMA הוא <strong>שחור חמים, שנהב רך, ונגיעות זהב</strong> — עם <strong>כותרות בסריף אלגנטי וטקסט בסנס נקי</strong>. המטרה תמיד: רוגע, יוקרה ושקט — לא רעש.</p>
+  </div>
+
+  <footer>
+    <span>The Multi Accademy · מערכת העיצוב</span>
+    <span>הצבעים והגופנים</span>
+  </footer>
+
+</div>
+<script>
+  (async function(){
+    try{ if(document.fonts && document.fonts.ready) await document.fonts.ready; }catch(e){}
+    setTimeout(function(){ window.print(); }, 600);
+  })();
+</script>
+</body></html>

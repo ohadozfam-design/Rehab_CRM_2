@@ -1,0 +1,2 @@
+# Claude Code — do not commit personal or generated files
+.claude/settings.local.json

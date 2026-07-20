@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---- Theme-aware surface tokens (TMA brand system) ---- */
+:root,
+:root[data-theme='light'] {
+  --bg-canvas: #fbf9f4; /* soft ivory — main light background */
+  --bg-surface: #ffffff;
+  --fg-1: #1f1f1f; /* warm noir — primary text */
+  --fg-2: #3a3a3a;
+  --fg-3: #6b6b6b;
+  --border-soft: #e8e1d2;
+}
+
+:root[data-theme='dark'] {
+  --bg-canvas: #1f1f1f; /* warm noir — main dark background */
+  --bg-surface: #242424;
+  --fg-1: #f4e6c2; /* candlelight ivory on dark */
+  --fg-2: #d9cfb8;
+  --fg-3: #9c9484;
+  --border-soft: #34302a;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-canvas);
+  color: var(--fg-2);
+  font-family: 'Inter', 'Heebo', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
