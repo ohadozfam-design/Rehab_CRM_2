@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../stores/useAuthStore';
 import { useNotificationStore } from '../stores/useNotificationStore';
 import { useThemeStore } from '../stores/useThemeStore';
+import { useUIStore } from '../stores/useUIStore';
 import { ROLE_LABELS } from '../lib/constants';
 import type { ThemeMode } from '../types';
 
@@ -26,6 +27,7 @@ export default function Header() {
   const unread = useNotificationStore((s) =>
     user ? s.unreadCount(user.id) : 0,
   );
+  const openNewProject = useUIStore((s) => s.openNewProject);
 
   if (!user) return null;
   const isAdmin = user.role === 'admin';
@@ -86,6 +88,7 @@ export default function Header() {
           <button
             className="inline-flex items-center gap-1.5 rounded-lg bg-accent px-3.5 py-2 text-[13px] font-semibold text-white"
             title="New Project"
+            onClick={openNewProject}
           >
             + New Project
           </button>
