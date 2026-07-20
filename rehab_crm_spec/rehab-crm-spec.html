@@ -1,0 +1,2502 @@
+<meta charset="utf-8">
+<title>Rehab CRM — Complete UI Reference</title>
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --surface-2: #f1f5f9;
+    --surface-3: #e2e8f0;
+    --border: #e2e8f0;
+    --border-strong: #cbd5e1;
+    --text: #0f172a;
+    --text-2: #334155;
+    --text-3: #64748b;
+    --text-4: #94a3b8;
+    --accent: #2563eb;
+    --accent-2: #1d4ed8;
+    --accent-soft: #dbeafe;
+    --amber: #f59e0b;
+    --amber-soft: #fef3c7;
+    --amber-text: #b45309;
+    --emerald: #059669;
+    --emerald-soft: #d1fae5;
+    --emerald-text: #047857;
+    --purple: #7c3aed;
+    --purple-soft: #ede9fe;
+    --purple-text: #6d28d9;
+    --red: #dc2626;
+    --red-soft: #fee2e2;
+    --red-text: #b91c1c;
+    --pink: #db2777;
+
+    --font-sans: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'SF Mono', 'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+    --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+    --shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
+    --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
+    --radius-sm: 6px;
+    --radius: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 18px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --bg: #020617;
+      --surface: #0f172a;
+      --surface-2: #1e293b;
+      --surface-3: #334155;
+      --border: #1e293b;
+      --border-strong: #334155;
+      --text: #f1f5f9;
+      --text-2: #cbd5e1;
+      --text-3: #94a3b8;
+      --text-4: #64748b;
+      --accent: #3b82f6;
+      --accent-2: #60a5fa;
+      --accent-soft: rgba(59, 130, 246, 0.15);
+      --amber-soft: rgba(245, 158, 11, 0.15);
+      --amber-text: #fbbf24;
+      --emerald-soft: rgba(5, 150, 105, 0.15);
+      --emerald-text: #34d399;
+      --purple-soft: rgba(124, 58, 237, 0.15);
+      --purple-text: #a78bfa;
+      --red-soft: rgba(220, 38, 38, 0.15);
+      --red-text: #fca5a5;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #020617; --surface: #0f172a; --surface-2: #1e293b; --surface-3: #334155;
+    --border: #1e293b; --border-strong: #334155;
+    --text: #f1f5f9; --text-2: #cbd5e1; --text-3: #94a3b8; --text-4: #64748b;
+    --accent: #3b82f6; --accent-2: #60a5fa; --accent-soft: rgba(59, 130, 246, 0.15);
+    --amber-soft: rgba(245, 158, 11, 0.15); --amber-text: #fbbf24;
+    --emerald-soft: rgba(5, 150, 105, 0.15); --emerald-text: #34d399;
+    --purple-soft: rgba(124, 58, 237, 0.15); --purple-text: #a78bfa;
+    --red-soft: rgba(220, 38, 38, 0.15); --red-text: #fca5a5;
+  }
+  :root[data-theme="light"] {
+    color-scheme: light;
+    --bg: #f8fafc; --surface: #ffffff; --surface-2: #f1f5f9; --surface-3: #e2e8f0;
+    --border: #e2e8f0; --border-strong: #cbd5e1;
+    --text: #0f172a; --text-2: #334155; --text-3: #64748b; --text-4: #94a3b8;
+    --accent: #2563eb; --accent-2: #1d4ed8; --accent-soft: #dbeafe;
+    --amber-soft: #fef3c7; --amber-text: #b45309;
+    --emerald-soft: #d1fae5; --emerald-text: #047857;
+    --purple-soft: #ede9fe; --purple-text: #6d28d9;
+    --red-soft: #fee2e2; --red-text: #b91c1c;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
+
+  /* Document-level styles */
+  .doc-hero {
+    padding: 56px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+  .doc-hero h1 {
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    text-wrap: balance;
+    margin: 0 0 12px;
+  }
+  .doc-hero .lede {
+    font-size: 18px;
+    color: var(--text-2);
+    max-width: 720px;
+    text-wrap: pretty;
+  }
+  .doc-hero .meta {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  .doc-hero .meta .chip {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border: 1px solid var(--accent);
+  }
+
+  h2.section-title {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 64px 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  h2.section-title .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--text);
+    color: var(--bg);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: var(--font-mono);
+    font-weight: 600;
+  }
+  .section-desc {
+    color: var(--text-3);
+    font-size: 15px;
+    max-width: 720px;
+    margin: 0 0 24px;
+  }
+
+  h3.sub {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 32px 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  h3.sub::before {
+    content: '';
+    width: 3px;
+    height: 14px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  /* Mockup frame — a windowed screenshot look */
+  .mockup {
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    margin-bottom: 32px;
+  }
+  .mockup-chrome {
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-3);
+  }
+  .mockup-chrome .dots { display: flex; gap: 6px; margin-right: 8px; }
+  .mockup-chrome .dots span {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--border-strong);
+  }
+  .mockup-chrome .dots span:nth-child(1) { background: #ef4444; }
+  .mockup-chrome .dots span:nth-child(2) { background: #f59e0b; }
+  .mockup-chrome .dots span:nth-child(3) { background: #10b981; }
+  .mockup-chrome .url {
+    flex: 1;
+    background: var(--surface);
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+  }
+  .mockup-body { padding: 0; }
+
+  /* App interior styles */
+  .app-shell { background: var(--bg); min-height: 480px; }
+  .app-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .app-header .brand { display: flex; align-items: center; gap: 10px; }
+  .app-header .brand .logo {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-weight: 700; font-size: 14px;
+  }
+  .app-header .brand h1 { font-size: 15px; font-weight: 700; margin: 0; line-height: 1.1; }
+  .app-header .brand p { font-size: 11px; color: var(--text-3); margin: 0; }
+  .app-header .actions { display: flex; align-items: center; gap: 6px; }
+
+  .icon-btn {
+    padding: 6px;
+    border-radius: 6px;
+    background: transparent;
+    border: none;
+    color: var(--text-3);
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .icon-btn:hover { background: var(--surface-2); color: var(--text); }
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn-secondary {
+    background: var(--surface);
+    color: var(--text-2);
+    border: 1px solid var(--border-strong);
+    padding: 7px 13px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-3);
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+  }
+
+  .app-body { padding: 20px; }
+
+  /* Stats grid */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px;
+  }
+  .stat-card .label {
+    font-size: 11px;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .stat-card .value {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-card .sub {
+    font-size: 11px;
+    color: var(--text-3);
+    margin-top: 2px;
+  }
+  .stat-card.emerald { background: var(--emerald-soft); }
+  .stat-card.blue { background: var(--accent-soft); }
+  .stat-card.purple { background: var(--purple-soft); }
+  .stat-card.green { background: var(--emerald-soft); }
+
+  /* Filter bar */
+  .filter-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+    align-items: center;
+  }
+  .search {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    padding: 7px 12px 7px 32px;
+    font-size: 13px;
+    color: var(--text-3);
+    position: relative;
+  }
+  .search::before {
+    content: '⌕';
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-4);
+  }
+  .toggle-group {
+    display: flex;
+    background: var(--surface-2);
+    border-radius: 8px;
+    padding: 3px;
+    gap: 3px;
+  }
+  .toggle-group button {
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    font-size: 12px;
+    color: var(--text-3);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 500;
+  }
+  .toggle-group button.active {
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* Kanban columns */
+  .kanban {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .kanban-col {
+    background: var(--surface-2);
+    border-radius: var(--radius);
+    padding: 12px;
+    min-height: 320px;
+    border-top: 3px solid var(--border-strong);
+  }
+  .kanban-col.active { border-top-color: var(--amber); }
+  .kanban-col.progress { border-top-color: var(--accent); }
+  .kanban-col.done { border-top-color: var(--emerald); }
+  .kanban-col header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .status-pill.active { background: var(--amber-soft); color: var(--amber-text); }
+  .status-pill.progress { background: var(--accent-soft); color: var(--accent); }
+  .status-pill.done { background: var(--emerald-soft); color: var(--emerald-text); }
+  .count-badge {
+    background: var(--surface);
+    border-radius: 999px;
+    width: 22px; height: 22px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
+    color: var(--text-3);
+  }
+  .kanban-list { display: flex; flex-direction: column; gap: 10px; }
+
+  /* Renovation card */
+  .reno-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px;
+    cursor: pointer;
+  }
+  .reno-card:hover { border-color: var(--accent); box-shadow: var(--shadow-sm); }
+  .reno-card .head {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 8px; margin-bottom: 10px;
+  }
+  .reno-card .title { font-size: 13px; font-weight: 700; margin: 0 0 2px; line-height: 1.2; }
+  .reno-card .location { font-size: 11px; color: var(--text-3); display: flex; align-items: center; gap: 3px; }
+  .reno-card .progress-block { margin-bottom: 10px; }
+  .reno-card .progress-block .row {
+    display: flex; justify-content: space-between; font-size: 10px;
+    text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-3);
+    margin-bottom: 4px; font-weight: 600;
+  }
+  .progress-bar {
+    height: 6px; background: var(--surface-3); border-radius: 999px; overflow: hidden;
+  }
+  .progress-bar > span { display: block; height: 100%; background: var(--accent); border-radius: 999px; }
+  .progress-bar.emerald > span { background: var(--emerald); }
+  .progress-bar.amber > span { background: var(--amber); }
+  .progress-bar.purple > span { background: var(--purple); }
+  .reno-card .foot {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding-top: 8px;
+    border-top: 1px solid var(--border);
+    font-variant-numeric: tabular-nums;
+  }
+  .reno-card .foot .cell { text-align: center; }
+  .reno-card .foot .k { font-size: 10px; color: var(--text-4); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 2px; }
+  .reno-card .foot .v { font-size: 12px; font-weight: 600; color: var(--text-2); }
+  .reno-card .foot .v.late { color: var(--red); }
+
+  /* Annotations */
+  .callout-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin: 20px 0 32px;
+  }
+  .callout {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+  }
+  .callout .k {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .callout .v { color: var(--text-2); }
+  .callout.amber { border-left-color: var(--amber); }
+  .callout.amber .k { color: var(--amber-text); }
+  .callout.emerald { border-left-color: var(--emerald); }
+  .callout.emerald .k { color: var(--emerald-text); }
+  .callout.purple { border-left-color: var(--purple); }
+  .callout.purple .k { color: var(--purple-text); }
+  .callout.red { border-left-color: var(--red); }
+  .callout.red .k { color: var(--red-text); }
+
+  /* Table for spec references */
+  table.spec {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    font-size: 13px;
+    margin: 16px 0;
+  }
+  table.spec th {
+    text-align: left;
+    padding: 10px 14px;
+    background: var(--surface-2);
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-3);
+    border-bottom: 1px solid var(--border);
+  }
+  table.spec td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    color: var(--text-2);
+  }
+  table.spec tr:last-child td { border-bottom: none; }
+  table.spec code { font-family: var(--font-mono); background: var(--surface-2); padding: 1px 6px; border-radius: 4px; font-size: 12px; color: var(--text); }
+
+  code.token, .token {
+    font-family: var(--font-mono);
+    background: var(--surface-2);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: var(--accent);
+  }
+
+  /* Login mockup */
+  .login-scene {
+    background: linear-gradient(135deg, var(--accent-soft), var(--surface-2));
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 480px;
+  }
+  .login-panel {
+    width: 100%; max-width: 400px;
+    background: var(--surface);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-lg);
+    padding: 32px;
+  }
+  .login-logo {
+    width: 56px; height: 56px; margin: 0 auto 12px;
+    background: var(--accent);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 24px;
+    box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+  }
+  .login-title { text-align: center; font-size: 22px; font-weight: 700; margin: 0 0 4px; }
+  .login-sub { text-align: center; font-size: 13px; color: var(--text-3); margin: 0 0 24px; }
+  .field { margin-bottom: 14px; }
+  .field label {
+    display: block; font-size: 11px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.05em; color: var(--text-3); margin-bottom: 5px;
+  }
+  .field input {
+    width: 100%; background: var(--surface); border: 1px solid var(--border-strong);
+    border-radius: 8px; padding: 9px 12px 9px 32px; font-size: 13px;
+    color: var(--text); font-family: inherit;
+  }
+  .field.with-icon { position: relative; }
+  .field.with-icon::before {
+    content: '';
+    position: absolute; left: 10px; top: 30px;
+    width: 16px; height: 16px; background: var(--text-4);
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M12 12a5 5 0 100-10 5 5 0 000 10zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M12 12a5 5 0 100-10 5 5 0 000 10zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z'/%3E%3C/svg%3E");
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    -webkit-mask-size: contain; mask-size: contain;
+  }
+  .login-submit {
+    width: 100%; background: var(--accent); color: white;
+    border: none; border-radius: 8px; padding: 10px;
+    font-weight: 600; font-size: 13px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    font-family: inherit;
+  }
+  .demo-accounts {
+    margin-top: 16px;
+    background: var(--surface-2);
+    border-radius: 12px;
+    padding: 14px;
+  }
+  .demo-accounts h4 {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.05em; color: var(--text-4); margin: 0 0 8px;
+  }
+  .demo-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 5px 8px; border-radius: 6px; font-size: 11px;
+  }
+  .demo-row:hover { background: var(--surface); }
+  .demo-row code {
+    font-family: var(--font-mono); background: var(--surface); padding: 2px 6px;
+    border-radius: 4px; font-size: 11px; color: var(--text-2);
+  }
+  .demo-row .role { color: var(--text-3); }
+
+  /* Renovation detail page */
+  .reno-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px 0;
+  }
+  .reno-header .top {
+    display: flex; align-items: center; gap: 12px; padding-bottom: 12px;
+  }
+  .reno-header .title-block { flex: 1; }
+  .reno-header h1 { font-size: 16px; font-weight: 700; margin: 0; }
+  .reno-header .location { font-size: 11px; color: var(--text-3); }
+  .reno-tabs { display: flex; gap: 2px; }
+  .reno-tab {
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-3);
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .reno-tab.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+
+  /* Card layouts */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-3);
+    margin: 0 0 12px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  /* SOW row layout */
+  .sow-phase {
+    background: var(--surface);
+    border-radius: var(--radius);
+    margin-bottom: 12px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .sow-phase.p1 { background: color-mix(in srgb, var(--purple-soft) 40%, var(--surface)); border-color: var(--purple); }
+  .sow-phase.p2 { background: color-mix(in srgb, var(--accent-soft) 40%, var(--surface)); border-color: var(--accent); }
+  .sow-phase.p3 { background: color-mix(in srgb, var(--emerald-soft) 40%, var(--surface)); border-color: var(--emerald); }
+  .sow-phase header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 16px;
+  }
+  .phase-badge {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .phase-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--accent); color: white; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    box-shadow: 0 0 0 2px var(--surface), 0 1px 3px rgba(0,0,0,0.1);
+  }
+  .p1 .phase-num { background: var(--purple); }
+  .p3 .phase-num { background: var(--emerald); }
+  .phase-name { font-size: 14px; font-weight: 700; color: var(--text); }
+  .p1 .phase-name { color: var(--purple-text); }
+  .p2 .phase-name { color: var(--accent); }
+  .p3 .phase-name { color: var(--emerald-text); }
+  .phase-stage {
+    font-size: 9px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.05em; color: var(--text-4);
+    background: var(--surface); padding: 2px 6px; border-radius: 4px;
+    margin-left: 6px;
+  }
+  .phase-desc { font-size: 11px; color: var(--text-3); }
+  .deadline-chip {
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--text-3);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .deadline-chip.late { background: var(--red-soft); color: var(--red-text); }
+  .deadline-chip.tight { background: var(--amber-soft); color: var(--amber-text); }
+  .deadline-chip.done { background: var(--emerald-soft); color: var(--emerald-text); }
+
+  .sow-table {
+    background: var(--surface);
+    border-radius: 8px;
+    margin: 0 12px 12px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    font-variant-numeric: tabular-nums;
+  }
+  .sow-header {
+    display: grid;
+    grid-template-columns: 32px 1fr 90px 90px 70px 40px;
+    padding: 8px 12px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-4);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface-2);
+  }
+  .sow-header .r { text-align: right; }
+  .sow-cat-row {
+    display: grid;
+    grid-template-columns: 1fr 90px 90px 70px 40px;
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    background: var(--surface-2);
+    color: var(--text-2);
+  }
+  .sow-cat-row .r { text-align: right; color: var(--text-3); font-weight: 500; }
+  .sow-cat-row .amber { color: var(--amber-text); }
+  .sow-cat-row .blue { color: var(--accent); }
+  .sow-row {
+    display: grid;
+    grid-template-columns: 32px 1fr 90px 90px 70px 40px;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    align-items: start;
+  }
+  .sow-row:last-child { border-bottom: none; }
+  .sow-row.done { background: color-mix(in srgb, var(--emerald-soft) 40%, transparent); }
+  .sow-row.half { background: color-mix(in srgb, var(--amber-soft) 40%, transparent); }
+  .sow-check {
+    width: 18px; height: 18px; border: 2px solid var(--border-strong);
+    border-radius: 4px; display: flex; align-items: center; justify-content: center;
+    margin-top: 2px;
+  }
+  .sow-check.done { background: var(--emerald); border-color: var(--emerald); color: white; }
+  .sow-check.half { background: var(--amber); border-color: var(--amber); color: white; }
+  .sow-desc .title {
+    font-weight: 500; color: var(--text);
+    display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  }
+  .sow-desc .title .done-text { text-decoration: line-through; color: var(--text-4); }
+  .sow-desc .note { font-size: 11px; color: var(--text-3); font-style: italic; margin-top: 2px; }
+  .sow-desc .meta {
+    font-size: 10px; color: var(--text-4); margin-top: 3px;
+    display: flex; gap: 6px; flex-wrap: wrap;
+  }
+  .sow-desc .meta .tag {
+    background: var(--surface-2); padding: 1px 6px; border-radius: 3px;
+    color: var(--text-3);
+  }
+  .sow-desc .meta .tag.assigned {
+    background: var(--accent-soft); color: var(--accent);
+  }
+  .sow-row .r { text-align: right; }
+  .sow-row .amber { color: var(--amber-text); font-weight: 500; }
+  .sow-row .blue { color: var(--accent); font-weight: 500; }
+  .sow-row .total { font-weight: 700; color: var(--text); }
+  .sow-row .muted { color: var(--text-4); }
+  .badge-half {
+    background: var(--amber); color: white; font-size: 9px; font-weight: 700;
+    padding: 1px 5px; border-radius: 3px; letter-spacing: 0.05em;
+  }
+  .badge-variance {
+    display: inline-flex; align-items: center; gap: 2px;
+    font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 3px;
+  }
+  .badge-variance.up { background: var(--red-soft); color: var(--red-text); }
+  .badge-variance.down { background: var(--emerald-soft); color: var(--emerald-text); }
+  .subtotal-row {
+    display: grid;
+    grid-template-columns: 32px 1fr 90px 90px 70px 40px;
+    padding: 10px 12px;
+    background: var(--surface-2);
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .subtotal-row .amber { color: var(--amber-text); text-align: right; }
+  .subtotal-row .blue { color: var(--accent); text-align: right; }
+  .subtotal-row .total { text-align: right; color: var(--text); }
+
+  /* Financial dashboard */
+  .metric-hero {
+    padding: 16px;
+    border-radius: var(--radius);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+  .metric-hero.emerald { background: var(--emerald-soft); border: 1px solid var(--emerald); }
+  .metric-hero.red { background: var(--red-soft); border: 1px solid var(--red); }
+  .metric-hero.amber { background: var(--amber-soft); border: 1px solid var(--amber); }
+  .metric-hero .label { font-size: 14px; font-weight: 700; color: var(--text); }
+  .metric-hero .sub { font-size: 12px; color: var(--text-2); margin-top: 4px; }
+  .metric-hero .big { font-size: 32px; font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+
+  /* AI chat */
+  .chat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .chat-header {
+    padding: 12px 16px;
+    background: linear-gradient(135deg, var(--accent-soft), var(--purple-soft));
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .chat-avatar {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 15px;
+  }
+  .chat-title { font-size: 13px; font-weight: 700; margin: 0; }
+  .chat-sub { font-size: 10px; color: var(--text-3); }
+  .chat-body { padding: 14px; max-height: 260px; overflow-y: auto; }
+  .chat-msg { display: flex; gap: 8px; margin-bottom: 12px; }
+  .chat-msg.user { flex-direction: row-reverse; }
+  .chat-msg .avatar {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--surface-3); display: flex; align-items: center;
+    justify-content: center; font-size: 12px; flex-shrink: 0;
+  }
+  .chat-msg.bot .avatar {
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    color: white;
+  }
+  .chat-msg .bubble {
+    max-width: 72%;
+    padding: 8px 12px;
+    border-radius: 12px;
+    background: var(--surface-2);
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.4;
+  }
+  .chat-msg.user .bubble { background: var(--accent); color: white; }
+  .chat-input {
+    padding: 10px 12px;
+    border-top: 1px solid var(--border);
+    display: flex; gap: 8px;
+  }
+  .chat-input input {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    padding: 7px 12px;
+    font-size: 13px;
+    color: var(--text-3);
+  }
+
+  /* Notifications */
+  .critical-alert {
+    background: var(--red);
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+  }
+  .critical-alert .icon { flex-shrink: 0; }
+  .critical-alert .title { font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em; }
+  .critical-alert .msg { font-size: 11px; opacity: 0.9; }
+
+  .notif-panel {
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    width: 360px;
+    overflow: hidden;
+  }
+  .notif-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .notif-item {
+    padding: 12px 16px;
+    display: flex; gap: 10px;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+  }
+  .notif-item:last-child { border-bottom: none; }
+  .notif-item.unread { background: color-mix(in srgb, var(--accent-soft) 40%, transparent); }
+  .notif-item .icon-circle {
+    width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 12px;
+  }
+  .notif-item.warning .icon-circle { background: var(--amber-soft); color: var(--amber-text); }
+  .notif-item.critical .icon-circle { background: var(--red-soft); color: var(--red-text); }
+  .notif-item.info .icon-circle { background: var(--accent-soft); color: var(--accent); }
+  .notif-item .n-title { font-weight: 700; font-size: 12px; }
+  .notif-item .n-msg { color: var(--text-3); font-size: 11px; margin-top: 2px; }
+  .notif-item .n-meta { color: var(--text-4); font-size: 10px; margin-top: 3px; }
+
+  /* Modal wrapper */
+  .modal-scrim {
+    background: rgba(15, 23, 42, 0.5);
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-panel {
+    background: var(--surface);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    width: 100%;
+    max-width: 640px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .modal-panel header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .modal-panel header h3 { margin: 0; font-size: 16px; font-weight: 700; }
+
+  /* Steps */
+  .step-nav {
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .step {
+    display: flex; align-items: center; gap: 6px; flex: 1;
+  }
+  .step .dot {
+    width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--surface-3); color: var(--text-4);
+    font-size: 11px; font-weight: 700;
+  }
+  .step.current .dot { background: var(--accent); color: white; }
+  .step.done .dot { background: var(--accent-soft); color: var(--accent); }
+  .step .label { font-size: 11px; color: var(--text-4); font-weight: 500; }
+  .step.current .label { color: var(--text); font-weight: 700; }
+  .step .connector { flex: 1; height: 1px; background: var(--border); margin: 0 6px; }
+  .step.done .connector { background: var(--accent-soft); }
+
+  /* Feature grid */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+    margin: 16px 0;
+  }
+  .feature-tile {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+  }
+  .feature-tile .num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .feature-tile h4 { margin: 0 0 4px; font-size: 14px; font-weight: 700; }
+  .feature-tile p { margin: 0; font-size: 12px; color: var(--text-3); line-height: 1.45; }
+  .feature-tile .tag {
+    display: inline-block; margin-top: 8px;
+    font-size: 10px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.05em; padding: 2px 8px;
+    background: var(--surface-2); color: var(--text-3); border-radius: 4px;
+  }
+
+  /* Data model */
+  .entity {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+  .entity h4 {
+    margin: 0 0 8px; font-size: 13px; font-weight: 700;
+    color: var(--accent); font-family: var(--font-mono);
+  }
+  .entity-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 4px 12px;
+    font-size: 11px;
+    font-family: var(--font-mono);
+    color: var(--text-2);
+  }
+  .entity-fields div { padding: 2px 0; }
+  .entity-fields div .k { color: var(--text-3); }
+  .entity-fields div .t { color: var(--purple-text); }
+
+  /* Theme toggle */
+  .theme-switcher {
+    position: fixed; top: 20px; right: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    color: var(--text-2);
+    z-index: 999;
+    font-family: inherit;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+
+  /* Utility */
+  .row { display: grid; gap: 14px; }
+  .row.two { grid-template-columns: 1fr 1fr; }
+  .row.three { grid-template-columns: 1fr 1fr 1fr; }
+  @media (max-width: 720px) {
+    .row.two, .row.three { grid-template-columns: 1fr; }
+    .kanban, .stats-grid { grid-template-columns: 1fr 1fr; }
+    .sow-header, .sow-row, .subtotal-row { grid-template-columns: 24px 1fr 70px 40px; }
+    .sow-header > *:nth-child(4), .sow-header > *:nth-child(5),
+    .sow-row > *:nth-child(4), .sow-row > *:nth-child(5),
+    .subtotal-row > *:nth-child(4), .subtotal-row > *:nth-child(5) { display: none; }
+  }
+  .anchor-nav {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--bg) 90%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 0;
+    margin-bottom: 20px;
+  }
+  .anchor-nav .inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 24px;
+    display: flex; gap: 4px; overflow-x: auto;
+    font-size: 12px; font-weight: 500;
+  }
+  .anchor-nav a {
+    padding: 4px 10px; border-radius: 999px;
+    color: var(--text-3); text-decoration: none;
+    white-space: nowrap;
+  }
+  .anchor-nav a:hover { background: var(--surface-2); color: var(--text); }
+
+  /* Photos section */
+  .media-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 6px;
+  }
+  .media-thumb {
+    aspect-ratio: 1;
+    background: var(--surface-2);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    color: var(--text-4);
+  }
+  .media-thumb.video { background: #1e293b; color: white; }
+
+  /* Receipt row */
+  .receipt-row {
+    display: flex; gap: 12px; padding: 10px;
+    background: var(--surface-2); border-radius: 8px;
+    align-items: flex-start; margin-bottom: 8px;
+  }
+  .receipt-row .icon-box {
+    width: 36px; height: 36px; border-radius: 6px;
+    background: var(--accent-soft); color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+  .receipt-row .info { flex: 1; }
+  .receipt-row .info .store { font-size: 13px; font-weight: 600; color: var(--accent); }
+  .receipt-row .info .meta { font-size: 11px; color: var(--text-3); }
+  .receipt-row .info .ai-summary {
+    background: var(--purple-soft); color: var(--purple-text);
+    padding: 4px 8px; border-radius: 4px;
+    font-size: 10px; margin-top: 6px;
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  .receipt-row .amount { font-weight: 700; font-size: 14px; }
+
+  /* Update timeline */
+  .update {
+    padding: 12px 0 12px 16px;
+    border-left: 2px solid var(--accent-soft);
+    margin-bottom: 10px;
+  }
+  .update .title { font-weight: 700; font-size: 13px; }
+  .update .meta { font-size: 11px; color: var(--text-3); margin: 3px 0; }
+  .update .msg { font-size: 12px; color: var(--text-2); }
+
+  /* Section divider */
+  .divider {
+    height: 1px; background: var(--border);
+    margin: 48px 0 24px;
+  }
+
+  /* Print / smaller */
+  @media (max-width: 900px) {
+    .app-header .brand p { display: none; }
+    .reno-tabs { overflow-x: auto; }
+  }
+</style>
+
+<button class="theme-switcher" id="themeToggle">☀ Light</button>
+
+<div class="anchor-nav">
+  <div class="inner">
+    <a href="#overview">Overview</a>
+    <a href="#tokens">Design system</a>
+    <a href="#login">Login</a>
+    <a href="#dashboard">Dashboard</a>
+    <a href="#new-project">New Project</a>
+    <a href="#overview-tab">Project Overview</a>
+    <a href="#sow-tab">SOW</a>
+    <a href="#finance-tab">Financials</a>
+    <a href="#photos-tab">Photos</a>
+    <a href="#updates-tab">Updates</a>
+    <a href="#notifications">Notifications</a>
+    <a href="#users">Users</a>
+    <a href="#morning">Morning Snapshot</a>
+    <a href="#data">Data model</a>
+    <a href="#features">Feature matrix</a>
+  </div>
+</div>
+
+<div class="container">
+
+  <section class="doc-hero" id="overview">
+    <h1>Rehab CRM — Complete UI &amp; Behavior Reference</h1>
+    <p class="lede">A pixel-and-structure spec of every screen, component, and interaction. Use this as the source of truth when re-implementing the app. Every mockup below is rendered live in HTML — hover, scroll, and toggle themes to inspect exact colors, spacing, and layout.</p>
+    <div class="meta">
+      <span class="chip">Renovation Management</span>
+      <span class="chip">React + Zustand + Tailwind</span>
+      <span class="chip">Auth · Notifications · AI</span>
+      <span class="chip">Light &amp; Dark themes</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       DESIGN SYSTEM
+       ============================================================ -->
+  <h2 class="section-title" id="tokens"><span class="num">01</span> Design System</h2>
+  <p class="section-desc">The whole product runs on a small token set. Match these exactly when replicating.</p>
+
+  <h3 class="sub">Semantic color roles</h3>
+  <div class="callout-strip">
+    <div class="callout"><div class="k">Accent (interactive)</div><div class="v"><code class="token">#2563eb</code> · blue-600 — primary CTAs, active tabs, links, section markers</div></div>
+    <div class="callout amber"><div class="k">Labor</div><div class="v"><code class="token">#f59e0b</code> · amber-500 — labor costs, "In progress" status, warnings</div></div>
+    <div class="callout emerald"><div class="k">Material / Budget OK</div><div class="v"><code class="token">#059669</code> · emerald-600 — material costs, on-budget, completed</div></div>
+    <div class="callout purple"><div class="k">Phase 1 / AI</div><div class="v"><code class="token">#7c3aed</code> · purple-600 — Phase 1 "Within Walls", AI features, receipts</div></div>
+    <div class="callout red"><div class="k">Critical</div><div class="v"><code class="token">#dc2626</code> · red-600 — over-budget, past-deadline, lien-waiver missing</div></div>
+    <div class="callout"><div class="k">Phase Blue / Phase Green</div><div class="v">Phase 2 uses accent blue; Phase 3 uses emerald. Each phase has a colored border + subtle tinted background.</div></div>
+  </div>
+
+  <h3 class="sub">Typography &amp; spacing</h3>
+  <table class="spec">
+    <thead><tr><th>Role</th><th>Size</th><th>Weight</th><th>Use</th></tr></thead>
+    <tbody>
+      <tr><td>Page title</td><td>16px</td><td>700</td><td>Renovation name in header</td></tr>
+      <tr><td>Section eyebrow</td><td>11px UPPERCASE 0.05em</td><td>600</td><td>Card titles, filter labels ("Payment Schedule")</td></tr>
+      <tr><td>Item description</td><td>13-14px</td><td>500</td><td>SOW items, financial entries, updates</td></tr>
+      <tr><td>Meta / hints</td><td>10-11px</td><td>500</td><td>Timestamps, secondary labels, breadcrumbs</td></tr>
+      <tr><td>Money / numbers</td><td>13-14px + <code>font-variant-numeric: tabular-nums</code></td><td>700</td><td>Every dollar amount aligns on the decimal</td></tr>
+      <tr><td>Border radius</td><td colspan="3">Small controls 6-8px · Cards 10-14px · Modals 18px · Chips 999px</td></tr>
+      <tr><td>Card padding</td><td colspan="3">Compact cards 12-14px · Main cards 16-20px · Modal content 20-24px</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ============================================================
+       LOGIN
+       ============================================================ -->
+  <h2 class="section-title" id="login"><span class="num">02</span> Login Page</h2>
+  <p class="section-desc">Entry point at <code class="token">/login</code>. Redirects to <code class="token">/</code> when authenticated. Includes demo accounts that one-click authenticate.</p>
+
+  <div class="mockup">
+    <div class="mockup-chrome"><div class="dots"><span></span><span></span><span></span></div><div class="url">rehab-crm.app/login</div></div>
+    <div class="mockup-body">
+      <div class="login-scene">
+        <div class="login-panel">
+          <div class="login-logo">🏗</div>
+          <h2 class="login-title">Rehab CRM</h2>
+          <p class="login-sub">Sign in to continue</p>
+          <div class="field with-icon">
+            <label>Username</label>
+            <input type="text" value="admin" readonly>
+          </div>
+          <div class="field with-icon">
+            <label>Password</label>
+            <input type="password" value="••••••" readonly>
+          </div>
+          <button class="login-submit">→ Sign In</button>
+          <div class="demo-accounts">
+            <h4>Demo accounts — click to sign in</h4>
+            <div class="demo-row"><code>admin / admin</code> <span class="role">Admin (all projects)</span></div>
+            <div class="demo-row"><code>manager / manager</code> <span class="role">Manager (Pursell + Clay)</span></div>
+            <div class="demo-row"><code>doolin / doolin</code> <span class="role">Contractor (Pursell only)</span></div>
+            <div class="demo-row"><code>eran / eran</code> <span class="role">Contractor (Clay only)</span></div>
+            <div class="demo-row"><code>viewer / viewer</code> <span class="role">Viewer (read-only)</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout-strip">
+    <div class="callout"><div class="k">Auth store</div><div class="v"><code class="token">useAuthStore</code> — Zustand persist to <code>rehab-crm-auth</code>. Users have username, password (plaintext demo), role, responsibilities, assignedProjectIds.</div></div>
+    <div class="callout"><div class="k">Roles</div><div class="v">admin · manager · contractor · viewer. Admin bypasses all permission checks.</div></div>
+    <div class="callout"><div class="k">Responsibilities</div><div class="v">finances · sow · progress · photos · documents. Tabs filter automatically.</div></div>
+  </div>
+
+  <!-- ============================================================
+       DASHBOARD
+       ============================================================ -->
+  <h2 class="section-title" id="dashboard"><span class="num">03</span> Dashboard</h2>
+  <p class="section-desc">The home screen. 4 top stats · search + view toggle · 3 Kanban columns (Active / In Progress / Completed). Cards route to project detail on click.</p>
+
+  <div class="mockup">
+    <div class="mockup-chrome"><div class="dots"><span></span><span></span><span></span></div><div class="url">rehab-crm.app/</div></div>
+    <div class="mockup-body">
+      <div class="app-shell">
+        <div class="app-header">
+          <div class="brand">
+            <div class="logo">🏗</div>
+            <div>
+              <h1>Rehab CRM</h1>
+              <p>Renovation Management</p>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="icon-btn" title="Theme">🌅 Auto</button>
+            <button class="icon-btn" title="Notifications">🔔<sup style="color:var(--red);font-size:10px;font-weight:800;">3</sup></button>
+            <button class="icon-btn" title="Settings">⚙</button>
+            <button class="icon-btn" title="Users">👥</button>
+            <div style="text-align:right;padding:0 8px;">
+              <div style="font-size:11px;font-weight:700;">Ohad Oz</div>
+              <div style="font-size:9px;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-4);">Admin</div>
+            </div>
+            <button class="btn-primary">+ New Project</button>
+            <button class="icon-btn" title="Sign out">⎋</button>
+          </div>
+        </div>
+
+        <div class="critical-alert">
+          <div class="icon">⚠</div>
+          <div style="flex:1;">
+            <div class="title">Over budget: 8 Pine Ridge Ct</div>
+            <div class="msg">Project is over budget by $1,240. Spent $39,240 of $38,000 budget.</div>
+          </div>
+          <button class="icon-btn" style="color:white;">✕</button>
+        </div>
+
+        <div class="app-body">
+          <div class="stats-grid">
+            <div class="stat-card blue"><div class="label">📁 Active Projects</div><div class="value">2</div><div class="sub">1 in progress</div></div>
+            <div class="stat-card emerald"><div class="label">💵 Total Spent</div><div class="value">$16,527</div><div class="sub">of $95,456 budget</div></div>
+            <div class="stat-card purple"><div class="label">📈 Avg. Completion</div><div class="value">32%</div><div class="sub">active projects</div></div>
+            <div class="stat-card green"><div class="label">✓ Completed</div><div class="value">1</div><div class="sub">finished projects</div></div>
+          </div>
+
+          <div class="filter-bar">
+            <div class="search">Search by name, address, or city...</div>
+            <div class="toggle-group">
+              <button class="active">⋮⋮⋮ Columns</button>
+              <button>▦ Grid</button>
+            </div>
+          </div>
+
+          <div class="kanban">
+            <div class="kanban-col active">
+              <header>
+                <span class="status-pill active">⏸ Active</span>
+                <span class="count-badge">1</span>
+              </header>
+              <div class="kanban-list">
+                <div class="reno-card">
+                  <div class="head">
+                    <div>
+                      <h4 class="title">1105 Pursell Ave Renovation</h4>
+                      <div class="location">📍 Dayton, OH</div>
+                    </div>
+                    <span class="status-pill active">Active</span>
+                  </div>
+                  <div class="progress-block">
+                    <div class="row"><span>Progress</span><span>0%</span></div>
+                    <div class="progress-bar"><span style="width:0%;"></span></div>
+                  </div>
+                  <div class="foot">
+                    <div class="cell"><div class="k">Spent</div><div class="v">$0</div></div>
+                    <div class="cell"><div class="k">Budget</div><div class="v">$48,921</div></div>
+                    <div class="cell"><div class="k">Days</div><div class="v">55d</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="kanban-col progress">
+              <header>
+                <span class="status-pill progress">🔨 In Progress</span>
+                <span class="count-badge">1</span>
+              </header>
+              <div class="kanban-list">
+                <div class="reno-card">
+                  <div class="head">
+                    <div>
+                      <h4 class="title">624 Clay St Refresh</h4>
+                      <div class="location">📍 Troy, OH</div>
+                    </div>
+                    <span class="status-pill progress">In Progress</span>
+                  </div>
+                  <div class="progress-block">
+                    <div class="row"><span>Progress</span><span>44%</span></div>
+                    <div class="progress-bar"><span style="width:44%;"></span></div>
+                  </div>
+                  <div class="foot">
+                    <div class="cell"><div class="k">Spent</div><div class="v">$4,878</div></div>
+                    <div class="cell"><div class="k">Budget</div><div class="v">$8,535</div></div>
+                    <div class="cell"><div class="k">Days</div><div class="v">36d</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="kanban-col done">
+              <header>
+                <span class="status-pill done">🏆 Completed</span>
+                <span class="count-badge">1</span>
+              </header>
+              <div class="kanban-list">
+                <div class="reno-card">
+                  <div class="head">
+                    <div>
+                      <h4 class="title">8 Pine Ridge Ct</h4>
+                      <div class="location">📍 Memphis, TN</div>
+                    </div>
+                    <span class="status-pill done">Completed</span>
+                  </div>
+                  <div class="progress-block">
+                    <div class="row"><span>Progress</span><span>100%</span></div>
+                    <div class="progress-bar emerald"><span style="width:100%;"></span></div>
+                  </div>
+                  <div class="foot">
+                    <div class="cell"><div class="k">Spent</div><div class="v">$39,240</div></div>
+                    <div class="cell"><div class="k">Budget</div><div class="v">$38,000</div></div>
+                    <div class="cell"><div class="k">Days</div><div class="v late">54d late</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout-strip">
+    <div class="callout"><div class="k">Auto-status</div><div class="v">When all non-optional SOW items reach 100%, status flips automatically to Completed. Uncheck an item → flips back to In Progress.</div></div>
+    <div class="callout amber"><div class="k">Role filtering</div><div class="v">Managers only see their <code>assignedProjectIds</code>. Contractors see only their assignments. Admin sees everything.</div></div>
+    <div class="callout red"><div class="k">Critical banner</div><div class="v">Sticky red banner appears when a visible project is over-budget or past-deadline. Dismissible for the day; reappears the next morning if still true.</div></div>
+  </div>
+
+  <!-- ============================================================
+       NEW PROJECT MODAL
+       ============================================================ -->
+  <h2 class="section-title" id="new-project"><span class="num">04</span> New Project Wizard</h2>
+  <p class="section-desc">Five-step modal: Basics → Team &amp; Financing → Phase Deadlines → Scope of Work → Review. The SOW step supports three input methods: AI file upload, paste text, or manual builder.</p>
+
+  <div class="mockup">
+    <div class="mockup-chrome"><div class="dots"><span></span><span></span><span></span></div><div class="url">Modal · step 4 of 5 · Scope of Work</div></div>
+    <div class="mockup-body">
+      <div class="modal-scrim" style="padding:20px;">
+        <div class="modal-panel">
+          <header>
+            <h3>New Renovation Project</h3>
+            <button class="icon-btn">✕</button>
+          </header>
+          <div class="step-nav">
+            <div class="step done"><div class="dot">1</div><div class="label">Basics</div><div class="connector"></div></div>
+            <div class="step done"><div class="dot">2</div><div class="label">Team</div><div class="connector"></div></div>
+            <div class="step done"><div class="dot">3</div><div class="label">Phases</div><div class="connector"></div></div>
+            <div class="step current"><div class="dot">4</div><div class="label">Scope of Work</div><div class="connector"></div></div>
+            <div class="step"><div class="dot">5</div><div class="label">Review</div></div>
+          </div>
+          <div style="padding: 20px;">
+            <div style="text-align:center;margin-bottom:16px;">
+              <h4 style="margin:0 0 4px;font-size:15px;">Add Scope of Work</h4>
+              <p style="margin:0;font-size:12px;color:var(--text-3);">Choose how to enter it:</p>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+              <div style="border:2px solid var(--purple);background:var(--purple-soft);border-radius:12px;padding:14px;">
+                <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">
+                  <span style="font-size:20px;">📤</span>
+                  <span style="font-size:9px;font-weight:800;background:var(--purple);color:white;padding:2px 5px;border-radius:3px;">AI</span>
+                </div>
+                <div style="font-weight:700;font-size:13px;">Upload SOW file</div>
+                <div style="font-size:11px;color:var(--text-3);margin-top:3px;">PDF, TXT, CSV. AI extracts items, phases, categories.</div>
+              </div>
+              <div style="border:2px solid var(--border);border-radius:12px;padding:14px;">
+                <span style="font-size:20px;">📋</span>
+                <div style="font-weight:700;font-size:13px;margin-top:6px;">Paste text</div>
+                <div style="font-size:11px;color:var(--text-3);margin-top:3px;">Copy/paste from email, Excel, or a quote.</div>
+              </div>
+              <div style="border:2px solid var(--border);border-radius:12px;padding:14px;">
+                <span style="font-size:20px;">＋</span>
+                <div style="font-weight:700;font-size:13px;margin-top:6px;">Build manually</div>
+                <div style="font-size:11px;color:var(--text-3);margin-top:3px;">Add items one by one.</div>
+              </div>
+            </div>
+
+            <div style="margin-top:16px; background:var(--emerald-soft); border: 1px solid var(--emerald); border-radius:8px; padding:10px; display:flex; gap:8px; font-size: 12px; color: var(--emerald-text);">
+              <span>✨</span>
+              <div><strong>AI extracted 66 items</strong> from your SOW (format: TPMD GC Agreement). Categories detected: Exterior, Kitchen, Upstairs Bath, Downstairs Bath, Floors +3 more. Review and adjust below before saving.</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:14px 20px;border-top:1px solid var(--border);background:var(--surface-2);">
+            <button class="btn-ghost">← Back</button>
+            <div style="display:flex;gap:8px;">
+              <button class="btn-secondary">Cancel</button>
+              <button class="btn-primary">Continue →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub">SOW Parser — supported formats</h3>
+  <table class="spec">
+    <thead><tr><th>Format</th><th>Detection cue</th><th>Extracts</th></tr></thead>
+    <tbody>
+      <tr><td>TPMD GC Agreement</td><td>Text "TPMD" or "Property Management Doctor"</td><td>4 columns: Description · Materials · Labor · Total</td></tr>
+      <tr><td>DSK Management</td><td>Text "DSK MANAGMENT"</td><td>5 columns: Description · Qty · Unit · Cost · Total</td></tr>
+      <tr><td>Phase-tagged</td><td><code>Phase 1</code> / <code>## Phase 2</code></td><td>Assigns phase to items until next marker</td></tr>
+      <tr><td>Tab-separated</td><td>Any line with <code>\t</code></td><td>Description &lt;tab&gt; Labor &lt;tab&gt; Material</td></tr>
+      <tr><td>Pipe-separated</td><td>Any line with <code>|</code></td><td>Description | Labor | Material</td></tr>
+      <tr><td>Category header</td><td>ALL CAPS or "Kitchen:" or "EXTERIOR (Est. 7 Days)"</td><td>Sets category for all subsequent items</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ============================================================
+       PROJECT OVERVIEW TAB
+       ============================================================ -->
+  <h2 class="section-title" id="overview-tab"><span class="num">05</span> Project Detail — Overview Tab</h2>
+  <p class="section-desc">Shows the high-level: status + summary, mini-dashboard, contractor + manager cards, payment schedule. Header has 5 tabs that gate by responsibility.</p>
+
+  <div class="mockup">
+    <div class="mockup-chrome"><div class="dots"><span></span><span></span><span></span></div><div class="url">rehab-crm.app/renovation/proj-pursell</div></div>
+    <div class="mockup-body">
+      <div class="app-shell">
+        <div class="reno-header">
+          <div class="top">
+            <button class="icon-btn">←</button>
+            <div class="title-block">
+              <h1>1105 Pursell Ave Renovation</h1>
+              <div class="location">📍 1105 Pursell Ave, Dayton, OH</div>
+            </div>
+            <button class="icon-btn" title="Delete">🗑</button>
+          </div>
+          <div class="reno-tabs">
+            <div class="reno-tab active">▦ Overview</div>
+            <div class="reno-tab">☰ Scope of Work</div>
+            <div class="reno-tab">$ Financials</div>
+            <div class="reno-tab">📷 Photos</div>
+            <div class="reno-tab">💬 Updates</div>
+          </div>
+        </div>
+
+        <div class="app-body" style="max-width: 900px; margin: 0 auto;">
+
+          <div class="card">
+            <div class="card-title">
+              <span>Project Summary</span>
+              <button class="icon-btn">✎</button>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;align-items:center;">
+              <span class="status-pill active">Active</span>
+              <span style="font-size:11px;color:var(--text-4);">Started Jun 8, 2026 · Deadline Jul 20, 2026</span>
+            </div>
+            <p style="font-size:13px;color:var(--text-2);line-height:1.5;margin:0;">
+              Full TPMD renovation under GC Agreement. 8 categories spanning exterior, interior paint, floors, kitchen, both bathrooms, bedrooms &amp; basement. Est. 26 working days, 6-week target completion. 4-phase payment schedule (25% each).
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Project Dashboard</div>
+            <div class="stats-grid" style="margin-bottom: 12px;">
+              <div class="stat-card emerald"><div class="label">💵 Total Spent</div><div class="value">$0</div><div class="sub">of $48,921</div></div>
+              <div class="stat-card blue"><div class="label">✓ Completion</div><div class="value">0%</div><div class="sub">0 of 66 items</div></div>
+              <div class="stat-card purple"><div class="label">📈 Remaining Budget</div><div class="value">$48,921</div><div class="sub">available</div></div>
+              <div class="stat-card"><div class="label">📅 Days to Deadline</div><div class="value">55d</div><div class="sub">Jul 20, 2026</div></div>
+            </div>
+            <div class="row two">
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-3);margin-bottom:4px;"><span>Overall Progress</span><span style="font-weight:700;">0%</span></div>
+                <div class="progress-bar" style="height:10px;"><span style="width:0%;"></span></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-3);margin-bottom:4px;"><span>Budget Used</span><span style="font-weight:700;">0%</span></div>
+                <div class="progress-bar emerald" style="height:10px;"><span style="width:0%;"></span></div>
+              </div>
+            </div>
+            <div class="row two" style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:32px;height:32px;border-radius:8px;background:var(--amber-soft);display:flex;align-items:center;justify-content:center;">🔧</div>
+                <div><div style="font-size:11px;color:var(--text-3);">Labor estimate</div><div style="font-size:14px;font-weight:700;">$25,178</div></div>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:32px;height:32px;border-radius:8px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;">📦</div>
+                <div><div style="font-size:11px;color:var(--text-3);">Material estimate</div><div style="font-size:14px;font-weight:700;">$23,743</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row two">
+            <div class="card">
+              <div class="card-title">👤 Project Manager</div>
+              <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;">
+                <div style="width:32px;height:32px;background:var(--accent-soft);border-radius:8px;display:flex;align-items:center;justify-content:center;">👤</div>
+                <div>
+                  <div style="font-size:11px;color:var(--text-4);">Name</div>
+                  <div style="font-weight:600;font-size:13px;">Ohad Oz</div>
+                  <div style="font-size:11px;color:var(--text-3);">Project Manager</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:10px;">
+                <div style="width:32px;height:32px;background:var(--surface-2);border-radius:8px;display:flex;align-items:center;justify-content:center;">✉</div>
+                <div>
+                  <div style="font-size:11px;color:var(--text-4);">Email</div>
+                  <a style="font-size:13px;color:var(--accent);text-decoration:none;">ohad.ozfam@gmail.com</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Contractor</div>
+              <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;">
+                <div style="width:32px;height:32px;background:var(--surface-2);border-radius:8px;display:flex;align-items:center;justify-content:center;">💼</div>
+                <div>
+                  <div style="font-size:11px;color:var(--text-4);">Company</div>
+                  <div style="font-weight:600;font-size:13px;">Doolin Home Remodeling LLC</div>
+                  <div style="font-size:11px;color:var(--text-3);">Charles Doolin</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;">
+                <div style="width:32px;height:32px;background:var(--surface-2);border-radius:8px;display:flex;align-items:center;justify-content:center;">🏛</div>
+                <div>
+                  <div style="font-size:11px;color:var(--text-4);">License</div>
+                  <div style="font-size:12px;">Ohio LLC Reg. No. 5423835</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:10px;">
+                <div style="width:32px;height:32px;background:var(--surface-2);border-radius:8px;display:flex;align-items:center;justify-content:center;">🛡</div>
+                <div>
+                  <div style="font-size:11px;color:var(--text-4);">Insurance</div>
+                  <div style="font-size:12px;">Cincinnati Insurance — Policy ENP 0753365 ($1M/$2M)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              <span>Payment Schedule</span>
+              <span style="font-weight:500;text-transform:none;letter-spacing:0;color:var(--text-3);">$0 of $48,921 paid (0%)</span>
+            </div>
+            <div class="progress-bar emerald" style="margin-bottom:12px;"><span style="width:0%;"></span></div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div style="display:flex;gap:10px;padding:10px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;align-items:flex-start;">
+                <div style="width:24px;height:24px;background:var(--surface);border:2px solid var(--border-strong);border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;">⏱</div>
+                <div style="flex:1;">
+                  <div style="display:flex;justify-content:space-between;">
+                    <div><span style="font-weight:700;font-size:11px;color:var(--text-4);">#1</span> <span style="font-weight:600;font-size:13px;">Deposit</span> <span style="font-size:10px;padding:1px 5px;border:1px solid var(--border);border-radius:3px;">25%</span></div>
+                    <div style="font-weight:700;font-size:13px;">$12,230</div>
+                  </div>
+                  <div style="font-size:11px;color:var(--text-3);margin-top:2px;">Due 5 days prior to work start</div>
+                </div>
+              </div>
+              <div style="display:flex;gap:10px;padding:10px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;align-items:flex-start;">
+                <div style="width:24px;height:24px;background:var(--surface);border:2px solid var(--border-strong);border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;">⏱</div>
+                <div style="flex:1;">
+                  <div style="display:flex;justify-content:space-between;">
+                    <div><span style="font-weight:700;font-size:11px;color:var(--text-4);">#2</span> <span style="font-weight:600;font-size:13px;">Painting complete</span> <span style="font-size:10px;padding:1px 5px;border:1px solid var(--border);border-radius:3px;">25%</span></div>
+                    <div style="font-weight:700;font-size:13px;">$12,230</div>
+                  </div>
+                  <div style="font-size:11px;color:var(--text-3);margin-top:2px;">After PM approval of all interior + exterior painting</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       SOW TAB
+       ============================================================ -->
+  <h2 class="section-title" id="sow-tab"><span class="num">06</span> Scope of Work Tab</h2>
+  <p class="section-desc">Items grouped into 3 fixed phases: Within Walls · Surface Work · Finishes. Each item is editable inline (name, qty, labor $, material $, category, note, vendor). Tri-state completion: 0% → 50% → 100%.</p>
+
+  <div class="mockup">
+    <div class="mockup-chrome"><div class="dots"><span></span><span></span><span></span></div><div class="url">Scope of Work — grouped by category</div></div>
+    <div class="mockup-body">
+      <div class="app-shell">
+        <div class="app-body">
+          <div style="display:flex;justify-content:space-between;margin-bottom:14px;">
+            <div>
+              <h3 style="margin:0;font-size:15px;">Scope of Work</h3>
+              <div style="font-size:11px;color:var(--text-3);">2 of 18 items completed, 1 at 50% · Est. total: $8,535 <span style="color:var(--red);font-weight:600;">(+$85 vs original $8,450)</span></div>
+            </div>
+            <button class="btn-secondary" style="font-size:11px;">🗂 Grouped by Category</button>
+          </div>
+
+          <div class="sow-phase p1">
+            <header>
+              <div class="phase-badge">
+                <div class="phase-num">1</div>
+                <div>
+                  <div><span class="phase-name">Within Walls</span><span class="phase-stage">Stage 1 of 3</span></div>
+                  <div class="phase-desc">Plumbing, Electrical, HVAC, Structural, rough-ins</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;">
+                <span class="deadline-chip">📆 Jun 22 · 27d left</span>
+                <div style="width:80px;"><div class="progress-bar" style="height:6px;"><span style="width:0%;background:var(--purple);"></span></div></div>
+                <span style="font-size:11px;font-weight:700;">0%</span>
+                <span style="font-size:11px;color:var(--text-4);">$0</span>
+                <span>▾</span>
+              </div>
+            </header>
+            <div class="sow-table">
+              <div class="sow-header">
+                <div></div><div>Item</div><div class="r">🔧 Labor</div><div class="r">📦 Material</div><div class="r">Total</div><div></div>
+              </div>
+              <div class="sow-cat-row">
+                <div>🗂 Plumbing <span style="color:var(--text-4);font-weight:400;">(1)</span></div>
+                <div class="r amber">$250</div><div class="r blue">$300</div><div class="r">$550</div><div></div>
+              </div>
+              <div class="sow-row">
+                <div class="sow-check"></div>
+                <div class="sow-desc">
+                  <div class="title">Install &amp; plumb sink</div>
+                  <div class="meta">
+                    <span class="tag">Plumbing</span>
+                    <span class="tag assigned">👤 Charles Doolin</span>
+                  </div>
+                </div>
+                <div class="r amber">$250</div><div class="r blue">$300</div><div class="r total">$550</div><div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sow-phase p2">
+            <header>
+              <div class="phase-badge">
+                <div class="phase-num">2</div>
+                <div>
+                  <div><span class="phase-name">Surface Work</span><span class="phase-stage">Stage 2 of 3</span></div>
+                  <div class="phase-desc">Drywall, Subfloor, Tile, Cabinets, Flooring, Trim</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;">
+                <span class="deadline-chip tight">📆 Jun 30 · 5d left</span>
+                <div style="width:80px;"><div class="progress-bar" style="height:6px;"><span style="width:44%;"></span></div></div>
+                <span style="font-size:11px;font-weight:700;">44%</span>
+                <span style="font-size:11px;color:var(--text-4);">$4,585</span>
+                <span>▾</span>
+              </div>
+            </header>
+            <div class="sow-table">
+              <div class="sow-header">
+                <div></div><div>Item</div><div class="r">🔧 Labor</div><div class="r">📦 Material</div><div class="r">Total</div><div></div>
+              </div>
+              <div class="sow-cat-row">
+                <div>🗂 Flooring <span style="color:var(--text-4);font-weight:400;">(3)</span></div>
+                <div class="r amber">$1,505</div><div class="r blue">$1,300</div><div class="r">$2,805</div><div></div>
+              </div>
+              <div class="sow-row done">
+                <div class="sow-check done">✓</div>
+                <div class="sow-desc">
+                  <div class="title"><span class="done-text">Remove sticky tiles &amp; prep for flooring</span></div>
+                  <div class="meta"><span>400 SF</span><span class="tag">Flooring</span></div>
+                </div>
+                <div class="r amber">$600</div><div class="r muted">—</div><div class="r total">$600</div><div></div>
+              </div>
+              <div class="sow-row half">
+                <div class="sow-check half">▨</div>
+                <div class="sow-desc">
+                  <div class="title">20MIL LVP including installation <span class="badge-half">50% DONE</span> <span class="badge-variance up">▲ +$85</span></div>
+                  <div class="note">Waterproof 20mil wear layer LVP</div>
+                  <div class="meta"><span>400 SF</span><span class="tag">Flooring</span></div>
+                </div>
+                <div class="r amber">$900</div><div class="r blue">$985</div><div class="r total">$1,885</div><div></div>
+              </div>
+              <div class="sow-row">
+                <div class="sow-check"></div>
+                <div class="sow-desc">
+                  <div class="title">Quarter rounds</div>
+                  <div class="meta"><span>350 LF</span><span class="tag">Flooring</span></div>
+                </div>
+                <div class="r amber">$405</div><div class="r blue">$315</div><div class="r total">$720</div><div></div>
+              </div>
+              <div class="subtotal-row">
+                <div></div><div>Subtotal</div><div class="amber">$3,565</div><div class="blue">$1,540</div><div class="total">$5,105</div><div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sow-phase p3">
+            <header>
+              <div class="phase-badge">
+                <div class="phase-num">3</div>
+                <div>
+                  <div><span class="phase-name">Finishes</span><span class="phase-stage">Stage 3 of 3</span></div>
+                  <div class="phase-desc">Paint, Fixtures, Appliances, Hardware, Landscaping</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;">
+                <span class="deadline-chip">📆 Jul 15 · 20d left</span>
+                <div style="width:80px;"><div class="progress-bar" style="height:6px;"><span style="width:0%;background:var(--emerald);"></span></div></div>
+                <span style="font-size:11px;font-weight:700;">0%</span>
+                <span style="font-size:11px;color:var(--text-4);">$2,530</span>
+                <span>▾</span>
+              </div>
+            </header>
+            <div class="sow-table">
+              <div class="sow-header">
+                <div></div><div>Item</div><div class="r">🔧 Labor</div><div class="r">📦 Material</div><div class="r">Total</div><div></div>
+              </div>
+              <div class="sow-row">
+                <div class="sow-check"></div>
+                <div class="sow-desc">
+                  <div class="title">Interior paint — light gray walls, white trims</div>
+                  <div class="note">Two coats, semigloss on trim</div>
+                  <div class="meta"><span>800 SF</span><span class="tag">Painting</span></div>
+                </div>
+                <div class="r amber">$1,840</div><div class="r muted">—</div><div class="r total">$1,840</div><div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub">Tri-state completion behavior</h3>
+  <div class="callout-strip">
+    <div class="callout"><div class="k">0% · Not started</div><div class="v">Empty checkbox <span style="display:inline-block;width:14px;height:14px;border:2px solid var(--text-4);border-radius:3px;vertical-align:-2px;"></span> · click once to advance</div></div>
+    <div class="callout amber"><div class="k">50% · Half done</div><div class="v">Amber dashed square <span style="display:inline-block;width:14px;height:14px;background:var(--amber);border-radius:3px;vertical-align:-2px;color:white;text-align:center;font-size:10px;line-height:14px;">▨</span> · row tinted amber · "50% DONE" badge</div></div>
+    <div class="callout emerald"><div class="k">100% · Completed</div><div class="v">Green check <span style="display:inline-block;width:14px;height:14px;background:var(--emerald);border-radius:3px;vertical-align:-2px;color:white;text-align:center;font-size:10px;line-height:14px;">✓</span> · row tinted green · text strikethrough</div></div>
+  </div>
+
+  <h3 class="sub">Inline item editor (fields)</h3>
+  <table class="spec">
+    <thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><code>description</code></td><td>text, required</td><td>The main item name</td></tr>
+      <tr><td><code>shortNote</code></td><td>text, optional</td><td>One-sentence explanation, shown as italic below description</td></tr>
+      <tr><td><code>category</code></td><td>text with datalist</td><td>32 preset suggestions (Kitchen, Master Bath, Plumbing, etc.). Free-form allowed.</td></tr>
+      <tr><td><code>quantity + unit</code></td><td>number + enum</td><td>Units: EA · SF · LF · UNIT · DAYS · LS</td></tr>
+      <tr><td><code>laborCost / materialCost</code></td><td>number ≥ 0</td><td>Original values are saved as baseline for variance display</td></tr>
+      <tr><td><code>vendor</code></td><td>text</td><td>Optional</td></tr>
+      <tr><td><code>assignedUserId</code></td><td>user pick</td><td>Triggers 2x/day photo-proof reminders</td></tr>
+      <tr><td><code>optional</code></td><td>boolean</td><td>Optional items shown in separate amber section; excluded from stats</td></tr>
+      <tr><td><code>notes</code></td><td>textarea</td><td>Long-form notes</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ============================================================
+       FINANCIALS TAB
+       ============================================================ -->
+  <h2 class="section-title" id="finance-tab"><span class="num">07</span> Financials Tab</h2>
+  <p class="section-desc">Budget banner · schedule vs. work progress · loan financing · true project cost · receipts · AI chat · transaction history with lien-waiver enforcement.</p>
+
+  <div class="mockup">
+    <div class="mockup-chrome"><div class="dots"><span></span><span></span><span></span></div><div class="url">Financials · 624 Clay St</div></div>
+    <div class="mockup-body">
+      <div class="app-shell">
+        <div class="app-body" style="max-width: 900px; margin: 0 auto;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:16px;">
+            <h3 style="margin:0;font-size:15px;">Financial Summary</h3>
+            <button class="btn-ghost" style="color:var(--accent);">+ Add Entry</button>
+          </div>
+
+          <div class="metric-hero emerald">
+            <div style="display:flex;gap:10px;">
+              <div style="color:var(--emerald);">✓</div>
+              <div>
+                <div class="label" style="color:var(--emerald-text);">On budget</div>
+                <div class="sub" style="color:var(--emerald-text);">Spent $4,878 of $8,535 budget <strong>(−$3,658 variance)</strong></div>
+              </div>
+            </div>
+            <div>
+              <div class="big">57%</div>
+              <div class="sub" style="text-align:right;">budget used</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              <span>⏱ Schedule <span style="color:var(--emerald-text);font-weight:500;text-transform:none;">(on track)</span></span>
+              <span style="font-weight:500;text-transform:none;color:var(--text-3);">40 of 46 days · 36d to deadline</span>
+            </div>
+            <div style="margin-bottom:8px;"><div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-3);margin-bottom:3px;"><span>Work Completed</span><span style="font-weight:700;">44%</span></div><div class="progress-bar" style="height:8px;"><span style="width:44%;"></span></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-3);margin-bottom:3px;"><span>Time Elapsed</span><span style="font-weight:700;">87%</span></div><div class="progress-bar emerald" style="height:8px;"><span style="width:87%;"></span></div></div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">💵 Loan Financing <span class="status-pill" style="background:var(--emerald-soft);color:var(--emerald-text);text-transform:none;">Interest-only</span></div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;font-size:13px;font-variant-numeric:tabular-nums;">
+              <div><div style="font-size:11px;color:var(--text-3);">Principal</div><div style="font-weight:700;">$40,000</div></div>
+              <div><div style="font-size:11px;color:var(--text-3);">Rate / Term</div><div style="font-weight:700;">9.5% · 12mo</div></div>
+              <div><div style="font-size:11px;color:var(--text-3);">Monthly Payment</div><div style="font-weight:700;color:var(--emerald-text);">$316.67</div></div>
+              <div><div style="font-size:11px;color:var(--text-3);">Total Interest</div><div style="font-weight:700;">$3,800</div></div>
+            </div>
+            <div style="margin-top:8px;font-size:10px;color:var(--text-4);font-style:italic;">Balloon: $40,000 principal is due at end of term (12 months).</div>
+          </div>
+
+          <div class="chat">
+            <div class="chat-header">
+              <div class="chat-avatar">✨</div>
+              <div>
+                <div class="chat-title">Finance Assistant</div>
+                <div class="chat-sub">Ask anything about budget, loan, schedule, or what's next</div>
+              </div>
+            </div>
+            <div class="chat-body">
+              <div class="chat-msg bot"><div class="avatar">🤖</div><div class="bubble">Hi! I'm your finance assistant for <strong>624 Clay St Refresh</strong>. Ask me about budget, schedule, loan, variance, or what to do next.</div></div>
+              <div class="chat-msg user"><div class="avatar">👤</div><div class="bubble">Am I on budget?</div></div>
+              <div class="chat-msg bot"><div class="avatar">🤖</div><div class="bubble">You've spent <strong>$4,878</strong> of your <strong>$8,535</strong> budget (57%). You have <strong>$3,658</strong> remaining. Breakdown so far: $4,878 labor · $0 materials. Total SOW estimate is $8,535, leaving $0 buffer against the budget.</div></div>
+            </div>
+            <div class="chat-input">
+              <input placeholder="Ask about your finances..." readonly>
+              <button class="icon-btn" style="background:var(--accent);color:white;">→</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              <span>🧾 Store Receipts <span style="font-weight:500;text-transform:none;color:var(--text-4);">(2 · 1 scanned · $186.42 total)</span></span>
+              <button class="btn-ghost">+ Upload Receipt</button>
+            </div>
+            <div class="receipt-row">
+              <div class="icon-box">🧾</div>
+              <div class="info">
+                <div class="store">The Home Depot</div>
+                <div class="meta">May 18, 2026 · Phase 2 · uploaded by Eran</div>
+                <div style="font-size:11px;color:var(--text-2);font-style:italic;margin-top:2px;">"2x4 lumber (10), Drywall sheets, Joint compound"</div>
+                <div class="ai-summary">✨ Detected The Home Depot receipt. Auto-extracted total: $186.42. Line items: 2x4 lumber (10), Drywall sheets, Joint compound.</div>
+              </div>
+              <div>
+                <div class="amount">$186.42</div>
+                <div style="font-size:9px;background:var(--emerald-soft);color:var(--emerald-text);padding:2px 6px;border-radius:3px;margin-top:4px;text-align:center;">✓ Scanned</div>
+              </div>
+            </div>
+            <div class="receipt-row">
+              <div class="icon-box">🧾</div>
+              <div class="info">
+                <div class="store">Receipt</div>
+                <div class="meta">May 20, 2026 · uploaded by Eran</div>
+              </div>
+              <div>
+                <button style="background:var(--purple);color:white;font-size:10px;padding:4px 8px;border-radius:4px;border:none;">✨ AI Scan</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              <span>📅 Transaction History (2)</span>
+            </div>
+            <div style="display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);align-items:center;">
+              <div style="width:24px;height:24px;border-radius:50%;background:var(--amber-soft);color:var(--amber-text);display:flex;align-items:center;justify-content:center;font-size:11px;">🔧</div>
+              <div style="flex:1;">
+                <div style="display:flex;gap:8px;align-items:center;">
+                  <span style="font-size:13px;">Deposit (50%) to contractor</span>
+                  <span style="background:var(--red-soft);color:var(--red-text);font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;">⚠ WAIVER NEEDED</span>
+                </div>
+                <div style="font-size:10px;color:var(--text-4);">May 13, 2026 · Eran / DSK · Phase 1</div>
+              </div>
+              <div style="font-size:13px;font-weight:700;">$4,267.50</div>
+            </div>
+            <div style="display:flex;gap:10px;padding:10px 0;align-items:center;">
+              <div style="width:24px;height:24px;border-radius:50%;background:var(--amber-soft);color:var(--amber-text);display:flex;align-items:center;justify-content:center;font-size:11px;">🔧</div>
+              <div style="flex:1;">
+                <div style="font-size:13px;">Electrical fixtures install</div>
+                <div style="font-size:10px;color:var(--text-4);">May 16, 2026 · Eran / DSK · Phase 3</div>
+              </div>
+              <div style="font-size:13px;font-weight:700;">$610.00</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub">Loan types</h3>
+  <table class="spec">
+    <thead><tr><th>Type</th><th>Monthly payment formula</th><th>Total cost</th><th>Balloon at end</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Interest-only</strong> (default for hard money rehab loans)</td><td><code>principal × APR / 100 / 12</code></td><td><code>monthly × months</code> (interest only)</td><td>Yes — full principal</td></tr>
+      <tr><td>Amortized P&amp;I</td><td>Standard PMT amortization formula</td><td><code>monthly × months − principal</code> (interest portion)</td><td>None</td></tr>
+      <tr><td>Manual</td><td>User-entered exact monthly payment</td><td><code>monthly × months − principal</code></td><td>Not tracked</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="sub">Lien waiver enforcement</h3>
+  <p class="section-desc">Any expense &gt; $600 in category <code class="token">labor</code> or <code class="token">material</code> auto-flags <code class="token">lienWaiverRequired: true</code>. Notification engine sends 1 daily reminder to the assigned contractor until <code class="token">lienWaiverUrl</code> is uploaded. Badge cycles: <span style="background:var(--red-soft);color:var(--red-text);font-size:10px;padding:1px 6px;border-radius:3px;">⚠ WAIVER NEEDED</span> → <span style="background:var(--emerald-soft);color:var(--emerald-text);font-size:10px;padding:1px 6px;border-radius:3px;">✓ WAIVER ON FILE</span></p>
+
+  <!-- ============================================================
+       PHOTOS TAB
+       ============================================================ -->
+  <h2 class="section-title" id="photos-tab"><span class="num">08</span> Photos Tab</h2>
+  <p class="section-desc">Two layers: <strong>per-item media</strong> (photos + videos attached to individual SOW items — proof-of-completion) and <strong>per-phase gallery</strong> (Drive folder link + uploaded photos organized by phase).</p>
+
+  <div class="mockup">
+    <div class="mockup-chrome"><div class="dots"><span></span><span></span><span></span></div><div class="url">Photos · organized by phase</div></div>
+    <div class="mockup-body">
+      <div class="app-shell">
+        <div class="app-body">
+          <div class="card">
+            <div class="card-title">
+              <span>Phase 1 — Within Walls · 4 photos</span>
+              <button class="btn-ghost">🔗 Drive Folder</button>
+            </div>
+            <div class="media-grid">
+              <div class="media-thumb">📷</div>
+              <div class="media-thumb">📷</div>
+              <div class="media-thumb video">▶</div>
+              <div class="media-thumb">📷</div>
+              <div class="media-thumb" style="border:2px dashed var(--border-strong);color:var(--text-4);">+</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">
+              <span>Phase 2 — Surface Work · 8 photos</span>
+              <button class="btn-ghost">🔗 Drive Folder</button>
+            </div>
+            <div class="media-grid">
+              <div class="media-thumb">📷</div>
+              <div class="media-thumb">📷</div>
+              <div class="media-thumb">📷</div>
+              <div class="media-thumb video">▶</div>
+              <div class="media-thumb">📷</div>
+              <div class="media-thumb">📷</div>
+              <div class="media-thumb">📷</div>
+              <div class="media-thumb">📷</div>
+              <div class="media-thumb" style="border:2px dashed var(--border-strong);color:var(--text-4);">+</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout-strip">
+    <div class="callout"><div class="k">Per-item media</div><div class="v">On any SOW item, expand to see media panel. Upload image or video by URL. Shown as thumbnails; delete on hover.</div></div>
+    <div class="callout amber"><div class="k">Proof enforcement</div><div class="v">Assigned items require ≥ 1 media file before reminders stop firing. Set on <code class="token">assignedUserId</code>.</div></div>
+    <div class="callout emerald"><div class="k">Drive integration</div><div class="v">Each phase has an optional <code class="token">driveLink</code> for the shared Google Drive folder.</div></div>
+  </div>
+
+  <!-- ============================================================
+       UPDATES TAB
+       ============================================================ -->
+  <h2 class="section-title" id="updates-tab"><span class="num">09</span> Updates Tab</h2>
+  <p class="section-desc">Timeline of updates from managers and contractors. Each update has title, message, optional phase tag, author with role. Posts flow chronologically.</p>
+
+  <div class="mockup">
+    <div class="mockup-chrome"><div class="dots"><span></span><span></span><span></span></div><div class="url">Updates · 1105 Pursell Ave</div></div>
+    <div class="mockup-body">
+      <div class="app-shell">
+        <div class="app-body">
+          <div class="card">
+            <div class="card-title">
+              <span>💬 Project Updates <span style="font-weight:500;text-transform:none;color:var(--text-4);">(3)</span></span>
+              <button class="btn-ghost">+ Post update</button>
+            </div>
+
+            <div class="update">
+              <div class="title">Walk-through complete <span style="background:var(--surface);border:1px solid var(--purple);color:var(--purple);font-size:10px;padding:1px 6px;border-radius:3px;text-transform:uppercase;">Phase 1</span></div>
+              <div class="meta"><strong>Charles Doolin</strong> · GC · 📅 May 22, 2026</div>
+              <div class="msg">Did final walk-through with owner. Permits filed Monday. Demo starts June 8.</div>
+            </div>
+            <div class="update">
+              <div class="title">Deposit received — kick-off scheduled</div>
+              <div class="meta"><strong>Ohad Oz</strong> · admin · 📅 May 15, 2026</div>
+              <div class="msg">$12,230 deposit wired to Doolin Home Remodeling. Kick-off meeting scheduled for June 5 at 9am on-site.</div>
+            </div>
+            <div class="update">
+              <div class="title">Contract signed</div>
+              <div class="meta"><strong>Ohad Oz</strong> · admin · 📅 May 10, 2026</div>
+              <div class="msg">TPMD GC Agreement executed by both parties. Insurance certificate verified. Ready to begin.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       NOTIFICATIONS
+       ============================================================ -->
+  <h2 class="section-title" id="notifications"><span class="num">10</span> Notifications</h2>
+  <p class="section-desc">Two surfaces: a <strong>bell dropdown</strong> (all pending items for the current user) and a <strong>critical banner</strong> (red, sticky, only for over-budget / past-deadline). Engine runs once per minute.</p>
+
+  <div class="row two">
+    <div class="mockup">
+      <div class="mockup-chrome"><div class="dots"><span></span><span></span><span></span></div><div class="url">Notification bell · dropdown</div></div>
+      <div class="mockup-body" style="padding: 20px; background: var(--bg);">
+        <div style="display:flex;justify-content:center;">
+          <div class="notif-panel">
+            <div class="notif-header">
+              <span style="font-weight:700;font-size:13px;">Notifications</span>
+              <span style="font-size:11px;color:var(--text-3);">4 active</span>
+            </div>
+            <div class="notif-item unread critical">
+              <div class="icon-circle">⚠</div>
+              <div style="flex:1;">
+                <div style="display:flex;justify-content:space-between;">
+                  <div class="n-title" style="color:var(--red-text);">Over budget: 8 Pine Ridge Ct</div>
+                  <span style="width:8px;height:8px;border-radius:50%;background:var(--accent);"></span>
+                </div>
+                <div class="n-msg">Spent $39,240 of $38,000 budget. $1,240 over.</div>
+                <div class="n-meta">8 Pine Ridge Ct · Jun 25, 8:14 AM</div>
+              </div>
+            </div>
+            <div class="notif-item unread critical">
+              <div class="icon-circle">📄</div>
+              <div style="flex:1;">
+                <div style="display:flex;justify-content:space-between;">
+                  <div class="n-title" style="color:var(--red-text);">Lien Waiver required</div>
+                  <span style="width:8px;height:8px;border-radius:50%;background:var(--accent);"></span>
+                </div>
+                <div class="n-msg">Expense "Deposit (50%)" of $4,267.50 requires a signed Lien Waiver.</div>
+                <div class="n-meta">624 Clay St · Jun 25, 7:00 AM</div>
+              </div>
+            </div>
+            <div class="notif-item warning">
+              <div class="icon-circle">📸</div>
+              <div style="flex:1;">
+                <div class="n-title" style="color:var(--amber-text);">Upload completion photos</div>
+                <div class="n-msg">"Install &amp; plumb sink" needs proof photos. Upload an image or video to confirm.</div>
+                <div class="n-meta">1105 Pursell Ave · Jun 25, 6:00 AM</div>
+              </div>
+            </div>
+            <div class="notif-item warning">
+              <div class="icon-circle">📸</div>
+              <div style="flex:1;">
+                <div class="n-title" style="color:var(--amber-text);">Upload completion photos</div>
+                <div class="n-msg">"Kitchen cabinets + island" needs proof photos.</div>
+                <div class="n-meta">1105 Pursell Ave · Jun 24, 6:00 PM</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mockup">
+      <div class="mockup-chrome"><div class="dots"><span></span><span></span><span></span></div><div class="url">Critical alert banner (always visible)</div></div>
+      <div class="mockup-body">
+        <div class="critical-alert">
+          <div class="icon" style="font-size:18px;">⚠</div>
+          <div style="flex:1;">
+            <div class="title">Over budget: 8 Pine Ridge Ct</div>
+            <div class="msg">Project is over budget by $1,240. Spent $39,240 of $38,000 budget.</div>
+          </div>
+          <button style="background:transparent;color:white;font-size:11px;border:none;text-decoration:underline;cursor:pointer;">Open project →</button>
+          <button class="icon-btn" style="color:white;">✕</button>
+        </div>
+        <div class="critical-alert" style="margin-top:0;">
+          <div class="icon" style="font-size:18px;">⚠</div>
+          <div style="flex:1;">
+            <div class="title">Past deadline: 624 Clay St Refresh</div>
+            <div class="msg">Project is 12 days past its deadline (2026-06-13). Completion: 44%.</div>
+          </div>
+          <button style="background:transparent;color:white;font-size:11px;border:none;text-decoration:underline;cursor:pointer;">Open project →</button>
+          <button class="icon-btn" style="color:white;">✕</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub">Notification triggers</h3>
+  <table class="spec">
+    <thead><tr><th>Kind</th><th>Recipient</th><th>Frequency</th><th>Resolved when</th></tr></thead>
+    <tbody>
+      <tr><td><code>item-proof-needed</code></td><td>Item's <code>assignedUserId</code></td><td>2× per day (every 12h)</td><td>Item is marked completed AND has ≥ 1 media file</td></tr>
+      <tr><td><code>lien-waiver-needed</code></td><td>Entry's <code>contractorUserId</code>, or contractors on the project, or manager</td><td>1× per day</td><td><code>lienWaiverUrl</code> is uploaded</td></tr>
+      <tr><td><code>budget-overrun</code></td><td>Admin + project's managers</td><td>1× per day, red banner</td><td><code>totalSpent ≤ totalBudget</code></td></tr>
+      <tr><td><code>schedule-overrun</code></td><td>Admin + project's managers</td><td>1× per day, red banner</td><td><code>daysLeft ≥ 0</code> OR project is Completed</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ============================================================
+       USER MANAGEMENT
+       ============================================================ -->
+  <h2 class="section-title" id="users"><span class="num">11</span> User Management</h2>
+  <p class="section-desc">Admin-only modal. Create/edit/delete users. Every user has: username · password · name · email · phone · role · responsibilities (checkboxes) · assigned projects.</p>
+
+  <div class="mockup">
+    <div class="mockup-chrome"><div class="dots"><span></span><span></span><span></span></div><div class="url">Admin · User Management</div></div>
+    <div class="mockup-body">
+      <div class="modal-scrim" style="padding: 24px;">
+        <div class="modal-panel">
+          <header>
+            <h3>👤 User Management</h3>
+            <button class="icon-btn">✕</button>
+          </header>
+          <div style="padding: 18px 20px;">
+            <div style="display:flex;justify-content:space-between;margin-bottom:12px;">
+              <span style="font-size:12px;color:var(--text-3);">5 users in the system</span>
+              <button class="btn-primary" style="font-size:11px;padding:5px 10px;">+ New User</button>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div style="display:flex;gap:12px;padding:12px;background:var(--surface-2);border-radius:8px;">
+                <div style="width:36px;height:36px;background:var(--accent-soft);color:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;">OO</div>
+                <div style="flex:1;">
+                  <div style="display:flex;gap:6px;align-items:center;">
+                    <span style="font-weight:700;font-size:13px;">Ohad Oz</span>
+                    <span style="font-size:9px;font-weight:700;text-transform:uppercase;background:var(--surface-3);padding:1px 5px;border-radius:3px;">Admin</span>
+                    <span style="font-size:9px;font-weight:700;text-transform:uppercase;background:var(--accent-soft);color:var(--accent);padding:1px 5px;border-radius:3px;">YOU</span>
+                  </div>
+                  <div style="font-size:11px;color:var(--text-3);">@admin · ohad.ozfam@gmail.com</div>
+                  <div style="display:flex;gap:4px;margin-top:4px;flex-wrap:wrap;">
+                    <span style="font-size:9px;padding:1px 5px;background:var(--surface);border:1px solid var(--border);border-radius:3px;color:var(--text-3);">Finances</span>
+                    <span style="font-size:9px;padding:1px 5px;background:var(--surface);border:1px solid var(--border);border-radius:3px;color:var(--text-3);">SOW</span>
+                    <span style="font-size:9px;padding:1px 5px;background:var(--surface);border:1px solid var(--border);border-radius:3px;color:var(--text-3);">Progress</span>
+                    <span style="font-size:9px;padding:1px 5px;background:var(--surface);border:1px solid var(--border);border-radius:3px;color:var(--text-3);">Photos</span>
+                    <span style="font-size:9px;padding:1px 5px;background:var(--surface);border:1px solid var(--border);border-radius:3px;color:var(--text-3);">Documents</span>
+                  </div>
+                </div>
+              </div>
+
+              <div style="display:flex;gap:12px;padding:12px;background:var(--surface-2);border-radius:8px;">
+                <div style="width:36px;height:36px;background:var(--accent-soft);color:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;">CD</div>
+                <div style="flex:1;">
+                  <div style="display:flex;gap:6px;align-items:center;">
+                    <span style="font-weight:700;font-size:13px;">Charles Doolin</span>
+                    <span style="font-size:9px;font-weight:700;text-transform:uppercase;background:var(--surface-3);padding:1px 5px;border-radius:3px;">Contractor</span>
+                  </div>
+                  <div style="font-size:11px;color:var(--text-3);">@doolin · doolinhomeremodeling@gmail.com</div>
+                  <div style="display:flex;gap:4px;margin-top:4px;flex-wrap:wrap;">
+                    <span style="font-size:9px;padding:1px 5px;background:var(--surface);border:1px solid var(--border);border-radius:3px;color:var(--text-3);">SOW</span>
+                    <span style="font-size:9px;padding:1px 5px;background:var(--surface);border:1px solid var(--border);border-radius:3px;color:var(--text-3);">Progress</span>
+                    <span style="font-size:9px;padding:1px 5px;background:var(--surface);border:1px solid var(--border);border-radius:3px;color:var(--text-3);">Photos</span>
+                    <span style="font-size:9px;padding:1px 5px;background:var(--surface);border:1px solid var(--border);border-radius:3px;color:var(--text-3);">Documents</span>
+                  </div>
+                </div>
+              </div>
+
+              <div style="display:flex;gap:12px;padding:12px;background:var(--surface-2);border-radius:8px;">
+                <div style="width:36px;height:36px;background:var(--accent-soft);color:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;">E</div>
+                <div style="flex:1;">
+                  <div style="display:flex;gap:6px;align-items:center;">
+                    <span style="font-weight:700;font-size:13px;">Eran</span>
+                    <span style="font-size:9px;font-weight:700;text-transform:uppercase;background:var(--surface-3);padding:1px 5px;border-radius:3px;">Contractor</span>
+                  </div>
+                  <div style="font-size:11px;color:var(--text-3);">@eran · DSK Management</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub">Role permission matrix</h3>
+  <table class="spec">
+    <thead><tr><th>Role</th><th>Sees projects</th><th>Default responsibilities</th><th>Can</th></tr></thead>
+    <tbody>
+      <tr><td>Admin</td><td>All</td><td>Everything</td><td>Manage users · delete projects · access all tabs</td></tr>
+      <tr><td>Manager</td><td>Their <code>assignedProjectIds</code></td><td>Finances · SOW · Progress</td><td>Edit SOW, finances, milestones, updates</td></tr>
+      <tr><td>Contractor</td><td>Their <code>assignedProjectIds</code></td><td>SOW · Progress · Photos · Documents</td><td>Mark items complete, upload media, upload lien waivers</td></tr>
+      <tr><td>Viewer</td><td>All (read-only)</td><td>Finances · Progress</td><td>View only — no edit buttons rendered</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ============================================================
+       MORNING SNAPSHOT
+       ============================================================ -->
+  <h2 class="section-title" id="morning"><span class="num">12</span> Morning Snapshot</h2>
+  <p class="section-desc">Opt-in dialog that appears once daily after user-configured time (default 08:00). Shows totals, risk items, per-project status, and last week's updates.</p>
+
+  <div class="mockup">
+    <div class="mockup-chrome"><div class="dots"><span></span><span></span><span></span></div><div class="url">Morning Snapshot · shows once per day</div></div>
+    <div class="mockup-body">
+      <div class="modal-scrim" style="padding: 30px;">
+        <div class="modal-panel" style="max-width: 560px;">
+          <header style="background: linear-gradient(135deg, #fef3c7, #fed7aa); border-bottom-color: transparent;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="width:40px;height:40px;background:linear-gradient(135deg,#fbbf24,#f97316);border-radius:12px;display:flex;align-items:center;justify-content:center;color:white;font-size:18px;">☀</div>
+              <div>
+                <h3>Good morning, Ohad</h3>
+                <div style="font-size:11px;color:var(--text-3);">Wednesday, June 25</div>
+              </div>
+            </div>
+            <button class="icon-btn">✕</button>
+          </header>
+          <div style="padding: 18px 20px;">
+            <p style="margin:0 0 14px;font-size:13px;color:var(--text-2);">Here's where you stand across 2 active projects this morning.</p>
+
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;">
+              <div style="background:var(--surface-2);border-radius:8px;padding:10px;">
+                <div style="font-size:10px;text-transform:uppercase;font-weight:700;color:var(--text-3);">💵 Spent</div>
+                <div style="font-size:16px;font-weight:700;font-variant-numeric:tabular-nums;">$16,527</div>
+                <div style="font-size:10px;color:var(--text-3);">of $95,456</div>
+              </div>
+              <div style="background:var(--surface-2);border-radius:8px;padding:10px;">
+                <div style="font-size:10px;text-transform:uppercase;font-weight:700;color:var(--text-3);">📁 Active</div>
+                <div style="font-size:16px;font-weight:700;">2</div>
+                <div style="font-size:10px;color:var(--text-3);">renovations</div>
+              </div>
+              <div style="background:var(--surface-2);border-radius:8px;padding:10px;">
+                <div style="font-size:10px;text-transform:uppercase;font-weight:700;color:var(--text-3);">📈 This Week</div>
+                <div style="font-size:16px;font-weight:700;font-variant-numeric:tabular-nums;">$610</div>
+                <div style="font-size:10px;color:var(--text-3);">1 transaction</div>
+              </div>
+              <div style="background:var(--surface-2);border-radius:8px;padding:10px;">
+                <div style="font-size:10px;text-transform:uppercase;font-weight:700;color:var(--text-3);">⚠ Risk</div>
+                <div style="font-size:16px;font-weight:700;">1</div>
+                <div style="font-size:10px;color:var(--text-3);">needs attention</div>
+              </div>
+            </div>
+
+            <div style="background:var(--red-soft);border:1px solid var(--red);border-radius:8px;padding:10px;margin-bottom:14px;">
+              <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;color:var(--red-text);font-weight:700;font-size:12px;">⚠ Needs attention</div>
+              <ul style="margin:0;padding-left:20px;font-size:11px;color:var(--red-text);">
+                <li>💸 <strong>8 Pine Ridge Ct</strong> is over budget</li>
+              </ul>
+            </div>
+
+            <div>
+              <div style="font-size:10px;text-transform:uppercase;font-weight:700;color:var(--text-3);margin-bottom:8px;">Project Status</div>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <div style="display:flex;gap:10px;padding:8px;background:var(--surface-2);border-radius:6px;align-items:center;">
+                  <div style="width:28px;height:28px;background:var(--accent-soft);color:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;">🔨</div>
+                  <div style="flex:1;">
+                    <div style="font-weight:600;font-size:12px;">1105 Pursell Ave Renovation</div>
+                    <div style="font-size:10px;color:var(--text-3);">0% done · $0 of $48,921 · 55d left</div>
+                  </div>
+                </div>
+                <div style="display:flex;gap:10px;padding:8px;background:var(--surface-2);border-radius:6px;align-items:center;">
+                  <div style="width:28px;height:28px;background:var(--accent-soft);color:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;">🔨</div>
+                  <div style="flex:1;">
+                    <div style="font-weight:600;font-size:12px;">624 Clay St Refresh</div>
+                    <div style="font-size:10px;color:var(--text-3);">44% done · $4,878 of $8,535 · 36d left</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="padding: 12px 20px; border-top: 1px solid var(--border); display:flex;justify-content:space-between;font-size:11px;">
+            <button class="btn-ghost">Don't show again</button>
+            <button class="btn-primary" style="font-size:12px;">Got it</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       DATA MODEL
+       ============================================================ -->
+  <h2 class="section-title" id="data"><span class="num">13</span> Data Model</h2>
+  <p class="section-desc">Everything persists in <code class="token">localStorage</code> via Zustand persist. Stores: renovations, auth, notifications, contacts, settings, theme.</p>
+
+  <div class="entity">
+    <h4>Renovation</h4>
+    <div class="entity-fields">
+      <div><span class="k">id</span> <span class="t">string</span></div>
+      <div><span class="k">name</span> <span class="t">string</span></div>
+      <div><span class="k">address, city, state</span> <span class="t">string</span></div>
+      <div><span class="k">size?</span> <span class="t">number</span></div>
+      <div><span class="k">startDate, deadline</span> <span class="t">ISO date</span></div>
+      <div><span class="k">status</span> <span class="t">'active' | 'in-progress' | 'completed'</span></div>
+      <div><span class="k">totalBudget</span> <span class="t">number</span></div>
+      <div><span class="k">contractor?</span> <span class="t">Contractor</span></div>
+      <div><span class="k">manager?</span> <span class="t">ProjectManager</span></div>
+      <div><span class="k">loan?</span> <span class="t">LoanInfo</span></div>
+      <div><span class="k">phases</span> <span class="t">Phase[]</span></div>
+      <div><span class="k">sowItems</span> <span class="t">SOWItem[]</span></div>
+      <div><span class="k">paymentMilestones?</span> <span class="t">PaymentMilestone[]</span></div>
+      <div><span class="k">financialEntries</span> <span class="t">FinancialEntry[]</span></div>
+      <div><span class="k">receipts?</span> <span class="t">Receipt[]</span></div>
+      <div><span class="k">updates?</span> <span class="t">ProjectUpdate[]</span></div>
+      <div><span class="k">summary</span> <span class="t">string</span></div>
+      <div><span class="k">createdAt, updatedAt</span> <span class="t">ISO</span></div>
+    </div>
+  </div>
+
+  <div class="entity">
+    <h4>SOWItem</h4>
+    <div class="entity-fields">
+      <div><span class="k">id, description</span> <span class="t">string</span></div>
+      <div><span class="k">shortNote?</span> <span class="t">string</span></div>
+      <div><span class="k">phase</span> <span class="t">1 | 2 | 3</span></div>
+      <div><span class="k">category?</span> <span class="t">string</span></div>
+      <div><span class="k">assignedUserId?</span> <span class="t">string</span></div>
+      <div><span class="k">approvedAt?</span> <span class="t">ISO</span></div>
+      <div><span class="k">quantity?</span> <span class="t">number</span></div>
+      <div><span class="k">unit?</span> <span class="t">'EA'|'SF'|'LF'|'UNIT'|'DAYS'|'LS'</span></div>
+      <div><span class="k">materialCost, laborCost</span> <span class="t">number</span></div>
+      <div><span class="k">originalMaterialCost?</span> <span class="t">number</span></div>
+      <div><span class="k">originalLaborCost?</span> <span class="t">number</span></div>
+      <div><span class="k">completed</span> <span class="t">boolean</span></div>
+      <div><span class="k">completionPct?</span> <span class="t">0 | 50 | 100</span></div>
+      <div><span class="k">optional?</span> <span class="t">boolean</span></div>
+      <div><span class="k">vendor?</span> <span class="t">string</span></div>
+      <div><span class="k">comments?</span> <span class="t">ItemComment[]</span></div>
+      <div><span class="k">media?</span> <span class="t">MediaItem[]</span></div>
+      <div><span class="k">notes?</span> <span class="t">string</span></div>
+    </div>
+  </div>
+
+  <div class="entity">
+    <h4>FinancialEntry</h4>
+    <div class="entity-fields">
+      <div><span class="k">id</span> <span class="t">string</span></div>
+      <div><span class="k">date</span> <span class="t">ISO date</span></div>
+      <div><span class="k">amount</span> <span class="t">number</span></div>
+      <div><span class="k">description</span> <span class="t">string</span></div>
+      <div><span class="k">category</span> <span class="t">'labor'|'material'|'loan'|'other'</span></div>
+      <div><span class="k">phase?</span> <span class="t">1|2|3</span></div>
+      <div><span class="k">vendor?</span> <span class="t">string</span></div>
+      <div><span class="k">contractorUserId?</span> <span class="t">string</span></div>
+      <div><span class="k">lienWaiverRequired?</span> <span class="t">boolean</span></div>
+      <div><span class="k">lienWaiverUrl?</span> <span class="t">string</span></div>
+      <div><span class="k">lienWaiverReceivedAt?</span> <span class="t">ISO</span></div>
+    </div>
+  </div>
+
+  <div class="entity">
+    <h4>LoanInfo</h4>
+    <div class="entity-fields">
+      <div><span class="k">enabled</span> <span class="t">boolean</span></div>
+      <div><span class="k">loanType?</span> <span class="t">'amortized'|'interest-only'|'manual'</span></div>
+      <div><span class="k">principal</span> <span class="t">number</span></div>
+      <div><span class="k">interestRate</span> <span class="t">number (APR %)</span></div>
+      <div><span class="k">termMonths</span> <span class="t">number</span></div>
+      <div><span class="k">monthlyPayment</span> <span class="t">number</span></div>
+      <div><span class="k">startDate?</span> <span class="t">ISO date</span></div>
+    </div>
+  </div>
+
+  <div class="entity">
+    <h4>User</h4>
+    <div class="entity-fields">
+      <div><span class="k">id, username, password</span> <span class="t">string</span></div>
+      <div><span class="k">name</span> <span class="t">string</span></div>
+      <div><span class="k">email?, phone?</span> <span class="t">string</span></div>
+      <div><span class="k">role</span> <span class="t">'admin'|'manager'|'contractor'|'viewer'</span></div>
+      <div><span class="k">responsibilities?</span> <span class="t">Responsibility[]</span></div>
+      <div><span class="k">assignedProjectIds?</span> <span class="t">string[]</span></div>
+      <div><span class="k">contractorCompany?</span> <span class="t">string</span></div>
+    </div>
+  </div>
+
+  <div class="entity">
+    <h4>AppNotification</h4>
+    <div class="entity-fields">
+      <div><span class="k">id, userId</span> <span class="t">string</span></div>
+      <div><span class="k">kind</span> <span class="t">'item-proof-needed'|'lien-waiver-needed'|'budget-overrun'|'schedule-overrun'|'assigned'|'general'</span></div>
+      <div><span class="k">severity</span> <span class="t">'info'|'warning'|'critical'</span></div>
+      <div><span class="k">title, message</span> <span class="t">string</span></div>
+      <div><span class="k">renovationId?, relatedItemId?</span> <span class="t">string</span></div>
+      <div><span class="k">createdAt, lastFiredAt?</span> <span class="t">ISO</span></div>
+      <div><span class="k">readAt?, dismissedAt?</span> <span class="t">ISO</span></div>
+      <div><span class="k">resolved?</span> <span class="t">boolean</span></div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       FEATURE MATRIX
+       ============================================================ -->
+  <h2 class="section-title" id="features"><span class="num">14</span> Feature Matrix</h2>
+  <p class="section-desc">Every user-facing feature in the app, in one table. Use as a checklist for replicating.</p>
+
+  <div class="feature-grid">
+    <div class="feature-tile"><div class="num">F01</div><h4>Auth &amp; users</h4><p>Username/password login. Admin can create/edit/delete users, assign responsibilities and projects.</p><span class="tag">Admin</span></div>
+    <div class="feature-tile"><div class="num">F02</div><h4>Kanban dashboard</h4><p>Projects grouped by status. Auto-promoted to Completed when all items reach 100%.</p><span class="tag">All roles</span></div>
+    <div class="feature-tile"><div class="num">F03</div><h4>5-step new project wizard</h4><p>Basics · Team · Phases · SOW · Review. Full validation, back navigation, review step.</p><span class="tag">Admin + Manager</span></div>
+    <div class="feature-tile"><div class="num">F04</div><h4>Address parsing</h4><p>Paste "Street, City, State" → auto-fills city + state. Datalist of previous addresses.</p><span class="tag">New project</span></div>
+    <div class="feature-tile"><div class="num">F05</div><h4>Contact address book</h4><p>Auto-saves contractors and managers. Dropdown to pick prior contact → auto-fills all fields.</p><span class="tag">Team step</span></div>
+    <div class="feature-tile"><div class="num">F06</div><h4>SOW parser (AI upload)</h4><p>Upload PDF/TXT/CSV of SOW. Auto-detects TPMD, DSK, tab, pipe formats. Extracts items, phases, categories.</p><span class="tag">AI</span></div>
+    <div class="feature-tile"><div class="num">F07</div><h4>3-phase SOW</h4><p>Fixed: Within Walls, Surface Work, Finishes. Grouped by category. Per-phase deadlines.</p><span class="tag">SOW tab</span></div>
+    <div class="feature-tile"><div class="num">F08</div><h4>Tri-state completion</h4><p>0% → 50% → 100% cycle. Row background tints. "50% DONE" badge for partial.</p><span class="tag">SOW tab</span></div>
+    <div class="feature-tile"><div class="num">F09</div><h4>Auto-hide material column</h4><p>If no item has material cost, the entire Material column is hidden and Item expands.</p><span class="tag">SOW tab</span></div>
+    <div class="feature-tile"><div class="num">F10</div><h4>Per-item media &amp; comments</h4><p>Photos/videos + threaded comments attached to each SOW line.</p><span class="tag">SOW tab</span></div>
+    <div class="feature-tile"><div class="num">F11</div><h4>Category presets</h4><p>32 preset categories via datalist autocomplete: Kitchen, Plumbing, Electrical, etc.</p><span class="tag">All item forms</span></div>
+    <div class="feature-tile"><div class="num">F12</div><h4>Variance tracking</h4><p>Original prices saved; badges show <span class="badge-variance up">▲</span>/<span class="badge-variance down">▼</span> deltas per item + total.</p><span class="tag">SOW tab</span></div>
+    <div class="feature-tile"><div class="num">F13</div><h4>Item assignment</h4><p>Assign SOW item to contractor. Triggers 2x/day photo-proof reminders until proof uploaded.</p><span class="tag">Notifications</span></div>
+    <div class="feature-tile"><div class="num">F14</div><h4>Budget banner</h4><p>Emerald / Amber / Red hero card in Financials — always shows spent vs budget with % badge.</p><span class="tag">Financials</span></div>
+    <div class="feature-tile"><div class="num">F15</div><h4>Schedule tracking</h4><p>Compare Work Completed % vs Time Elapsed %. Auto-detect "behind schedule" (>10% gap).</p><span class="tag">Financials</span></div>
+    <div class="feature-tile"><div class="num">F16</div><h4>Loan (3 types)</h4><p>Interest-only (default for hard money), Amortized P&amp;I, or Manual override.</p><span class="tag">Financials</span></div>
+    <div class="feature-tile"><div class="num">F17</div><h4>True project cost</h4><p>Cash spent + loan interest accrued. Projected total incl. full loan cost vs budget.</p><span class="tag">Financials</span></div>
+    <div class="feature-tile"><div class="num">F18</div><h4>Payment milestones</h4><p>Toggleable 4-phase or 2-phase payment schedule. Tracks paid % of contract.</p><span class="tag">Overview + Financials</span></div>
+    <div class="feature-tile"><div class="num">F19</div><h4>Lien waiver enforcement</h4><p>Expenses &gt; $600 auto-require signed waiver. Daily reminders + WAIVER NEEDED badge.</p><span class="tag">Financials</span></div>
+    <div class="feature-tile"><div class="num">F20</div><h4>Store receipts + AI scan</h4><p>Upload Home Depot/Lowe's/etc receipts. AI extracts store, total, line items.</p><span class="tag">AI</span></div>
+    <div class="feature-tile"><div class="num">F21</div><h4>AI Finance chat</h4><p>Rule-based assistant answering budget, schedule, loan, variance, "what's next" questions.</p><span class="tag">AI</span></div>
+    <div class="feature-tile"><div class="num">F22</div><h4>Critical banner</h4><p>Sticky red bar for over-budget / past-deadline. Dismissible for the day; reappears tomorrow.</p><span class="tag">Notifications</span></div>
+    <div class="feature-tile"><div class="num">F23</div><h4>Notification bell</h4><p>Header dropdown with pulse animation for critical. Click → jump to project.</p><span class="tag">Header</span></div>
+    <div class="feature-tile"><div class="num">F24</div><h4>Morning snapshot</h4><p>Optional daily summary modal — weekly spend, project status, updates, risk items.</p><span class="tag">Settings</span></div>
+    <div class="feature-tile"><div class="num">F25</div><h4>Updates timeline</h4><p>Manager/contractor updates with phase tags, chronological.</p><span class="tag">Updates tab</span></div>
+    <div class="feature-tile"><div class="num">F26</div><h4>Auto light/dark</h4><p>Time-based (dark 18:00–07:00) with manual override. Persisted per user.</p><span class="tag">Header toggle</span></div>
+    <div class="feature-tile"><div class="num">F27</div><h4>Role-based tabs</h4><p>Tabs hide if user lacks the matching responsibility. Content shows access-denied message.</p><span class="tag">All roles</span></div>
+    <div class="feature-tile"><div class="num">F28</div><h4>Data persistence</h4><p>All Zustand stores persist to localStorage with version numbers for migrations.</p><span class="tag">Foundation</span></div>
+  </div>
+
+  <!-- ============================================================
+       ARCHITECTURE
+       ============================================================ -->
+  <h2 class="section-title" id="arch"><span class="num">15</span> Store Architecture</h2>
+  <p class="section-desc">Six independent Zustand stores. All are persisted to localStorage.</p>
+
+  <table class="spec">
+    <thead><tr><th>Store</th><th>Persistent key</th><th>State</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><code>useAuthStore</code></td><td>rehab-crm-auth</td><td>users[], currentUserId</td><td>Users, login/logout, CRUD</td></tr>
+      <tr><td><code>useRenovationStore</code></td><td>rehab-crm-storage</td><td>renovations[]</td><td>All project data. All mutations flow through here.</td></tr>
+      <tr><td><code>useNotificationStore</code></td><td>rehab-crm-notifications</td><td>notifications[]</td><td>User-scoped alerts; engine runs every 60s</td></tr>
+      <tr><td><code>useContactsStore</code></td><td>rehab-crm-contacts</td><td>contacts[]</td><td>Address book of contractors + managers</td></tr>
+      <tr><td><code>useSettingsStore</code></td><td>rehab-crm-settings</td><td>byUserId per-user preferences</td><td>Morning snapshot toggle, snapshot time</td></tr>
+      <tr><td><code>useThemeStore</code></td><td>rehab-crm-theme</td><td>mode: 'light'|'dark'|'auto'</td><td>Theme toggle, auto by time-of-day</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="sub">Notification engine flow</h3>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;font-family:var(--font-mono);font-size:12px;line-height:1.7;color:var(--text-2);">
+    <div><span style="color:var(--text-4);">// Runs once per minute via useEffect(setInterval)</span></div>
+    <div>for each <strong>renovation</strong>:</div>
+    <div style="padding-left:20px;">for each <strong>SOWItem</strong> with <code>assignedUserId</code>:</div>
+    <div style="padding-left:40px;">if <code>completed &amp;&amp; media.length &gt; 0</code> → <span style="color:var(--emerald-text);">resolve</span> existing reminder</div>
+    <div style="padding-left:40px;">else if <code>hoursSince(lastFire) &gt;= 12</code> → <span style="color:var(--amber-text);">fireReminder(item-proof-needed)</span></div>
+    <div style="padding-left:20px;">for each <strong>FinancialEntry</strong> with <code>lienWaiverRequired</code>:</div>
+    <div style="padding-left:40px;">if <code>lienWaiverUrl</code> → <span style="color:var(--emerald-text);">resolve</span></div>
+    <div style="padding-left:40px;">else if <code>hoursSince(lastFire) &gt;= 24</code> → <span style="color:var(--red-text);">fireReminder(lien-waiver-needed)</span></div>
+    <div style="padding-left:20px;">for each <strong>overrun</strong> (budget or schedule):</div>
+    <div style="padding-left:40px;">for each admin/manager on project:</div>
+    <div style="padding-left:60px;">if condition true → <span style="color:var(--red-text);">fireReminder(critical)</span></div>
+    <div style="padding-left:60px;">else → <span style="color:var(--emerald-text);">resolve</span></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div style="text-align:center;color:var(--text-3);font-size:12px;margin-top:40px;padding-bottom:40px;">
+    <p>End of spec. Use the anchor nav above to jump back to any section.</p>
+    <p style="margin-top:4px;">Toggle theme with the button top-right to inspect the dark palette.</p>
+  </div>
+
+</div>
+
+<script>
+  // Theme toggle
+  const html = document.documentElement;
+  const btn = document.getElementById('themeToggle');
+  const setTheme = (mode) => {
+    if (mode === 'dark') { html.setAttribute('data-theme', 'dark'); btn.textContent = '🌙 Dark'; }
+    else { html.setAttribute('data-theme', 'light'); btn.textContent = '☀ Light'; }
+  };
+  const currentDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  setTheme(currentDark ? 'dark' : 'light');
+  btn.onclick = () => {
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    setTheme(isDark ? 'light' : 'dark');
+  };
+</script>

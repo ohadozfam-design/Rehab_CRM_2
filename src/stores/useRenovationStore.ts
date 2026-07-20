@@ -2,10 +2,10 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type {
   FinancialEntry,
-  Photo,
+  MediaItem,
+  ProjectUpdate,
   Renovation,
-  SowItem,
-  Update,
+  SOWItem,
   User,
 } from '../types';
 import { seedRenovations } from '../data/mockData';
@@ -26,7 +26,7 @@ interface RenovationState {
   updateSowItem: (
     renovationId: string,
     itemId: string,
-    patch: Partial<SowItem>,
+    patch: Partial<SOWItem>,
   ) => void;
   addFinancialEntry: (renovationId: string, entry: FinancialEntry) => void;
   updateFinancialEntry: (
@@ -34,18 +34,24 @@ interface RenovationState {
     entryId: string,
     patch: Partial<FinancialEntry>,
   ) => void;
-  addPhoto: (renovationId: string, photo: Photo) => void;
-  removePhoto: (renovationId: string, photoId: string) => void;
-  addUpdate: (renovationId: string, update: Update) => void;
+  addItemMedia: (
+    renovationId: string,
+    itemId: string,
+    media: MediaItem,
+  ) => void;
+  addUpdate: (renovationId: string, update: ProjectUpdate) => void;
 }
 
-/** Immutably maps over one renovation by id. */
+/** Immutably maps over one renovation by id, bumping updatedAt. */
 function mapRenovation(
   renovations: Renovation[],
   id: string,
   fn: (r: Renovation) => Renovation,
 ): Renovation[] {
-  return renovations.map((r) => (r.id === id ? fn(r) : r));
+  const stamp = new Date().toISOString();
+  return renovations.map((r) =>
+    r.id === id ? { ...fn(r), updatedAt: stamp } : r,
+  );
 }
 
 export const useRenovationStore = create<RenovationState>()(
@@ -76,7 +82,8 @@ export const useRenovationStore = create<RenovationState>()(
         if (!user) return [];
         // Admin and viewer see everything; managers/contractors see only assigned.
         if (user.role === 'admin' || user.role === 'viewer') return all;
-        return all.filter((r) => user.assignedRenovationIds.includes(r.id));
+        const assigned = user.assignedProjectIds ?? [];
+        return all.filter((r) => assigned.includes(r.id));
       },
 
       updateSowItem: (renovationId, itemId, patch) =>
@@ -107,19 +114,15 @@ export const useRenovationStore = create<RenovationState>()(
           })),
         })),
 
-      addPhoto: (renovationId, photo) =>
+      addItemMedia: (renovationId, itemId, media) =>
         set((state) => ({
           renovations: mapRenovation(state.renovations, renovationId, (r) => ({
             ...r,
-            photos: [...r.photos, photo],
-          })),
-        })),
-
-      removePhoto: (renovationId, photoId) =>
-        set((state) => ({
-          renovations: mapRenovation(state.renovations, renovationId, (r) => ({
-            ...r,
-            photos: r.photos.filter((p) => p.id !== photoId),
+            sowItems: r.sowItems.map((it) =>
+              it.id === itemId
+                ? { ...it, media: [...(it.media ?? []), media] }
+                : it,
+            ),
           })),
         })),
 
@@ -127,10 +130,10 @@ export const useRenovationStore = create<RenovationState>()(
         set((state) => ({
           renovations: mapRenovation(state.renovations, renovationId, (r) => ({
             ...r,
-            updates: [update, ...r.updates],
+            updates: [update, ...(r.updates ?? [])],
           })),
         })),
     }),
-    { name: 'rehab-crm-storage' },
+    { name: 'rehab-crm-storage', version: 1 },
   ),
 );

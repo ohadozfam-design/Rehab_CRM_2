@@ -1,23 +1,34 @@
 // ============================================================================
 // Rehab CRM — Core Data Model
-// Single source of truth for every entity persisted across the 6 Zustand stores.
-// Designed forward-compatible with all modules (auth, SOW, financials, loans,
-// receipts, media, updates, notifications) so the schema never has to be rebuilt.
+// Aligned verbatim with the entity spec in rehab_crm_spec/rehab-crm-spec.html
+// (section 13, Data Model) so every module reads and writes the same shapes.
 // ============================================================================
 
-// ---- Roles & Auth -----------------------------------------------------------
+// ---- Roles, Responsibilities & Auth -----------------------------------------
 
 export type Role = 'admin' | 'manager' | 'contractor' | 'viewer';
+
+/** Tab/feature gates. A tab renders only if the user has the matching one. */
+export type Responsibility =
+  | 'finances'
+  | 'sow'
+  | 'progress'
+  | 'photos'
+  | 'documents';
 
 export interface User {
   id: string;
   username: string;
-  /** Demo-only plaintext credential. Never do this in a real backend. */
+  /** Demo-only plaintext credential. Never do this with a real backend. */
   password: string;
   name: string;
+  email?: string;
+  phone?: string;
   role: Role;
-  /** Renovation ids this user is scoped to. Admin/viewer ignore this (see role gating). */
-  assignedRenovationIds: string[];
+  responsibilities?: Responsibility[];
+  /** Projects this user is scoped to (managers/contractors). */
+  assignedProjectIds?: string[];
+  contractorCompany?: string;
 }
 
 // ---- Phases -----------------------------------------------------------------
@@ -25,127 +36,161 @@ export interface User {
 /** Fixed 3-phase model used throughout the SOW and scheduling. */
 export type PhaseId = 1 | 2 | 3;
 
-export const PHASE_NAMES: Record<PhaseId, string> = {
-  1: 'Within Walls',
-  2: 'Surface Work',
-  3: 'Finishes',
-};
-
 export interface Phase {
   id: PhaseId;
   name: string;
-  /** ISO date string for the phase deadline (set in the project wizard). */
+  /** ISO date string for the phase deadline. */
   deadline: string | null;
 }
 
 // ---- Scope of Work ----------------------------------------------------------
 
-/** Tri-state completion: 0 = Not Started, 1 = In Progress (50%), 2 = Completed. */
-export type SowStatus = 0 | 1 | 2;
+export type Unit = 'EA' | 'SF' | 'LF' | 'UNIT' | 'DAYS' | 'LS';
 
-export interface SowComment {
+/** Tri-state completion percentage. */
+export type CompletionPct = 0 | 50 | 100;
+
+export interface ItemComment {
   id: string;
-  authorId: string;
-  authorName: string;
-  authorRole: Role;
+  userId: string;
+  userName: string;
+  role?: Role;
   text: string;
   createdAt: string;
 }
 
-export interface SowItem {
+export interface MediaItem {
   id: string;
-  phase: PhaseId;
+  type: 'image' | 'video';
+  url: string;
+  caption?: string;
+  uploadedById?: string;
+  uploadedAt: string;
+}
+
+export interface SOWItem {
+  id: string;
   description: string;
-  note: string;
-  laborCost: number;
+  shortNote?: string;
+  phase: PhaseId;
+  category?: string;
+  assignedUserId?: string;
+  approvedAt?: string;
+  quantity?: number;
+  unit?: Unit;
   materialCost: number;
-  /** Original baseline costs, used to render variance badges against current inputs. */
-  baselineLaborCost: number;
-  baselineMaterialCost: number;
-  status: SowStatus;
-  /** User id of the assigned worker/contractor, if any. */
-  assignedWorkerId: string | null;
-  /** Photo ids attached as completion proof (drives the item-proof-needed rule). */
-  proofPhotoIds: string[];
-  comments: SowComment[];
-  /** Timestamp captured when the item is marked Completed. */
-  approvedAt: string | null;
+  laborCost: number;
+  /** Original values, saved as baseline for variance badges. */
+  originalMaterialCost?: number;
+  originalLaborCost?: number;
+  completed: boolean;
+  completionPct?: CompletionPct;
+  /** Optional items are shown separately and excluded from stats. */
+  optional?: boolean;
+  vendor?: string;
+  comments?: ItemComment[];
+  media?: MediaItem[];
+  notes?: string;
 }
 
 // ---- Financials -------------------------------------------------------------
 
-export type FinancialCategory = 'labor' | 'material' | 'loan' | 'permit' | 'other';
+export type FinancialCategory = 'labor' | 'material' | 'loan' | 'other';
 
 export interface FinancialEntry {
   id: string;
   date: string;
+  amount: number;
   description: string;
   category: FinancialCategory;
-  amount: number;
-  vendor: string;
-  /** Auto-set true when a labor/material entry exceeds $600 (lien waiver enforcement). */
-  lienWaiverRequired: boolean;
-  /** URL of the uploaded, signed lien waiver. Null until compliance is satisfied. */
-  lienWaiverUrl: string | null;
+  phase?: PhaseId;
+  vendor?: string;
+  contractorUserId?: string;
+  /** Auto-set true when a labor/material entry exceeds $600. */
+  lienWaiverRequired?: boolean;
+  lienWaiverUrl?: string;
+  lienWaiverReceivedAt?: string;
 }
 
-// ---- Loans ------------------------------------------------------------------
+// ---- Loan -------------------------------------------------------------------
 
-export type LoanType = 'interest-only' | 'amortized' | 'manual';
+export type LoanType = 'amortized' | 'interest-only' | 'manual';
 
-export interface Loan {
-  id: string;
-  name: string;
+export interface LoanInfo {
+  enabled: boolean;
+  loanType?: LoanType;
   principal: number;
-  /** Annual percentage rate as a decimal, e.g. 0.12 for 12%. */
-  apr: number;
-  type: LoanType;
-  startDate: string;
+  /** Annual percentage rate as a percent, e.g. 9.5 for 9.5%. */
+  interestRate: number;
   termMonths: number;
-  /** Used only when type === 'manual'. */
-  manualMonthlyPayment: number | null;
+  monthlyPayment: number;
+  startDate?: string;
 }
 
 // ---- Receipts ---------------------------------------------------------------
 
 export interface ReceiptLineItem {
   description: string;
-  amount: number;
+  amount?: number;
 }
 
 export interface Receipt {
   id: string;
-  fileName: string;
-  fileUrl: string;
-  uploadedAt: string;
-  /** Populated by the simulated "AI Scan" action. */
-  vendor: string | null;
-  total: number | null;
-  lineItems: ReceiptLineItem[];
+  /** Detected store/vendor, populated by the simulated AI scan. */
+  store?: string;
+  total?: number;
+  date?: string;
+  phase?: PhaseId;
+  uploadedById?: string;
+  fileName?: string;
+  fileUrl?: string;
   scanned: boolean;
+  lineItems?: ReceiptLineItem[];
+  aiSummary?: string;
 }
 
-// ---- Media / Photos ---------------------------------------------------------
+// ---- Payment milestones -----------------------------------------------------
 
-export interface Photo {
+export interface PaymentMilestone {
   id: string;
-  phase: PhaseId;
-  url: string;
-  thumbnailUrl: string;
-  caption: string;
-  uploadedAt: string;
-  uploadedById: string;
+  label: string;
+  /** Percent of contract, e.g. 25. */
+  pct: number;
+  amount: number;
+  description?: string;
+  paid: boolean;
+  paidAt?: string;
+}
+
+// ---- Contractor / Manager sub-objects ---------------------------------------
+
+export interface Contractor {
+  company: string;
+  name?: string;
+  email?: string;
+  phone?: string;
+  license?: string;
+  insurance?: string;
+  userId?: string;
+}
+
+export interface ProjectManager {
+  name: string;
+  email?: string;
+  phone?: string;
+  userId?: string;
 }
 
 // ---- Updates feed -----------------------------------------------------------
 
-export interface Update {
+export interface ProjectUpdate {
   id: string;
+  title: string;
+  message: string;
+  phaseTag?: PhaseId;
   authorId: string;
   authorName: string;
   authorRole: Role;
-  phaseTag: PhaseId | null;
-  message: string;
   createdAt: string;
 }
 
@@ -159,45 +204,51 @@ export interface Renovation {
   address: string;
   city: string;
   state: string;
+  size?: number;
+  startDate: string;
+  deadline: string;
   status: RenovationStatus;
-  /** Overall project budget target. */
-  budget: number;
-  /** Ids of assigned manager(s) and contractor(s). */
-  managerIds: string[];
-  contractorIds: string[];
+  totalBudget: number;
+  contractor?: Contractor;
+  manager?: ProjectManager;
+  loan?: LoanInfo;
   phases: Phase[];
-  sowItems: SowItem[];
+  sowItems: SOWItem[];
+  paymentMilestones?: PaymentMilestone[];
   financialEntries: FinancialEntry[];
-  loans: Loan[];
-  receipts: Receipt[];
-  photos: Photo[];
-  /** Shared Google Drive folder links per phase. */
-  driveFolders: Record<PhaseId, string>;
-  updates: Update[];
+  receipts?: Receipt[];
+  updates?: ProjectUpdate[];
+  summary: string;
   createdAt: string;
+  updatedAt: string;
 }
 
 // ---- Notifications ----------------------------------------------------------
 
-export type NotificationType =
+export type NotificationKind =
   | 'item-proof-needed'
   | 'lien-waiver-needed'
   | 'budget-overrun'
-  | 'deadline-risk'
+  | 'schedule-overrun'
+  | 'assigned'
   | 'general';
 
 export type NotificationSeverity = 'info' | 'warning' | 'critical';
 
 export interface AppNotification {
   id: string;
-  type: NotificationType;
+  userId: string;
+  kind: NotificationKind;
   severity: NotificationSeverity;
-  renovationId: string | null;
-  /** Target user id; null means system-wide/dashboard-level. */
-  targetUserId: string | null;
+  title: string;
   message: string;
+  renovationId?: string;
+  relatedItemId?: string;
   createdAt: string;
-  read: boolean;
+  lastFiredAt?: string;
+  readAt?: string;
+  dismissedAt?: string;
+  resolved?: boolean;
 }
 
 // ---- Contacts (address book) ------------------------------------------------
@@ -206,18 +257,19 @@ export interface Contact {
   id: string;
   name: string;
   role: Role;
-  company: string;
-  phone: string;
-  email: string;
+  company?: string;
+  email?: string;
+  phone?: string;
 }
 
 // ---- Settings & Theme -------------------------------------------------------
 
-export interface Settings {
+export interface UserSettings {
+  morningSnapshotEnabled: boolean;
   /** Time-of-day (HH:mm) after which the morning snapshot may show. */
   morningSnapshotTime: string;
   /** ISO date (YYYY-MM-DD) the snapshot was last shown, to throttle to once/day. */
-  lastSnapshotShownDate: string | null;
+  lastSnapshotShownDate?: string;
 }
 
 export type ThemeMode = 'light' | 'dark' | 'auto';

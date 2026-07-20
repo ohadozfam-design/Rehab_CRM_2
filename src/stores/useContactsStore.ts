@@ -33,6 +33,6 @@ export const useContactsStore = create<ContactsState>()(
 
       byRole: (role) => get().contacts.filter((c) => c.role === role),
     }),
-    { name: 'rehab-crm-contacts' },
+    { name: 'rehab-crm-contacts', version: 1 },
   ),
 );

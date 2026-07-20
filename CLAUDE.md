@@ -9,10 +9,16 @@ LocalStorage. Built for a non-technical owner: Claude is the sole builder and
 makes industry-standard technical decisions automatically.
 
 ## Tech Stack
-- Framework: React 18 + Vite 5
+- Framework: React 18 + Vite 5, routing via react-router-dom 6
 - Language: TypeScript (strict)
-- Styling: Tailwind CSS 3 (TMA brand tokens in `tailwind.config.js` + CSS vars in `src/index.css`)
+- Styling: Tailwind CSS 3. Colors route through CSS variables (`src/index.css`) that
+  flip light/dark; the token values come **verbatim from the UI spec**.
 - State: Zustand 4 with the `persist` middleware (LocalStorage)
+
+## Source of Truth for UI
+`rehab_crm_spec/rehab-crm-spec.html` is the authoritative pixel/behavior reference —
+a slate + blue SaaS system. Match its tokens, layout, and data model exactly.
+(The `Design_Principles_rehab_crm/` TMA doc is an unrelated brand and is NOT used.)
 
 ## Build Execution Model
 Work proceeds strictly step-by-step through `prompts_master:/` (Steps 1–6).
@@ -21,10 +27,14 @@ for explicit user approval before starting the next step.
 
 ## Key Conventions
 - One Zustand store per domain; each persists under its own `rehab-crm-*` key.
-- All entity shapes live in `src/types.ts` — the single source of truth.
+- All entity shapes live in `src/types.ts` — mirror the spec's field names exactly
+  (`totalBudget`, `assignedProjectIds`, `completionPct`, notification `kind`, etc.).
 - Store mutations are immutable; nested edits use id-scoped map helpers.
 - The 3-phase model is fixed: Phase 1 Within Walls, Phase 2 Surface Work, Phase 3 Finishes.
-- Theme is driven by the `data-theme` attribute on `<html>` + CSS token layer.
+- Theme is driven by the `data-theme` attribute on `<html>` (see `ThemeController`)
+  + CSS token layer. Auto mode = dark 18:00–07:00.
+- Role gating: `useRenovationStore.visibleFor(user)` filters projects; tab access
+  keys off `useAuthStore.hasResponsibility()` (admin bypasses all checks).
 
 ## Important Paths
 - Source: `src/`

@@ -3,16 +3,24 @@ import { persist } from 'zustand/middleware';
 import type { AppNotification } from '../types';
 import { seedNotifications } from '../data/mockData';
 
+/** A notification is "active" if it hasn't been resolved or dismissed. */
+function isActive(n: AppNotification): boolean {
+  return !n.resolved && !n.dismissedAt;
+}
+
 interface NotificationState {
   notifications: AppNotification[];
   add: (notification: AppNotification) => void;
   markRead: (id: string) => void;
-  markAllRead: (userId: string | null) => void;
+  markAllRead: (userId: string) => void;
+  dismiss: (id: string) => void;
+  resolve: (id: string) => void;
   remove: (id: string) => void;
   clearAll: () => void;
-  /** Notifications targeted at a user (plus system-wide ones with null target). */
-  forUser: (userId: string | null) => AppNotification[];
-  unreadCount: (userId: string | null) => number;
+  /** Active notifications targeted at a user. */
+  forUser: (userId: string) => AppNotification[];
+  /** Count of active, unread notifications for a user (drives the bell badge). */
+  unreadCount: (userId: string) => number;
 }
 
 export const useNotificationStore = create<NotificationState>()(
@@ -28,16 +36,32 @@ export const useNotificationStore = create<NotificationState>()(
       markRead: (id) =>
         set((state) => ({
           notifications: state.notifications.map((n) =>
-            n.id === id ? { ...n, read: true } : n,
+            n.id === id && !n.readAt
+              ? { ...n, readAt: new Date().toISOString() }
+              : n,
           ),
         })),
 
       markAllRead: (userId) =>
         set((state) => ({
           notifications: state.notifications.map((n) =>
-            n.targetUserId === userId || n.targetUserId === null
-              ? { ...n, read: true }
+            n.userId === userId && !n.readAt
+              ? { ...n, readAt: new Date().toISOString() }
               : n,
+          ),
+        })),
+
+      dismiss: (id) =>
+        set((state) => ({
+          notifications: state.notifications.map((n) =>
+            n.id === id ? { ...n, dismissedAt: new Date().toISOString() } : n,
+          ),
+        })),
+
+      resolve: (id) =>
+        set((state) => ({
+          notifications: state.notifications.map((n) =>
+            n.id === id ? { ...n, resolved: true } : n,
           ),
         })),
 
@@ -49,15 +73,13 @@ export const useNotificationStore = create<NotificationState>()(
       clearAll: () => set({ notifications: [] }),
 
       forUser: (userId) =>
-        get().notifications.filter(
-          (n) => n.targetUserId === userId || n.targetUserId === null,
-        ),
+        get().notifications.filter((n) => n.userId === userId && isActive(n)),
 
       unreadCount: (userId) =>
         get()
           .forUser(userId)
-          .filter((n) => !n.read).length,
+          .filter((n) => !n.readAt).length,
     }),
-    { name: 'rehab-crm-notifications' },
+    { name: 'rehab-crm-notifications', version: 1 },
   ),
 );
