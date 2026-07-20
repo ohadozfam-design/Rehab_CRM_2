@@ -9,6 +9,7 @@ import SowTab from '../components/sow/SowTab';
 import FinancialsTab from '../components/finance/FinancialsTab';
 import PhotosTab from '../components/media/PhotosTab';
 import UpdatesTab from '../components/updates/UpdatesTab';
+import OverviewTab from '../components/overview/OverviewTab';
 
 type TabKey = 'overview' | 'sow' | 'financials' | 'photos' | 'updates';
 
@@ -19,15 +20,6 @@ const TABS: { key: TabKey; label: string }[] = [
   { key: 'photos', label: '📷 Photos' },
   { key: 'updates', label: '💬 Updates' },
 ];
-
-/** Lightweight placeholder for tabs delivered in later steps. */
-function ComingSoon({ step, name }: { step: string; name: string }) {
-  return (
-    <div className="mx-auto max-w-[900px] px-6 py-12 text-center text-sm text-text-3">
-      The <strong>{name}</strong> tab comes online in {step}.
-    </div>
-  );
-}
 
 export default function RenovationDetailPage() {
   const { id } = useParams();
@@ -129,7 +121,7 @@ export default function RenovationDetailPage() {
       ) : active === 'updates' ? (
         <UpdatesTab renovation={renovation} />
       ) : (
-        <ComingSoon step="a later step" name="Overview" />
+        <OverviewTab renovation={renovation} />
       )}
     </div>
   );
