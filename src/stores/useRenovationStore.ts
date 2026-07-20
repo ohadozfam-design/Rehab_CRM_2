@@ -4,6 +4,7 @@ import type {
   FinancialEntry,
   MediaItem,
   ProjectUpdate,
+  Receipt,
   Renovation,
   SOWItem,
   User,
@@ -41,6 +42,13 @@ interface RenovationState {
     itemId: string,
     media: MediaItem,
   ) => void;
+  addReceipt: (renovationId: string, receipt: Receipt) => void;
+  updateReceipt: (
+    renovationId: string,
+    receiptId: string,
+    patch: Partial<Receipt>,
+  ) => void;
+  removeReceipt: (renovationId: string, receiptId: string) => void;
   addUpdate: (renovationId: string, update: ProjectUpdate) => void;
 }
 
@@ -141,6 +149,32 @@ export const useRenovationStore = create<RenovationState>()(
                 ? { ...it, media: [...(it.media ?? []), media] }
                 : it,
             ),
+          })),
+        })),
+
+      addReceipt: (renovationId, receipt) =>
+        set((state) => ({
+          renovations: mapRenovation(state.renovations, renovationId, (r) => ({
+            ...r,
+            receipts: [...(r.receipts ?? []), receipt],
+          })),
+        })),
+
+      updateReceipt: (renovationId, receiptId, patch) =>
+        set((state) => ({
+          renovations: mapRenovation(state.renovations, renovationId, (r) => ({
+            ...r,
+            receipts: (r.receipts ?? []).map((rc) =>
+              rc.id === receiptId ? { ...rc, ...patch } : rc,
+            ),
+          })),
+        })),
+
+      removeReceipt: (renovationId, receiptId) =>
+        set((state) => ({
+          renovations: mapRenovation(state.renovations, renovationId, (r) => ({
+            ...r,
+            receipts: (r.receipts ?? []).filter((rc) => rc.id !== receiptId),
           })),
         })),
 

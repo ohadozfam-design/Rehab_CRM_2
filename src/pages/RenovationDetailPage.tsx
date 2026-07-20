@@ -6,6 +6,7 @@ import { TAB_RESPONSIBILITY } from '../lib/constants';
 import type { Responsibility } from '../types';
 import AccessDenied from '../components/AccessDenied';
 import SowTab from '../components/sow/SowTab';
+import FinancialsTab from '../components/finance/FinancialsTab';
 
 type TabKey = 'overview' | 'sow' | 'financials' | 'photos' | 'updates';
 
@@ -119,10 +120,10 @@ export default function RenovationDetailPage() {
         <AccessDenied />
       ) : active === 'sow' ? (
         <SowTab renovation={renovation} />
-      ) : active === 'overview' ? (
-        <ComingSoon step="Step 5" name="Overview" />
       ) : active === 'financials' ? (
-        <ComingSoon step="Step 5" name="Financials" />
+        <FinancialsTab renovation={renovation} />
+      ) : active === 'overview' ? (
+        <ComingSoon step="a later step" name="Overview" />
       ) : active === 'photos' ? (
         <ComingSoon step="Step 6" name="Photos" />
       ) : (
