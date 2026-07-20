@@ -4,6 +4,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import AppLayout from './components/AppLayout';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
+import RenovationDetailPage from './pages/RenovationDetailPage';
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
           }
         >
           <Route path="/" element={<DashboardPage />} />
+          <Route path="/renovation/:id" element={<RenovationDetailPage />} />
         </Route>
 
         {/* Unknown routes fall back to the dashboard (or login if unauthenticated). */}

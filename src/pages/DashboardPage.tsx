@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../stores/useAuthStore';
 import { useRenovationStore } from '../stores/useRenovationStore';
 import { formatCurrency } from '../lib/format';
@@ -66,11 +67,14 @@ const toggleBtn =
   'inline-flex items-center gap-1 rounded-md px-2.5 py-1.5 text-[12px] font-medium text-text-3';
 
 export default function DashboardPage() {
+  const navigate = useNavigate();
   const user = useAuthStore((s) => s.currentUser());
   const visible = useRenovationStore((s) => s.visibleFor(user));
 
   const [query, setQuery] = useState('');
   const [view, setView] = useState<ViewMode>('columns');
+
+  const openProject = (pid: string) => navigate(`/renovation/${pid}`);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -90,7 +94,7 @@ export default function DashboardPage() {
 
   return (
     <div>
-      <CriticalAlerts projects={visible} />
+      <CriticalAlerts projects={visible} onOpenProject={openProject} />
 
       <div className="mx-auto max-w-[1200px] px-6 py-5">
         {/* KPI bar */}
@@ -178,7 +182,11 @@ export default function DashboardPage() {
                   </header>
                   <div className="flex flex-col gap-2.5">
                     {items.map((r) => (
-                      <RenovationCard key={r.id} renovation={r} />
+                      <RenovationCard
+                        key={r.id}
+                        renovation={r}
+                        onOpen={openProject}
+                      />
                     ))}
                   </div>
                 </div>
@@ -188,7 +196,7 @@ export default function DashboardPage() {
         ) : (
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((r) => (
-              <RenovationCard key={r.id} renovation={r} />
+              <RenovationCard key={r.id} renovation={r} onOpen={openProject} />
             ))}
           </div>
         )}

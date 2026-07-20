@@ -23,11 +23,13 @@ interface RenovationState {
   visibleFor: (user: User | null) => Renovation[];
 
   // --- Nested mutators (used by SOW, financials, media, feed modules) ---
+  addSowItem: (renovationId: string, item: SOWItem) => void;
   updateSowItem: (
     renovationId: string,
     itemId: string,
     patch: Partial<SOWItem>,
   ) => void;
+  removeSowItem: (renovationId: string, itemId: string) => void;
   addFinancialEntry: (renovationId: string, entry: FinancialEntry) => void;
   updateFinancialEntry: (
     renovationId: string,
@@ -86,6 +88,14 @@ export const useRenovationStore = create<RenovationState>()(
         return all.filter((r) => assigned.includes(r.id));
       },
 
+      addSowItem: (renovationId, item) =>
+        set((state) => ({
+          renovations: mapRenovation(state.renovations, renovationId, (r) => ({
+            ...r,
+            sowItems: [...r.sowItems, item],
+          })),
+        })),
+
       updateSowItem: (renovationId, itemId, patch) =>
         set((state) => ({
           renovations: mapRenovation(state.renovations, renovationId, (r) => ({
@@ -93,6 +103,14 @@ export const useRenovationStore = create<RenovationState>()(
             sowItems: r.sowItems.map((it) =>
               it.id === itemId ? { ...it, ...patch } : it,
             ),
+          })),
+        })),
+
+      removeSowItem: (renovationId, itemId) =>
+        set((state) => ({
+          renovations: mapRenovation(state.renovations, renovationId, (r) => ({
+            ...r,
+            sowItems: r.sowItems.filter((it) => it.id !== itemId),
           })),
         })),
 
