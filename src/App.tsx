@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import ThemeController from './components/ThemeController';
+import SupabaseSync from './components/SupabaseSync';
 import ProtectedRoute from './components/ProtectedRoute';
 import AppLayout from './components/AppLayout';
 import LoginPage from './pages/LoginPage';
@@ -11,6 +12,8 @@ export default function App() {
     <>
       {/* Applies the resolved light/dark theme to <html> app-wide. */}
       <ThemeController />
+      {/* Mirrors state to Supabase when configured; offline-first otherwise. */}
+      <SupabaseSync />
 
       <Routes>
         <Route path="/login" element={<LoginPage />} />
