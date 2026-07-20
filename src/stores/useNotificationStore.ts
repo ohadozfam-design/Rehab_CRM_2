@@ -13,6 +13,8 @@ interface NotificationState {
   add: (notification: AppNotification) => void;
   markRead: (id: string) => void;
   markAllRead: (userId: string) => void;
+  /** Re-surface an active reminder: bump lastFiredAt and clear read state. */
+  refire: (id: string) => void;
   dismiss: (id: string) => void;
   resolve: (id: string) => void;
   remove: (id: string) => void;
@@ -47,6 +49,15 @@ export const useNotificationStore = create<NotificationState>()(
           notifications: state.notifications.map((n) =>
             n.userId === userId && !n.readAt
               ? { ...n, readAt: new Date().toISOString() }
+              : n,
+          ),
+        })),
+
+      refire: (id) =>
+        set((state) => ({
+          notifications: state.notifications.map((n) =>
+            n.id === id
+              ? { ...n, lastFiredAt: new Date().toISOString(), readAt: undefined }
               : n,
           ),
         })),

@@ -42,6 +42,11 @@ interface RenovationState {
     itemId: string,
     media: MediaItem,
   ) => void;
+  removeItemMedia: (
+    renovationId: string,
+    itemId: string,
+    mediaId: string,
+  ) => void;
   addReceipt: (renovationId: string, receipt: Receipt) => void;
   updateReceipt: (
     renovationId: string,
@@ -147,6 +152,18 @@ export const useRenovationStore = create<RenovationState>()(
             sowItems: r.sowItems.map((it) =>
               it.id === itemId
                 ? { ...it, media: [...(it.media ?? []), media] }
+                : it,
+            ),
+          })),
+        })),
+
+      removeItemMedia: (renovationId, itemId, mediaId) =>
+        set((state) => ({
+          renovations: mapRenovation(state.renovations, renovationId, (r) => ({
+            ...r,
+            sowItems: r.sowItems.map((it) =>
+              it.id === itemId
+                ? { ...it, media: (it.media ?? []).filter((m) => m.id !== mediaId) }
                 : it,
             ),
           })),

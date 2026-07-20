@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../stores/useAuthStore';
-import { useNotificationStore } from '../stores/useNotificationStore';
 import { useThemeStore } from '../stores/useThemeStore';
 import { useUIStore } from '../stores/useUIStore';
+import NotificationBell from './NotificationBell';
 import { ROLE_LABELS } from '../lib/constants';
 import type { ThemeMode } from '../types';
 
@@ -24,9 +24,6 @@ export default function Header() {
   const mode = useThemeStore((s) => s.mode);
   const cycleMode = useThemeStore((s) => s.cycleMode);
 
-  const unread = useNotificationStore((s) =>
-    user ? s.unreadCount(user.id) : 0,
-  );
   const openNewProject = useUIStore((s) => s.openNewProject);
 
   if (!user) return null;
@@ -60,12 +57,7 @@ export default function Header() {
           {THEME_LABEL[mode]}
         </button>
 
-        <button className={`${iconBtn} relative`} title="Notifications">
-          🔔
-          {unread > 0 && (
-            <sup className="text-[10px] font-extrabold text-red">{unread}</sup>
-          )}
-        </button>
+        <NotificationBell />
 
         <button className={iconBtn} title="Settings">
           ⚙

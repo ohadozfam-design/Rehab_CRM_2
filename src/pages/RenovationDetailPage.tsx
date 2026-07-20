@@ -7,6 +7,8 @@ import type { Responsibility } from '../types';
 import AccessDenied from '../components/AccessDenied';
 import SowTab from '../components/sow/SowTab';
 import FinancialsTab from '../components/finance/FinancialsTab';
+import PhotosTab from '../components/media/PhotosTab';
+import UpdatesTab from '../components/updates/UpdatesTab';
 
 type TabKey = 'overview' | 'sow' | 'financials' | 'photos' | 'updates';
 
@@ -122,12 +124,12 @@ export default function RenovationDetailPage() {
         <SowTab renovation={renovation} />
       ) : active === 'financials' ? (
         <FinancialsTab renovation={renovation} />
-      ) : active === 'overview' ? (
-        <ComingSoon step="a later step" name="Overview" />
       ) : active === 'photos' ? (
-        <ComingSoon step="Step 6" name="Photos" />
+        <PhotosTab renovation={renovation} />
+      ) : active === 'updates' ? (
+        <UpdatesTab renovation={renovation} />
       ) : (
-        <ComingSoon step="Step 6" name="Updates" />
+        <ComingSoon step="a later step" name="Overview" />
       )}
     </div>
   );

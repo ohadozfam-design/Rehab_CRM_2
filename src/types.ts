@@ -218,6 +218,8 @@ export interface Renovation {
   financialEntries: FinancialEntry[];
   receipts?: Receipt[];
   updates?: ProjectUpdate[];
+  /** Shared Google Drive folder link per phase (Photos tab). */
+  driveFolders?: Partial<Record<PhaseId, string>>;
   summary: string;
   createdAt: string;
   updatedAt: string;
