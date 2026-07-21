@@ -1,6 +1,17 @@
 import { useState } from 'react';
+import {
+  ArrowDown,
+  ArrowUp,
+  Check,
+  ChevronDown,
+  ChevronUp,
+  Minus,
+  Trash2,
+  User,
+} from 'lucide-react';
 import { useAuthStore } from '../../stores/useAuthStore';
 import { useRenovationStore } from '../../stores/useRenovationStore';
+import { useTelemetryStore } from '../../stores/useTelemetryStore';
 import { formatCurrency } from '../../lib/format';
 import {
   completionOf,
@@ -35,6 +46,7 @@ export default function SowRow({
   const removeSowItem = useRenovationStore((s) => s.removeSowItem);
   const users = useAuthStore((s) => s.users);
   const currentUser = useAuthStore((s) => s.currentUser());
+  const track = useTelemetryStore((s) => s.track);
 
   const pct = completionOf(item);
   const variance = itemVariance(item);
@@ -47,7 +59,9 @@ export default function SowRow({
     updateSowItem(renovation.id, item.id, p);
 
   const cycle = () => {
-    if (editable) patch(completionPatch(nextCompletion(pct)));
+    if (!editable) return;
+    patch(completionPatch(nextCompletion(pct)));
+    if (currentUser) track(currentUser.id, 'sow-update');
   };
 
   // Capture the pre-edit value as baseline the first time a cost is edited.
@@ -108,7 +122,7 @@ export default function SowRow({
                   ? 'Mark complete'
                   : 'Reset to not started'
             }
-            className={`mt-0.5 flex h-[18px] w-[18px] items-center justify-center rounded border-2 text-[10px] text-white ${
+            className={`mt-0.5 flex h-[18px] w-[18px] items-center justify-center rounded border-2 text-white ${
               pct === 100
                 ? 'border-emerald bg-emerald'
                 : pct === 50
@@ -116,7 +130,11 @@ export default function SowRow({
                   : 'border-border-strong'
             } ${editable ? 'cursor-pointer' : 'cursor-default'}`}
           >
-            {pct === 100 ? '✓' : pct === 50 ? '▨' : ''}
+            {pct === 100 ? (
+              <Check size={12} strokeWidth={3} />
+            ) : pct === 50 ? (
+              <Minus size={12} strokeWidth={3} />
+            ) : null}
           </button>
         </div>
 
@@ -145,7 +163,8 @@ export default function SowRow({
                     : 'bg-emerald-soft text-emerald-text'
                 }`}
               >
-                {variance > 0 ? '▲ +' : '▼ −'}
+                {variance > 0 ? <ArrowUp size={9} /> : <ArrowDown size={9} />}
+                {variance > 0 ? '+' : '−'}
                 {formatCurrency(Math.abs(variance))}
               </span>
             )}
@@ -167,8 +186,8 @@ export default function SowRow({
               </span>
             )}
             {assignee && (
-              <span className="rounded bg-accent-soft px-1.5 py-px text-accent">
-                👤 {assignee.name}
+              <span className="inline-flex items-center gap-1 rounded bg-accent-soft px-1.5 py-px text-accent">
+                <User size={9} /> {assignee.name}
               </span>
             )}
             {item.optional && (
@@ -201,9 +220,13 @@ export default function SowRow({
         </div>
 
         {/* Actions */}
-        <div className="text-right text-text-4">
-          <button onClick={() => setOpen((o) => !o)} title="Details">
-            {open ? '▴' : '▾'}
+        <div className="flex justify-end text-text-4">
+          <button
+            onClick={() => setOpen((o) => !o)}
+            title="Details"
+            className="hover:text-text"
+          >
+            {open ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
           </button>
         </div>
       </div>
@@ -362,10 +385,10 @@ export default function SowRow({
           {editable && (
             <div className="mt-3 flex justify-end">
               <button
-                className="text-[12px] text-text-4 hover:text-red"
+                className="inline-flex items-center gap-1 text-[12px] text-text-4 hover:text-red"
                 onClick={() => removeSowItem(renovation.id, item.id)}
               >
-                🗑 Remove item
+                <Trash2 size={12} /> Remove item
               </button>
             </div>
           )}

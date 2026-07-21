@@ -91,7 +91,7 @@ export const seedContacts: Contact[] = [
     id: 'contact-jordan',
     name: 'Jordan Pierce',
     role: 'manager',
-    company: 'Rehab CRM',
+    company: 'REMO',
     phone: '(937) 555-0100',
     email: 'jordan@rehabcrm.app',
   },

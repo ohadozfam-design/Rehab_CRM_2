@@ -1,3 +1,4 @@
+import { Check, Receipt as ReceiptIcon, Sparkles, Upload } from 'lucide-react';
 import { useAuthStore } from '../../stores/useAuthStore';
 import { useRenovationStore } from '../../stores/useRenovationStore';
 import { formatCurrency } from '../../lib/format';
@@ -60,8 +61,8 @@ export default function ReceiptsCard({
   return (
     <div className="mb-4 rounded border border-border bg-surface p-4">
       <div className="mb-3 flex items-center justify-between">
-        <div className="text-[11px] font-bold uppercase tracking-[0.05em] text-text-3">
-          🧾 Store Receipts{' '}
+        <div className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.05em] text-text-3">
+          <ReceiptIcon size={13} /> Store Receipts{' '}
           <span className="font-medium normal-case text-text-4">
             ({receipts.length} · {scannedCount} scanned ·{' '}
             {formatCurrency(total)} total)
@@ -69,10 +70,10 @@ export default function ReceiptsCard({
         </div>
         {editable && (
           <button
-            className="text-[12px] font-semibold text-accent"
+            className="inline-flex items-center gap-1 text-[12px] font-semibold text-accent"
             onClick={upload}
           >
-            + Upload Receipt
+            <Upload size={13} /> Upload Receipt
           </button>
         )}
       </div>
@@ -86,8 +87,8 @@ export default function ReceiptsCard({
               key={rc.id}
               className="flex items-start gap-3 rounded-lg bg-surface-2 p-2.5"
             >
-              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-accent-soft text-base text-accent">
-                🧾
+              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-accent-soft text-accent">
+                <ReceiptIcon size={16} />
               </div>
               <div className="flex-1">
                 <div className="text-[13px] font-semibold text-accent">
@@ -100,7 +101,7 @@ export default function ReceiptsCard({
                 </div>
                 {rc.aiSummary && (
                   <div className="mt-1.5 inline-flex items-center gap-1 rounded bg-purple-soft px-2 py-1 text-[10px] text-purple-text">
-                    ✨ {rc.aiSummary}
+                    <Sparkles size={11} /> {rc.aiSummary}
                   </div>
                 )}
               </div>
@@ -110,16 +111,16 @@ export default function ReceiptsCard({
                     <div className="text-[14px] font-bold text-text">
                       {rc.total != null ? formatCurrency(rc.total) : '—'}
                     </div>
-                    <div className="mt-1 rounded bg-emerald-soft px-1.5 py-0.5 text-[9px] text-emerald-text">
-                      ✓ Scanned
+                    <div className="mt-1 inline-flex items-center gap-1 rounded bg-emerald-soft px-1.5 py-0.5 text-[9px] text-emerald-text">
+                      <Check size={10} /> Scanned
                     </div>
                   </>
                 ) : editable ? (
                   <button
-                    className="rounded bg-purple px-2 py-1 text-[10px] font-semibold text-white"
+                    className="inline-flex items-center gap-1 rounded bg-purple px-2 py-1 text-[10px] font-semibold text-white"
                     onClick={() => updateReceipt(renovation.id, rc.id, simulateScan())}
                   >
-                    ✨ AI Scan
+                    <Sparkles size={11} /> AI Scan
                   </button>
                 ) : (
                   <span className="text-[11px] text-text-4">Unscanned</span>

@@ -1,4 +1,11 @@
 import { useState } from 'react';
+import {
+  AlertTriangle,
+  CheckCircle2,
+  CircleDashed,
+  Clock,
+  Plus,
+} from 'lucide-react';
 import { useAuthStore } from '../../stores/useAuthStore';
 import { formatCurrency } from '../../lib/format';
 import { budgetHealth, scheduleMeter } from '../../lib/finance';
@@ -35,27 +42,34 @@ export default function FinancialsTab({
   const health = budgetHealth(renovation);
   const sched = scheduleMeter(renovation);
 
+  const HeroIcon =
+    health.status === 'red'
+      ? AlertTriangle
+      : health.status === 'amber'
+        ? CircleDashed
+        : CheckCircle2;
+
   return (
-    <div className="mx-auto max-w-[900px] px-6 py-5">
+    <div className="mx-auto max-w-[1100px] px-8 py-6">
       <div className="mb-4 flex items-center justify-between">
-        <h3 className="text-[15px] font-bold text-text">Financial Summary</h3>
+        <h3 className="text-[16px] font-bold text-text">Financial Summary</h3>
         {editable && (
           <button
-            className="text-[13px] font-semibold text-accent"
+            className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-accent"
             onClick={() => setAddOpen(true)}
           >
-            + Add Entry
+            <Plus size={15} /> Add Entry
           </button>
         )}
       </div>
 
       {/* Hero: budget health */}
       <div
-        className={`mb-4 flex items-start justify-between rounded border p-4 ${HERO_TONE[health.status]}`}
+        className={`mb-4 flex items-start justify-between rounded-lg border p-5 ${HERO_TONE[health.status]}`}
       >
         <div className="flex gap-2.5">
           <div className={HERO_TEXT[health.status]}>
-            {health.status === 'red' ? '⚠' : health.status === 'amber' ? '◐' : '✓'}
+            <HeroIcon size={20} />
           </div>
           <div>
             <div className={`text-[14px] font-bold ${HERO_TEXT[health.status]}`}>
@@ -85,8 +99,8 @@ export default function FinancialsTab({
       {/* Schedule meter */}
       <div className="mb-4 rounded border border-border bg-surface p-4">
         <div className="mb-2 flex items-center justify-between">
-          <span className="text-[11px] font-bold uppercase tracking-[0.05em] text-text-3">
-            ⏱ Schedule{' '}
+          <span className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.05em] text-text-3">
+            <Clock size={13} /> Schedule{' '}
             <span
               className={`normal-case ${sched.behind ? 'text-red-text' : 'text-emerald-text'}`}
             >

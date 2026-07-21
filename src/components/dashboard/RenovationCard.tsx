@@ -1,3 +1,4 @@
+import { MapPin } from 'lucide-react';
 import type { Renovation, RenovationStatus } from '../../types';
 import { formatCurrency } from '../../lib/format';
 import {
@@ -45,7 +46,7 @@ export default function RenovationCard({
             {renovation.name}
           </h4>
           <div className="mt-0.5 flex items-center gap-1 text-[11px] text-text-3">
-            📍 {renovation.city}, {renovation.state}
+            <MapPin size={11} /> {renovation.city}, {renovation.state}
           </div>
         </div>
         <span

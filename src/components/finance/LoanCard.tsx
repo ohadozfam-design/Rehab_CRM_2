@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { DollarSign, Pencil } from 'lucide-react';
 import { useRenovationStore } from '../../stores/useRenovationStore';
 import { formatCurrency } from '../../lib/format';
 import {
@@ -59,8 +60,8 @@ export default function LoanCard({
   if (!loan || !loan.enabled) {
     return (
       <div className="mb-4 rounded border border-border bg-surface p-4">
-        <div className="mb-1 text-[11px] font-bold uppercase tracking-[0.05em] text-text-3">
-          💵 Loan Financing
+        <div className="mb-1 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.05em] text-text-3">
+          <DollarSign size={13} /> Loan Financing
         </div>
         <p className="text-[13px] text-text-3">
           This project is not loan-financed.
@@ -92,17 +93,17 @@ export default function LoanCard({
     <div className="mb-4 rounded border border-border bg-surface p-4">
       <div className="mb-3 flex items-center justify-between">
         <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.05em] text-text-3">
-          💵 Loan Financing
+          <DollarSign size={13} /> Loan Financing
           <span className="inline-flex items-center rounded-full bg-emerald-soft px-2 py-0.5 text-[11px] font-semibold normal-case text-emerald-text">
             {LOAN_TYPE_LABEL[loan.loanType ?? 'interest-only']}
           </span>
         </div>
         {editable && (
           <button
-            className="text-[12px] font-semibold text-accent"
+            className="inline-flex items-center gap-1 text-[12px] font-semibold text-accent"
             onClick={() => setEditing((e) => !e)}
           >
-            {editing ? 'Done' : '✎ Edit'}
+            {editing ? 'Done' : <><Pencil size={12} /> Edit</>}
           </button>
         )}
       </div>

@@ -1,4 +1,15 @@
 import { useEffect, useState } from 'react';
+import {
+  AlertTriangle,
+  Clock,
+  DollarSign,
+  FolderKanban,
+  Hammer,
+  Sun,
+  TrendingUp,
+  Wallet,
+  X,
+} from 'lucide-react';
 import { useAuthStore } from '../stores/useAuthStore';
 import { useRenovationStore } from '../stores/useRenovationStore';
 import { useSettingsStore } from '../stores/useSettingsStore';
@@ -13,11 +24,21 @@ import {
 
 const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
 
-function Stat({ icon, label, value, sub }: { icon: string; label: string; value: string; sub: string }) {
+function Stat({
+  Icon,
+  label,
+  value,
+  sub,
+}: {
+  Icon: typeof Wallet;
+  label: string;
+  value: string;
+  sub: string;
+}) {
   return (
     <div className="rounded-lg bg-surface-2 p-2.5">
-      <div className="text-[10px] font-bold uppercase tracking-[0.03em] text-text-3">
-        {icon} {label}
+      <div className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-[0.03em] text-text-3">
+        <Icon size={12} /> {label}
       </div>
       <div className="text-[16px] font-bold tabular-nums text-text">{value}</div>
       <div className="text-[10px] text-text-3">{sub}</div>
@@ -98,10 +119,10 @@ export default function MorningSnapshot() {
         >
           <div className="flex items-center gap-3">
             <div
-              className="flex h-10 w-10 items-center justify-center rounded-xl text-lg text-white"
+              className="flex h-10 w-10 items-center justify-center rounded-xl text-white"
               style={{ background: 'linear-gradient(135deg, #fbbf24, #f97316)' }}
             >
-              ☀
+              <Sun size={20} />
             </div>
             <div>
               <h3 className="text-base font-bold" style={{ color: '#1f1f1f' }}>
@@ -117,11 +138,11 @@ export default function MorningSnapshot() {
             </div>
           </div>
           <button
-            className="rounded-md p-1 text-[13px]"
+            className="rounded-md p-1"
             style={{ color: '#57534e' }}
             onClick={dismiss}
           >
-            ✕
+            <X size={16} />
           </button>
         </header>
 
@@ -133,25 +154,25 @@ export default function MorningSnapshot() {
 
           <div className="mb-3.5 grid grid-cols-2 gap-2 sm:grid-cols-4">
             <Stat
-              icon="💵"
+              Icon={Wallet}
               label="Spent"
               value={formatCurrency(totalSpent)}
               sub={`of ${formatCurrency(totalBudget)}`}
             />
             <Stat
-              icon="📁"
+              Icon={FolderKanban}
               label="Active"
               value={String(active.length)}
               sub="renovations"
             />
             <Stat
-              icon="📈"
+              Icon={TrendingUp}
               label="This Week"
               value={formatCurrency(weekSpend)}
               sub={`${weekEntries.length} transaction${weekEntries.length === 1 ? '' : 's'}`}
             />
             <Stat
-              icon="⚠"
+              Icon={AlertTriangle}
               label="Risk"
               value={String(riskProjects.length)}
               sub="needs attention"
@@ -167,12 +188,17 @@ export default function MorningSnapshot() {
               }}
             >
               <div className="mb-1.5 flex items-center gap-1.5 text-[12px] font-bold text-red-text">
-                ⚠ Needs attention
+                <AlertTriangle size={13} /> Needs attention
               </div>
-              <ul className="list-disc pl-5 text-[11px] text-red-text">
+              <ul className="flex flex-col gap-1 text-[11px] text-red-text">
                 {riskProjects.map((p) => (
-                  <li key={p.id}>
-                    {isOverBudget(p) ? '💸' : '⏰'} <strong>{p.name}</strong> is{' '}
+                  <li key={p.id} className="flex items-center gap-1.5">
+                    {isOverBudget(p) ? (
+                      <DollarSign size={12} />
+                    ) : (
+                      <Clock size={12} />
+                    )}
+                    <strong>{p.name}</strong> is{' '}
                     {isOverBudget(p) ? 'over budget' : 'past deadline'}
                   </li>
                 ))}
@@ -191,7 +217,7 @@ export default function MorningSnapshot() {
                   className="flex items-center gap-2.5 rounded-md bg-surface-2 p-2"
                 >
                   <div className="flex h-7 w-7 items-center justify-center rounded-full bg-accent-soft text-accent">
-                    🔨
+                    <Hammer size={14} />
                   </div>
                   <div className="flex-1">
                     <div className="text-[12px] font-semibold text-text">

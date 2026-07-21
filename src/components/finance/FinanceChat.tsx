@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Bot, SendHorizontal, Sparkles, User } from 'lucide-react';
 import { formatCurrency } from '../../lib/format';
 import { projectSpent } from '../../lib/metrics';
 import {
@@ -74,8 +75,8 @@ export default function FinanceChat({ renovation }: { renovation: Renovation }) 
             'linear-gradient(135deg, var(--accent-soft), var(--purple-soft))',
         }}
       >
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-[15px] text-white">
-          ✨
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-white">
+          <Sparkles size={16} />
         </div>
         <div>
           <div className="text-[13px] font-bold text-text">
@@ -93,8 +94,8 @@ export default function FinanceChat({ renovation }: { renovation: Renovation }) 
             key={i}
             className={`flex gap-2 ${m.from === 'user' ? 'flex-row-reverse' : ''}`}
           >
-            <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-surface-3 text-[12px]">
-              {m.from === 'user' ? '👤' : '🤖'}
+            <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-surface-3 text-text-2">
+              {m.from === 'user' ? <User size={13} /> : <Bot size={13} />}
             </div>
             <div
               className={`max-w-[72%] rounded-xl px-3 py-2 text-[13px] ${
@@ -118,10 +119,11 @@ export default function FinanceChat({ renovation }: { renovation: Renovation }) 
           onKeyDown={(e) => e.key === 'Enter' && send()}
         />
         <button
-          className="rounded-lg bg-accent px-3 py-1.5 text-white"
+          className="inline-flex items-center justify-center rounded-lg bg-accent px-3 py-1.5 text-white"
           onClick={send}
+          title="Send"
         >
-          →
+          <SendHorizontal size={16} />
         </button>
       </div>
     </div>

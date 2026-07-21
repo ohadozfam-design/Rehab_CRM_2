@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { AlertTriangle } from 'lucide-react';
 import { useAuthStore } from '../../stores/useAuthStore';
 import { useRenovationStore } from '../../stores/useRenovationStore';
+import { useTelemetryStore } from '../../stores/useTelemetryStore';
 import { lienRequired } from '../../lib/finance';
 import type {
   FinancialCategory,
@@ -30,6 +32,8 @@ export default function AddEntryForm({
 }) {
   const addFinancialEntry = useRenovationStore((s) => s.addFinancialEntry);
   const users = useAuthStore((s) => s.users);
+  const currentUserId = useAuthStore((s) => s.currentUserId);
+  const track = useTelemetryStore((s) => s.track);
   const assignable = users.filter((u) =>
     (u.assignedProjectIds ?? []).includes(renovation.id),
   );
@@ -65,6 +69,7 @@ export default function AddEntryForm({
       lienWaiverRequired: willRequireWaiver,
     };
     addFinancialEntry(renovation.id, entry);
+    if (currentUserId) track(currentUserId, 'add-expense');
     onClose();
   };
 
@@ -171,8 +176,9 @@ export default function AddEntryForm({
           </div>
 
           {willRequireWaiver && (
-            <div className="rounded-lg bg-red-soft px-3 py-2 text-[12px] text-red-text">
-              ⚠ Over $600 in {category} — a signed lien waiver will be required.
+            <div className="flex items-center gap-1.5 rounded-lg bg-red-soft px-3 py-2 text-[12px] text-red-text">
+              <AlertTriangle size={14} /> Over $600 in {category} — a signed lien
+              waiver will be required.
             </div>
           )}
         </div>

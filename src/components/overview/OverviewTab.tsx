@@ -1,4 +1,17 @@
 import { useState } from 'react';
+import {
+  Briefcase,
+  CalendarDays,
+  Check,
+  CheckCircle2,
+  Clock,
+  Package,
+  Pencil,
+  TrendingUp,
+  User,
+  Wallet,
+  Wrench,
+} from 'lucide-react';
 import { useAuthStore } from '../../stores/useAuthStore';
 import { useRenovationStore } from '../../stores/useRenovationStore';
 import { formatCurrency } from '../../lib/format';
@@ -28,21 +41,23 @@ function fmtDate(iso: string): string {
 
 function StatCard({
   tone,
+  Icon,
   label,
   value,
   sub,
 }: {
   tone: string;
+  Icon: typeof Wallet;
   label: string;
   value: string;
   sub: string;
 }) {
   return (
-    <div className={`rounded border border-border p-3.5 ${tone}`}>
-      <div className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.05em] text-text-3">
-        {label}
+    <div className={`rounded-lg border border-border p-4 ${tone}`}>
+      <div className="mb-1.5 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.05em] text-text-3">
+        <Icon size={14} /> {label}
       </div>
-      <div className="text-[22px] font-bold tabular-nums tracking-[-0.02em] text-text">
+      <div className="text-[24px] font-bold tabular-nums tracking-[-0.02em] text-text">
         {value}
       </div>
       <div className="mt-0.5 text-[11px] text-text-3">{sub}</div>
@@ -92,7 +107,7 @@ function SummaryCard({
             }}
             title="Edit summary"
           >
-            ✎
+            <Pencil size={14} />
           </button>
         )}
       </div>
@@ -148,8 +163,8 @@ function ContactCards({ renovation }: { renovation: Renovation }) {
   return (
     <div className="mb-4 grid gap-4 md:grid-cols-2">
       <div className="rounded border border-border bg-surface p-[18px]">
-        <div className="mb-3 text-[11px] font-bold uppercase tracking-[0.05em] text-text-3">
-          👤 Project Manager
+        <div className="mb-3 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.05em] text-text-3">
+          <User size={13} /> Project Manager
         </div>
         {manager ? (
           <>
@@ -165,8 +180,8 @@ function ContactCards({ renovation }: { renovation: Renovation }) {
       </div>
 
       <div className="rounded border border-border bg-surface p-[18px]">
-        <div className="mb-3 text-[11px] font-bold uppercase tracking-[0.05em] text-text-3">
-          💼 Contractor
+        <div className="mb-3 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.05em] text-text-3">
+          <Briefcase size={13} /> Contractor
         </div>
         {contractor ? (
           <>
@@ -281,7 +296,7 @@ function PaymentSchedule({
               onClick={() => editable && togglePaid(m.id)}
               title={editable ? 'Toggle paid' : undefined}
             >
-              {m.paid ? '✓' : '⏱'}
+              {m.paid ? <Check size={13} /> : <Clock size={13} />}
             </button>
             <div className="flex-1">
               <div className="flex items-center justify-between">
@@ -334,7 +349,7 @@ export default function OverviewTab({
   const materialEst = counted.reduce((a, it) => a + it.materialCost, 0);
 
   return (
-    <div className="mx-auto max-w-[900px] px-6 py-5">
+    <div className="mx-auto max-w-[1100px] px-8 py-6">
       <SummaryCard renovation={renovation} editable={canEdit} />
 
       {/* Mini-dashboard */}
@@ -345,25 +360,29 @@ export default function OverviewTab({
         <div className="mb-3 grid grid-cols-2 gap-3 lg:grid-cols-4">
           <StatCard
             tone="bg-emerald-soft"
-            label="💵 Total Spent"
+            Icon={Wallet}
+            label="Total Spent"
             value={formatCurrency(spent)}
             sub={`of ${formatCurrency(renovation.totalBudget)}`}
           />
           <StatCard
             tone="bg-accent-soft"
-            label="✓ Completion"
+            Icon={CheckCircle2}
+            label="Completion"
             value={`${progress}%`}
             sub={`${completed} of ${counted.length} items`}
           />
           <StatCard
             tone="bg-purple-soft"
-            label="📈 Remaining Budget"
+            Icon={TrendingUp}
+            label="Remaining Budget"
             value={formatCurrency(remaining)}
             sub={remaining >= 0 ? 'available' : 'over budget'}
           />
           <StatCard
             tone=""
-            label="📅 Days to Deadline"
+            Icon={CalendarDays}
+            label="Days to Deadline"
             value={days >= 0 ? `${days}d` : `${Math.abs(days)}d late`}
             sub={fmtDate(renovation.deadline)}
           />
@@ -391,8 +410,8 @@ export default function OverviewTab({
 
         <div className="mt-3 grid grid-cols-2 gap-4 border-t border-border pt-3">
           <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-soft">
-              🔧
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-soft text-amber-text">
+              <Wrench size={15} />
             </div>
             <div>
               <div className="text-[11px] text-text-3">Labor estimate</div>
@@ -402,8 +421,8 @@ export default function OverviewTab({
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent-soft">
-              📦
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent-soft text-accent">
+              <Package size={15} />
             </div>
             <div>
               <div className="text-[11px] text-text-3">Material estimate</div>

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { AlertTriangle, X } from 'lucide-react';
 import type { Renovation } from '../../types';
 import { formatCurrency } from '../../lib/format';
 import {
@@ -93,9 +94,9 @@ export default function CriticalAlerts({
       {alerts.map((a) => (
         <div
           key={a.key}
-          className="flex items-center gap-3 bg-red px-5 py-2.5 text-white"
+          className="flex items-center gap-3 bg-red px-8 py-2.5 text-white"
         >
-          <div className="shrink-0 text-lg">⚠</div>
+          <AlertTriangle size={18} className="shrink-0" />
           <div className="flex-1">
             <div className="text-[11px] font-bold uppercase tracking-[0.05em]">
               {a.title}
@@ -106,9 +107,9 @@ export default function CriticalAlerts({
             <button
               type="button"
               onClick={() => onOpenProject(a.projectId)}
-              className="shrink-0 text-[11px] underline"
+              className="shrink-0 text-[11px] font-semibold underline"
             >
-              Open project →
+              Open project
             </button>
           )}
           <button
@@ -117,7 +118,7 @@ export default function CriticalAlerts({
             className="shrink-0 rounded-md p-1 text-white/90 hover:bg-white/10"
             title="Dismiss for today"
           >
-            ✕
+            <X size={16} />
           </button>
         </div>
       ))}

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { Building2, Lock, LogIn, User } from 'lucide-react';
 import { useAuthStore } from '../stores/useAuthStore';
 
 interface DemoAccount {
@@ -48,16 +49,15 @@ export default function LoginPage() {
         background: 'linear-gradient(135deg, var(--accent-soft), var(--surface-2))',
       }}
     >
-      <div className="w-full max-w-[400px] rounded-xl border border-border bg-surface p-8 shadow-lg">
-        <div
-          className="mx-auto mb-3 grid h-14 w-14 place-items-center rounded-[14px] bg-accent text-2xl text-white"
-          style={{ boxShadow: '0 10px 30px rgba(37, 99, 235, 0.3)' }}
-        >
-          🏗
+      <div className="w-full max-w-[420px] rounded-xl border border-border bg-surface p-8 shadow-lg">
+        <div className="mx-auto mb-3 grid h-14 w-14 place-items-center rounded-[14px] bg-text text-bg">
+          <Building2 size={26} strokeWidth={2.25} />
         </div>
-        <h2 className="text-center text-[22px] font-bold text-text">Rehab CRM</h2>
+        <h2 className="text-center text-[24px] font-bold tracking-tight text-text">
+          REMO
+        </h2>
         <p className="mb-6 text-center text-[13px] text-text-3">
-          Sign in to continue
+          Renovation Management · Sign in to continue
         </p>
 
         <form
@@ -72,7 +72,7 @@ export default function LoginPage() {
             </label>
             <div className="relative">
               <span className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-text-4">
-                👤
+                <User size={16} />
               </span>
               <input
                 id="username"
@@ -95,7 +95,7 @@ export default function LoginPage() {
             </label>
             <div className="relative">
               <span className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-text-4">
-                🔒
+                <Lock size={16} />
               </span>
               <input
                 id="password"
@@ -117,9 +117,9 @@ export default function LoginPage() {
 
           <button
             type="submit"
-            className="flex w-full items-center justify-center gap-1.5 rounded-lg bg-accent py-2.5 text-[13px] font-semibold text-white"
+            className="flex w-full items-center justify-center gap-1.5 rounded-lg bg-accent py-2.5 text-[13px] font-semibold text-white transition-colors hover:bg-accent-2"
           >
-            → Sign In
+            <LogIn size={16} /> Sign In
           </button>
         </form>
 

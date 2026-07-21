@@ -1,4 +1,4 @@
-# Rehab CRM — Production Deployment Guide
+# REMO — Production Deployment Guide
 
 Two services: **Supabase** (the database that stores your data online) and
 **Vercel** (hosts the live website). Do Supabase first, then Vercel.

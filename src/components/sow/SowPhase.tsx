@@ -1,4 +1,13 @@
 import { useState } from 'react';
+import {
+  CalendarDays,
+  ChevronDown,
+  ChevronRight,
+  FolderTree,
+  Package,
+  Plus,
+  Wrench,
+} from 'lucide-react';
 import { useRenovationStore } from '../../stores/useRenovationStore';
 import { formatCurrency } from '../../lib/format';
 import { PHASE_META } from '../../lib/constants';
@@ -45,18 +54,18 @@ const COLS_NO_MATERIAL = '32px 1fr 90px 70px 40px';
 function deadlineChip(deadline: string | null, complete: boolean) {
   const days = daysLeft(deadline);
   if (!deadline || days == null)
-    return { cls: 'bg-surface text-text-3', text: '📆 No deadline' };
+    return { cls: 'bg-surface text-text-3', text: 'No deadline' };
   const short = new Date(deadline).toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
   });
   if (complete)
-    return { cls: 'bg-emerald-soft text-emerald-text', text: `📆 ${short} · done` };
+    return { cls: 'bg-emerald-soft text-emerald-text', text: `${short} · done` };
   if (days < 0)
-    return { cls: 'bg-red-soft text-red-text', text: `📆 ${short} · ${Math.abs(days)}d late` };
+    return { cls: 'bg-red-soft text-red-text', text: `${short} · ${Math.abs(days)}d late` };
   if (days <= 7)
-    return { cls: 'bg-amber-soft text-amber-text', text: `📆 ${short} · ${days}d left` };
-  return { cls: 'bg-surface text-text-3', text: `📆 ${short} · ${days}d left` };
+    return { cls: 'bg-amber-soft text-amber-text', text: `${short} · ${days}d left` };
+  return { cls: 'bg-surface text-text-3', text: `${short} · ${days}d left` };
 }
 
 export default function SowPhase({
@@ -140,7 +149,7 @@ export default function SowPhase({
           <span
             className={`hidden items-center gap-1 rounded-md px-2 py-1 text-[11px] sm:inline-flex ${chip.cls}`}
           >
-            {chip.text}
+            <CalendarDays size={12} /> {chip.text}
           </span>
           <div className="hidden w-20 sm:block">
             <div className="h-1.5 overflow-hidden rounded-full bg-surface-3">
@@ -157,11 +166,11 @@ export default function SowPhase({
             {formatCurrency(agg.spent)} / {formatCurrency(agg.budget)}
           </span>
           <button
-            className="text-text-4"
+            className="text-text-4 hover:text-text"
             onClick={() => setCollapsed((c) => !c)}
             title={collapsed ? 'Expand' : 'Collapse'}
           >
-            {collapsed ? '▸' : '▾'}
+            {collapsed ? <ChevronRight size={16} /> : <ChevronDown size={16} />}
           </button>
         </div>
       </header>
@@ -175,8 +184,14 @@ export default function SowPhase({
           >
             <div />
             <div>Item</div>
-            <div className="text-right">🔧 Labor</div>
-            {showMaterial && <div className="text-right">📦 Material</div>}
+            <div className="flex items-center justify-end gap-1">
+              <Wrench size={11} /> Labor
+            </div>
+            {showMaterial && (
+              <div className="flex items-center justify-end gap-1">
+                <Package size={11} /> Material
+              </div>
+            )}
             <div className="text-right">Total</div>
             <div />
           </div>
@@ -195,8 +210,9 @@ export default function SowPhase({
                     style={{ gridTemplateColumns: cols }}
                   >
                     <div />
-                    <div>
-                      🗂 {g.category}{' '}
+                    <div className="flex items-center gap-1.5">
+                      <FolderTree size={12} className="text-text-4" />
+                      {g.category}{' '}
                       <span className="font-normal text-text-4">
                         ({g.items.length})
                       </span>
@@ -268,10 +284,10 @@ export default function SowPhase({
           {editable && (
             <div className="border-t border-border px-3 py-2">
               <button
-                className="text-[12px] font-semibold text-accent"
+                className="inline-flex items-center gap-1 text-[12px] font-semibold text-accent"
                 onClick={addItem}
               >
-                + Add item to {meta.name}
+                <Plus size={13} /> Add item to {meta.name}
               </button>
             </div>
           )}

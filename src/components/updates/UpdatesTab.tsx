@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { CalendarDays, MessageSquare, Plus } from 'lucide-react';
 import { useAuthStore } from '../../stores/useAuthStore';
 import { useRenovationStore } from '../../stores/useRenovationStore';
 import { ROLE_LABELS } from '../../lib/constants';
@@ -18,10 +19,10 @@ function PostForm({ renovation }: { renovation: Renovation }) {
   if (!open) {
     return (
       <button
-        className="text-[12px] font-semibold text-accent"
+        className="inline-flex items-center gap-1 text-[12px] font-semibold text-accent"
         onClick={() => setOpen(true)}
       >
-        + Post update
+        <Plus size={13} /> Post update
       </button>
     );
   }
@@ -102,11 +103,11 @@ export default function UpdatesTab({ renovation }: { renovation: Renovation }) {
   );
 
   return (
-    <div className="mx-auto max-w-[900px] px-6 py-5">
-      <div className="rounded border border-border bg-surface p-4">
+    <div className="mx-auto max-w-[1100px] px-8 py-6">
+      <div className="rounded-lg border border-border bg-surface p-5">
         <div className="mb-3 flex items-center justify-between">
-          <span className="text-[11px] font-bold uppercase tracking-[0.05em] text-text-3">
-            💬 Project Updates{' '}
+          <span className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.05em] text-text-3">
+            <MessageSquare size={13} /> Project Updates{' '}
             <span className="font-medium normal-case text-text-4">
               ({updates.length})
             </span>
@@ -131,9 +132,9 @@ export default function UpdatesTab({ renovation }: { renovation: Renovation }) {
                     </span>
                   )}
                 </div>
-                <div className="my-0.5 text-[11px] text-text-3">
+                <div className="my-0.5 inline-flex items-center gap-1 text-[11px] text-text-3">
                   <strong>{u.authorName}</strong> · {ROLE_LABELS[u.authorRole]} ·
-                  📅{' '}
+                  <CalendarDays size={11} />
                   {new Date(u.createdAt).toLocaleDateString('en-US', {
                     month: 'short',
                     day: 'numeric',

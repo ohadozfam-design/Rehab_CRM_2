@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { FolderTree, List } from 'lucide-react';
 import { useAuthStore } from '../../stores/useAuthStore';
 import { formatCurrency } from '../../lib/format';
 import { summarize } from '../../lib/sow';
@@ -31,7 +32,7 @@ export default function SowTab({ renovation }: { renovation: Renovation }) {
   const s = summarize(renovation);
 
   return (
-    <div className="mx-auto max-w-[900px] px-6 py-5">
+    <div className="mx-auto max-w-[1200px] px-8 py-6">
       {/* Category suggestions for the inline item editors on this tab. */}
       <datalist id="np-category-list">
         {CATEGORY_PRESETS.map((c) => (
@@ -59,10 +60,11 @@ export default function SowTab({ renovation }: { renovation: Renovation }) {
           </div>
         </div>
         <button
-          className="shrink-0 rounded-lg border border-border-strong bg-surface px-3 py-1.5 text-[11px] font-medium text-text-2"
+          className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-border-strong bg-surface px-3 py-1.5 text-[11px] font-medium text-text-2 hover:border-accent"
           onClick={() => setGrouped((g) => !g)}
         >
-          {grouped ? '🗂 Grouped by Category' : '☰ Flat list'}
+          {grouped ? <FolderTree size={14} /> : <List size={14} />}
+          {grouped ? 'Grouped by Category' : 'Flat list'}
         </button>
       </div>
 

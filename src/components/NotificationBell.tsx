@@ -1,17 +1,25 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {
+  AlertTriangle,
+  Bell,
+  Camera,
+  FileText,
+  User,
+  X,
+} from 'lucide-react';
 import { useAuthStore } from '../stores/useAuthStore';
 import { useNotificationStore } from '../stores/useNotificationStore';
 import { useRenovationStore } from '../stores/useRenovationStore';
 import type { AppNotification, NotificationKind, NotificationSeverity } from '../types';
 
-const KIND_ICON: Record<NotificationKind, string> = {
-  'item-proof-needed': '📸',
-  'lien-waiver-needed': '📄',
-  'budget-overrun': '⚠',
-  'schedule-overrun': '⚠',
-  assigned: '👤',
-  general: '🔔',
+const KIND_ICON: Record<NotificationKind, typeof Bell> = {
+  'item-proof-needed': Camera,
+  'lien-waiver-needed': FileText,
+  'budget-overrun': AlertTriangle,
+  'schedule-overrun': AlertTriangle,
+  assigned: User,
+  general: Bell,
 };
 
 const SEV: Record<NotificationSeverity, { circle: string; title: string }> = {
@@ -50,13 +58,15 @@ export default function NotificationBell() {
   return (
     <div className="relative">
       <button
-        className="relative inline-flex items-center justify-center rounded-md p-1.5 text-sm leading-none text-text-3 hover:bg-surface-2 hover:text-text"
+        className="relative inline-flex items-center justify-center rounded-md p-2 text-text-3 hover:bg-surface-2 hover:text-text"
         title="Notifications"
         onClick={() => setOpen((o) => !o)}
       >
-        🔔
+        <Bell size={18} />
         {unread > 0 && (
-          <sup className="text-[10px] font-extrabold text-red">{unread}</sup>
+          <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-red px-1 text-[9px] font-bold text-white">
+            {unread}
+          </span>
         )}
       </button>
 
@@ -92,6 +102,7 @@ export default function NotificationBell() {
               <div className="max-h-[380px] overflow-y-auto">
                 {sorted.map((n) => {
                   const sev = SEV[n.severity];
+                  const KindIcon = KIND_ICON[n.kind];
                   const projName = n.renovationId
                     ? getById(n.renovationId)?.name
                     : undefined;
@@ -103,9 +114,9 @@ export default function NotificationBell() {
                       }`}
                     >
                       <div
-                        className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[12px] ${sev.circle}`}
+                        className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${sev.circle}`}
                       >
-                        {KIND_ICON[n.kind]}
+                        <KindIcon size={14} />
                       </div>
                       <button
                         className="flex-1 text-left"
@@ -128,11 +139,11 @@ export default function NotificationBell() {
                         </div>
                       </button>
                       <button
-                        className="shrink-0 self-start text-[11px] text-text-4 hover:text-text"
+                        className="shrink-0 self-start text-text-4 hover:text-text"
                         title="Dismiss"
                         onClick={() => dismiss(n.id)}
                       >
-                        ✕
+                        <X size={14} />
                       </button>
                     </div>
                   );

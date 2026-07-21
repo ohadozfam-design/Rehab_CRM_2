@@ -1,13 +1,24 @@
+import {
+  AlertTriangle,
+  Check,
+  DollarSign,
+  FileText,
+  Package,
+  Wrench,
+} from 'lucide-react';
 import { useRenovationStore } from '../../stores/useRenovationStore';
 import { formatCurrency } from '../../lib/format';
 import { waiverState } from '../../lib/finance';
 import type { FinancialCategory, Renovation } from '../../types';
 
-const CAT_ICON: Record<FinancialCategory, { icon: string; cls: string }> = {
-  labor: { icon: '🔧', cls: 'bg-amber-soft text-amber-text' },
-  material: { icon: '📦', cls: 'bg-accent-soft text-accent' },
-  loan: { icon: '💵', cls: 'bg-emerald-soft text-emerald-text' },
-  other: { icon: '📄', cls: 'bg-surface-3 text-text-3' },
+const CAT_ICON: Record<
+  FinancialCategory,
+  { Icon: typeof Wrench; cls: string }
+> = {
+  labor: { Icon: Wrench, cls: 'bg-amber-soft text-amber-text' },
+  material: { Icon: Package, cls: 'bg-accent-soft text-accent' },
+  loan: { Icon: DollarSign, cls: 'bg-emerald-soft text-emerald-text' },
+  other: { Icon: FileText, cls: 'bg-surface-3 text-text-3' },
 };
 
 export default function TransactionHistory({
@@ -32,7 +43,7 @@ export default function TransactionHistory({
   return (
     <div className="mb-4 rounded border border-border bg-surface p-4">
       <div className="mb-2 text-[11px] font-bold uppercase tracking-[0.05em] text-text-3">
-        📅 Transaction History ({entries.length})
+        Transaction History ({entries.length})
       </div>
 
       {entries.length === 0 ? (
@@ -48,9 +59,9 @@ export default function TransactionHistory({
                 className="flex items-center gap-3 border-b border-border py-2.5 last:border-0"
               >
                 <div
-                  className={`flex h-6 w-6 items-center justify-center rounded-full text-[11px] ${cat.cls}`}
+                  className={`flex h-6 w-6 items-center justify-center rounded-full ${cat.cls}`}
                 >
-                  {cat.icon}
+                  <cat.Icon size={12} />
                 </div>
                 <div className="flex-1">
                   <div className="flex flex-wrap items-center gap-2">
@@ -58,13 +69,13 @@ export default function TransactionHistory({
                       {e.description}
                     </span>
                     {wState === 'needed' && (
-                      <span className="rounded bg-red-soft px-1.5 py-px text-[9px] font-bold text-red-text">
-                        ⚠ WAIVER NEEDED
+                      <span className="inline-flex items-center gap-1 rounded bg-red-soft px-1.5 py-px text-[9px] font-bold text-red-text">
+                        <AlertTriangle size={9} /> WAIVER NEEDED
                       </span>
                     )}
                     {wState === 'on-file' && (
-                      <span className="rounded bg-emerald-soft px-1.5 py-px text-[9px] font-bold text-emerald-text">
-                        ✓ WAIVER ON FILE
+                      <span className="inline-flex items-center gap-1 rounded bg-emerald-soft px-1.5 py-px text-[9px] font-bold text-emerald-text">
+                        <Check size={9} /> WAIVER ON FILE
                       </span>
                     )}
                   </div>

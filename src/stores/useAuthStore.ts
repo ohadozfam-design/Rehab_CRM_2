@@ -6,6 +6,8 @@ import { seedUsers } from '../data/mockData';
 interface AuthState {
   users: User[];
   currentUserId: string | null;
+  /** When set, an admin is impersonating currentUserId; holds the admin's id. */
+  impersonatorId: string | null;
 
   // --- Session ---
   /** Attempts a username/password login; returns true on success. */
@@ -15,6 +17,10 @@ interface AuthState {
   hasRole: (...roles: Role[]) => boolean;
   /** Admin bypasses all responsibility checks; others need the responsibility. */
   hasResponsibility: (responsibility: Responsibility) => boolean;
+
+  // --- Impersonation (admin support tool) ---
+  impersonate: (userId: string) => void;
+  stopImpersonating: () => void;
 
   // --- User CRUD (admin) ---
   addUser: (user: User) => void;
@@ -27,17 +33,36 @@ export const useAuthStore = create<AuthState>()(
     (set, get) => ({
       users: seedUsers,
       currentUserId: null,
+      impersonatorId: null,
 
       login: (username, password) => {
         const match = get().users.find(
           (u) => u.username === username && u.password === password,
         );
         if (!match) return false;
-        set({ currentUserId: match.id });
+        set({ currentUserId: match.id, impersonatorId: null });
         return true;
       },
 
-      logout: () => set({ currentUserId: null }),
+      logout: () => set({ currentUserId: null, impersonatorId: null }),
+
+      impersonate: (userId) => {
+        const { currentUserId, impersonatorId, users } = get();
+        const admin = users.find((u) => u.id === currentUserId);
+        if (!admin || admin.role !== 'admin') return;
+        if (!users.some((u) => u.id === userId)) return;
+        // Preserve the original admin id (don't overwrite if already impersonating).
+        set({
+          currentUserId: userId,
+          impersonatorId: impersonatorId ?? currentUserId,
+        });
+      },
+
+      stopImpersonating: () => {
+        const { impersonatorId } = get();
+        if (!impersonatorId) return;
+        set({ currentUserId: impersonatorId, impersonatorId: null });
+      },
 
       currentUser: () => {
         const { users, currentUserId } = get();

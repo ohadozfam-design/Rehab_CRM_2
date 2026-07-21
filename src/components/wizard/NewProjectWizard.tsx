@@ -1,8 +1,23 @@
 import { useEffect, useState } from 'react';
+import {
+  ArrowLeft,
+  ArrowRight,
+  Briefcase,
+  Check,
+  ClipboardList,
+  DollarSign,
+  Plus,
+  Sparkles,
+  Trash2,
+  Upload,
+  User,
+  X,
+} from 'lucide-react';
 import { useUIStore } from '../../stores/useUIStore';
 import { useAuthStore } from '../../stores/useAuthStore';
 import { useContactsStore } from '../../stores/useContactsStore';
 import { useRenovationStore } from '../../stores/useRenovationStore';
+import { useTelemetryStore } from '../../stores/useTelemetryStore';
 import { formatCurrency } from '../../lib/format';
 import { PHASE_META } from '../../lib/constants';
 import type { PhaseId } from '../../types';
@@ -54,6 +69,7 @@ export default function NewProjectWizard() {
   const contacts = useContactsStore((s) => s.contacts);
   const renovations = useRenovationStore((s) => s.renovations);
   const addRenovation = useRenovationStore((s) => s.addRenovation);
+  const track = useTelemetryStore((s) => s.track);
 
   const [step, setStep] = useState(0);
   const [draft, setDraft] = useState<WizardDraft>(emptyDraft);
@@ -85,6 +101,7 @@ export default function NewProjectWizard() {
 
   const create = () => {
     addRenovation(buildRenovation(draft, user));
+    if (user) track(user.id, 'create-project');
     close();
   };
 
@@ -107,7 +124,7 @@ export default function NewProjectWizard() {
             onClick={close}
             title="Close"
           >
-            ✕
+            <X size={18} />
           </button>
         </header>
 
@@ -232,8 +249,8 @@ export default function NewProjectWizard() {
           {step === 1 && (
             <div className="space-y-4">
               <div>
-                <h4 className="mb-2 text-[13px] font-bold text-text">
-                  👤 Project Manager
+                <h4 className="mb-2 inline-flex items-center gap-1.5 text-[13px] font-bold text-text">
+                  <User size={15} /> Project Manager
                 </h4>
                 {managers.length > 0 && (
                   <select
@@ -275,8 +292,8 @@ export default function NewProjectWizard() {
               </div>
 
               <div>
-                <h4 className="mb-2 text-[13px] font-bold text-text">
-                  💼 Contractor
+                <h4 className="mb-2 inline-flex items-center gap-1.5 text-[13px] font-bold text-text">
+                  <Briefcase size={15} /> Contractor
                 </h4>
                 {contractors.length > 0 && (
                   <select
@@ -329,7 +346,7 @@ export default function NewProjectWizard() {
                     checked={draft.loanEnabled}
                     onChange={(e) => update({ loanEnabled: e.target.checked })}
                   />
-                  💵 Finance this project with a loan
+                  <DollarSign size={14} /> Finance this project with a loan
                 </label>
                 {draft.loanEnabled && (
                   <div className="mt-3 grid grid-cols-2 gap-3">
@@ -448,11 +465,11 @@ export default function NewProjectWizard() {
         {/* Footer */}
         <div className="flex items-center justify-between border-t border-border bg-surface-2 px-5 py-3.5">
           <button
-            className={btnGhost}
+            className={`${btnGhost} inline-flex items-center gap-1`}
             onClick={() => setStep((s) => Math.max(0, s - 1))}
             style={{ visibility: step === 0 ? 'hidden' : 'visible' }}
           >
-            ← Back
+            <ArrowLeft size={14} /> Back
           </button>
           <div className="flex gap-2">
             <button className={btnSecondary} onClick={close}>
@@ -460,15 +477,18 @@ export default function NewProjectWizard() {
             </button>
             {step < STEPS.length - 1 ? (
               <button
-                className={btnPrimary}
+                className={`${btnPrimary} inline-flex items-center gap-1`}
                 disabled={!canContinue}
                 onClick={() => setStep((s) => s + 1)}
               >
-                Continue →
+                Continue <ArrowRight size={14} />
               </button>
             ) : (
-              <button className={btnPrimary} onClick={create}>
-                ✓ Create Project
+              <button
+                className={`${btnPrimary} inline-flex items-center gap-1.5`}
+                onClick={create}
+              >
+                <Check size={15} /> Create Project
               </button>
             )}
           </div>
@@ -532,27 +552,31 @@ function StepSow({
     }
   };
 
-  const modeCards: { mode: SowMode; icon: string; title: string; desc: string }[] =
-    [
-      {
-        mode: 'manual',
-        icon: '＋',
-        title: 'Build manually',
-        desc: 'Add items one by one.',
-      },
-      {
-        mode: 'paste',
-        icon: '📋',
-        title: 'Paste text',
-        desc: 'Copy/paste from email, Excel, or a quote.',
-      },
-      {
-        mode: 'upload',
-        icon: '📤',
-        title: 'Upload SOW file',
-        desc: 'TXT/CSV parsed now; PDF simulated later.',
-      },
-    ];
+  const modeCards: {
+    mode: SowMode;
+    Icon: typeof Plus;
+    title: string;
+    desc: string;
+  }[] = [
+    {
+      mode: 'manual',
+      Icon: Plus,
+      title: 'Build manually',
+      desc: 'Add items one by one.',
+    },
+    {
+      mode: 'paste',
+      Icon: ClipboardList,
+      title: 'Paste text',
+      desc: 'Copy/paste from email, Excel, or a quote.',
+    },
+    {
+      mode: 'upload',
+      Icon: Upload,
+      title: 'Upload SOW file',
+      desc: 'TXT/CSV parsed now; PDF simulated later.',
+    },
+  ];
 
   return (
     <div className="space-y-4">
@@ -567,7 +591,7 @@ function StepSow({
                 : 'border-border'
             }`}
           >
-            <div className="text-xl">{c.icon}</div>
+            <c.Icon size={20} className="text-text-2" />
             <div className="mt-1.5 text-[13px] font-bold text-text">
               {c.title}
             </div>
@@ -587,12 +611,12 @@ function StepSow({
             onChange={(e) => update({ pasteText: e.target.value })}
           />
           <button
-            className={`${btnSecondary} mt-2`}
+            className={`${btnSecondary} mt-2 inline-flex items-center gap-1.5`}
             onClick={() =>
               update({ items: parseSowText(draft.pasteText), sowMode: 'paste' })
             }
           >
-            ✨ Parse text
+            <Sparkles size={14} /> Parse text
           </button>
         </div>
       )}
@@ -674,11 +698,11 @@ function StepSow({
                 }
               />
               <button
-                className="text-text-4 hover:text-red"
+                className="flex justify-center text-text-4 hover:text-red"
                 onClick={() => removeItem(it.id)}
                 title="Remove"
               >
-                🗑
+                <Trash2 size={15} />
               </button>
             </div>
           ))}

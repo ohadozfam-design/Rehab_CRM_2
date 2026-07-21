@@ -1,4 +1,4 @@
-# Project Instructions — Rehab CRM
+# Project Instructions — REMO
 
 ## Project Overview
 Real Estate Project Management CRM for tracking rehab/renovation portfolios:

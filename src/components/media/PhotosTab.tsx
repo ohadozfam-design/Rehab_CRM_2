@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { Link2, Play, X } from 'lucide-react';
 import { useAuthStore } from '../../stores/useAuthStore';
 import { useRenovationStore } from '../../stores/useRenovationStore';
+import { useTelemetryStore } from '../../stores/useTelemetryStore';
 import { PHASE_META } from '../../lib/constants';
 import { phaseItems } from '../../lib/sow';
 import type { MediaItem, PhaseId, Renovation, SOWItem } from '../../types';
@@ -31,6 +33,7 @@ function AttachMedia({
 }) {
   const addItemMedia = useRenovationStore((s) => s.addItemMedia);
   const currentUser = useAuthStore((s) => s.currentUser());
+  const track = useTelemetryStore((s) => s.track);
   const [open, setOpen] = useState(false);
   const [itemId, setItemId] = useState(items[0]?.id ?? '');
   const [url, setUrl] = useState('');
@@ -67,6 +70,7 @@ function AttachMedia({
       uploadedById: currentUser?.id,
       uploadedAt: new Date().toISOString(),
     });
+    if (currentUser) track(currentUser.id, 'upload-media');
     setUrl('');
     setOpen(false);
   };
@@ -162,9 +166,9 @@ function DriveFolder({
           href={url}
           target="_blank"
           rel="noreferrer"
-          className="text-[12px] text-accent"
+          className="inline-flex items-center gap-1 text-[12px] text-accent"
         >
-          🔗 Drive Folder
+          <Link2 size={12} /> Drive Folder
         </a>
         {editable && (
           <button
@@ -183,10 +187,10 @@ function DriveFolder({
 
   return editable ? (
     <button
-      className="text-[12px] text-text-3 hover:text-text"
+      className="inline-flex items-center gap-1 text-[12px] text-text-3 hover:text-text"
       onClick={() => setEditing(true)}
     >
-      🔗 Link Drive Folder
+      <Link2 size={12} /> Link Drive Folder
     </button>
   ) : null;
 }
@@ -198,7 +202,7 @@ export default function PhotosTab({ renovation }: { renovation: Renovation }) {
   const removeItemMedia = useRenovationStore((s) => s.removeItemMedia);
 
   return (
-    <div className="mx-auto max-w-[900px] px-6 py-5">
+    <div className="mx-auto max-w-[1100px] px-8 py-6">
       {([1, 2, 3] as PhaseId[]).map((phase) => {
         const items = phaseItems(renovation, phase);
         const media = collectPhaseMedia(items);
@@ -244,18 +248,18 @@ export default function PhotosTab({ renovation }: { renovation: Renovation }) {
                         className="flex h-full w-full items-center justify-center text-white"
                         style={{ background: '#1e293b' }}
                       >
-                        ▶
+                        <Play size={22} fill="currentColor" />
                       </div>
                     )}
                     {editable && (
                       <button
-                        className="absolute right-1 top-1 hidden rounded bg-black/60 px-1 text-[10px] text-white group-hover:block"
+                        className="absolute right-1 top-1 hidden rounded bg-black/60 p-0.5 text-white group-hover:block"
                         onClick={() =>
                           removeItemMedia(renovation.id, itemId, m.id)
                         }
                         title="Delete"
                       >
-                        ✕
+                        <X size={12} />
                       </button>
                     )}
                   </div>
